@@ -1,0 +1,26 @@
+
+#Settled{
+  color: #69e846
+}
+#Invoiced{
+  color: orange !important}
+#Delivered{
+  color: #e8dd46
+}
+#Pending{
+  color: red !important
+}
+
+
+.modal-content{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 15px;
+  border-radius: 5px;
+}
+#filter-select{
+  width: 120px;
+}
