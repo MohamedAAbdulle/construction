@@ -1,65 +1,47 @@
 import React from "react";
-import {
-  Button,
-  Grid,
-  IconButton,
-  Modal,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-import { Close } from "@material-ui/icons";
-import { appContext } from "AppContext";
+import { Grid } from "@material-ui/core";
 import { inventoryContext } from "./InventoryContext";
+import dayjs from "dayjs";
+import { postEndpoint } from "services/apiFunctions";
+import onChangeSimple from "utils/onChangeSimple";
+import ModalCont from "components/modalCont/ModalCont";
+import InputComp from "components/input/InputComp";
+import BtnComp from "components/btn-comp/BtnComp";
 
 const NewInventory = ({ open, setOpen }) => {
-  const { postEndpoint } = React.useContext(appContext);
   const { getInvList } = React.useContext(inventoryContext);
 
   const [newInv, setNewInv] = React.useState({
-    id: 10,
-    name: "Mohamed",
-    unit: "Bags",
-    quantity: 136,
-    status: 0,
-    threshold: 100,
-    dateModified: "2022-03-02T15:20",
+    modifiedDate: dayjs().format("YYYY-MM-DDTHH:MM"),
   });
-  const [errors, setErrors] = React.useState([]);
+  const [errors, setErrors] = React.useState({});
 
   const changed = (e) => {
-    const { name, value } = e.target;
-    setNewInv((prev) => ({ ...prev, [name]: value }));
+    onChangeSimple(e, newInv, setNewInv);
   };
 
   const addInventory = () => {
-    postEndpoint(`/inventory`, newInv)
-      .then((res) => {
+    postEndpoint(`/inventory`, newInv).then((res) => {
+      console.log(res);
+      if (res.status === 200) {
+        console.log("OK");
         setOpen(false);
         getInvList();
-      })
-      .catch((err) => setErrors(err));
+      } else {
+        setErrors(res);
+      }
+    });
   };
   const findError = (type) => {
-    return errors.includes(type);
+    if (errors[type]) {
+      return errors[type][0];
+    }
   };
+
+  const closeAction = () => setOpen(false);
   return (
-    <Modal open={open}>
-      <div className="modal-content">
-        <Grid
-          container
-          justifyContent="space-between"
-          alignItems="center"
-          spacing={2}
-        >
-          <Grid item>
-            <Typography variant="h5">New Inventory</Typography>
-          </Grid>
-          <Grid item>
-            <IconButton color="inherit" onClick={() => setOpen(false)}>
-              <Close />
-            </IconButton>
-          </Grid>
-        </Grid>
+    <>
+      <ModalCont open={open} onClose={closeAction} title="New Inventory">
         <Grid
           container
           alignItems="center"
@@ -67,66 +49,53 @@ const NewInventory = ({ open, setOpen }) => {
           spacing={3}
         >
           <Grid item xs={12} md={6}>
-            <TextField
-              variant="outlined"
-              size="small"
+            <InputComp
               onChange={changed}
               value={newInv.name || ""}
               name="name"
-              error={findError("name")}
               label="Item Name"
+              required
+              error={findError("Name")}
             />
           </Grid>
 
           <Grid item xs={12} md={6}>
-            <TextField
-              variant="outlined"
-              size="small"
+            <InputComp
               onChange={changed}
-              value={newInv.unit}
-              error={findError("unit")}
+              value={newInv.unit || ""}
+              error={findError("Unit")}
               name="unit"
+              required
               label="Unit"
             />
           </Grid>
           <Grid item xs={12} md={6}>
-            <TextField
-              variant="outlined"
-              size="small"
+            <InputComp
               onChange={changed}
               value={newInv.quantity || ""}
               name="quantity"
-              error={findError("quantity")}
+              error={findError("Quantity")}
               label="Quantity"
               type="number"
             />
           </Grid>
           <Grid item xs={12} md={6}>
-            <TextField
-              variant="outlined"
-              size="small"
+            <InputComp
               onChange={changed}
               value={newInv.threshold || ""}
-              error={findError("threshold")}
+              error={findError("Threshold")}
               name="threshold"
               label="Threshold"
               type="number"
             />
           </Grid>
-          <Grid item xs={12}></Grid>
         </Grid>
-        <Grid container alignItems="center" justifyContent="flex-end">
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            onClick={() => addInventory(newInv)}
-          >
-            Save
-          </Button>
-        </Grid>
-      </div>
-    </Modal>
+
+        <div className="modal-btns">
+          <BtnComp label="Save" onClick={addInventory} />
+        </div>
+      </ModalCont>
+    </>
   );
 };
 

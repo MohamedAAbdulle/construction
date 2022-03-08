@@ -1,18 +1,4 @@
 import React from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Menu,
-  MenuItem,
-  IconButton,
-} from "@material-ui/core";
-import { MoreVert } from "@material-ui/icons";
-import { dateReadable } from "utils/dateFormatter";
 import { inventoryStatus } from "utils/enums";
 import "./Inventory.css";
 import { inventoryContext } from "./InventoryContext";
@@ -22,20 +8,14 @@ import InvHistory from "./modals/InvHistory";
 import TableCont from "components/table-comp/TableCont";
 import Ellipsis from "components/ellipsis/Ellipsis";
 import dayjs from "dayjs";
+import DeleteInv from "./modals/DeleteInv";
+import EditInv from "./modals/EditInv";
 
 export default function Inventory() {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const { invList } = React.useContext(inventoryContext);
 
-  const getInvetoryStatus = (inv) => {
-    if (inv.quantity <= 0) return [inventoryStatus[2], "red"];
-    else if (inv.quantity >= inv.threshold)
-      return [inventoryStatus[0], "green"];
-    else if (inv.quantity < inv.threshold)
-      return [inventoryStatus[1], "orange"];
-    return ["", ""];
-  };
   const getInventoryStatus = (inv) => {
     let a = "";
     if (inv.quantity <= 0) {
@@ -77,7 +57,7 @@ export default function Inventory() {
             inv.unit,
             inv.quantity,
             getInventoryStatus(inv),
-            dayjs(inv.dateModified).format("DD-MM-YYYY"),
+            dayjs(inv.modifiedDate).format("DD-MM-YY, HH:mm"),
             <Ellipsis
               menus={[
                 { onClick: () => tableAction("add", inv), label: "Add More" },
@@ -88,6 +68,14 @@ export default function Inventory() {
                 {
                   onClick: () => tableAction("history", inv),
                   label: "History",
+                },
+                {
+                  onClick: () => tableAction("edit", inv),
+                  label: "Edit",
+                },
+                {
+                  onClick: () => tableAction("delete", inv),
+                  label: "Delete",
                 },
               ]}
             />,
@@ -105,6 +93,12 @@ export default function Inventory() {
       )}
       {modal === "history" && (
         <InvHistory open={true} onClose={closeModal} inv={selectedInv} />
+      )}
+      {modal === "edit" && (
+        <EditInv open={true} onClose={closeModal} inv={selectedInv} />
+      )}
+      {modal === "delete" && (
+        <DeleteInv open={true} onClose={closeModal} id={selectedInv.id} />
       )}
     </>
   );

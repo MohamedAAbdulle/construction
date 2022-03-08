@@ -2,9 +2,9 @@ import React from "react";
 import { Button, Grid, IconButton, Modal } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import BtnComp from "components/btn-comp/BtnComp";
-import "./ModalCont.sass"
+import "./ModalCont.sass";
 
-const NewInventory = ({ open, onClose, onAction, title, children }) => {
+const NewInventory = ({ open, onClose, title, children }) => {
   return (
     <Modal open={open}>
       <div className="modal-content">
@@ -19,19 +19,6 @@ const NewInventory = ({ open, onClose, onAction, title, children }) => {
           </Grid>
         </Grid>
         {children}
-        <div className="modal-btn">
-          <BtnComp label="Save" onClick={onAction} />
-        </div>
-        <Grid item xs={12}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={onAction}
-            style={{ width: "100%" }}
-          >
-            Save
-          </Button>
-        </Grid>
       </div>
     </Modal>
   );

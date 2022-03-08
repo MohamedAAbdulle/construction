@@ -5,7 +5,7 @@ import inventory from "data/inventory";
 import contracts from "data/contracts";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import moment from "moment";
+import dayjs from "dayjs";
 
 const appContext = React.createContext();
 const AppContext = (props) => {
@@ -59,7 +59,7 @@ const AppContext = (props) => {
   const fetchPost = (url, body, pos) => {
     let errors = [];
     url = pos ? url.split("/").slice(0, pos).join("/") : url;
-    const newId = moment().format("yyyy-MM-DDThh:mm");
+    const newId = dayjs().format("YYYY-MM-DDTHH:MM");
     return new Promise((a, b) => {
       switch (url) {
         case "/inventory":
@@ -69,7 +69,7 @@ const AppContext = (props) => {
             return;
           } else {
             setInvList((prev) => {
-              let c = { ...body, id: newId, dateModified: newId };
+              let c = { ...body, id: newId, modifiedDate: newId };
               prev.unshift(c);
               return prev;
             });
@@ -104,7 +104,7 @@ const AppContext = (props) => {
                 (inv) => inv.id.toString() === body.invId.toString()
               );
               i.quantity -= body.quantity;
-              i.dateModified = newId;
+              i.modifiedDate = newId;
               return prev;
             });
 
@@ -136,7 +136,7 @@ const AppContext = (props) => {
                 (inv) => inv.id.toString() === body.invId.toString()
               );
               i.quantity += parseInt(body.quantity);
-              i.dateModified = newId;
+              i.modifiedDate = newId;
               return prev;
             });
             setAccountingList([body, ...accountingList]);
@@ -154,7 +154,7 @@ const AppContext = (props) => {
             contract,
             contractor,
             totalPrice,
-            dateModified: newId,
+            modifiedDate: newId,
           };
           setContractList((prev) => {
             prev.push(aaa);

@@ -5,7 +5,7 @@ const contracts = [
     contractor: "James Vick",
     totalPrice: 112000,
     status: "Inprogress",
-    dateModified: "2022-01-12"
+    modifiedDate: "2022-01-12",
   },
 ];
 

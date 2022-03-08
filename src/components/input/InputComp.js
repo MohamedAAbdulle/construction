@@ -23,8 +23,9 @@ const InputComp = ({
     placeholder: placeholder,
     InputLabelProps: { shrink: true },
     onChange: onChange,
-    error: error,
+    error: Boolean(error),
     required: required,
+    helperText: error,
   };
   return (
     <>

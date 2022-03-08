@@ -1,21 +1,20 @@
 import React from "react";
 import ModalCont from "components/modalCont/ModalCont";
-import { Grid, Button } from "@material-ui/core";
-import { appContext } from "AppContext";
-import moment from "moment";
+import { Grid } from "@material-ui/core";
+import dayjs from "dayjs";
 import InputComp from "components/input/InputComp";
 import { inventoryContext } from "../InventoryContext";
+import BtnComp from "components/btn-comp/BtnComp";
+import { putEndpoint } from "services/apiFunctions";
+import onChangeSimple from "utils/onChangeSimple";
 
 const TakeOut = ({ open, onClose, inv }) => {
-  const { postEndpoint } = React.useContext(appContext);
   const { getInvList } = React.useContext(inventoryContext);
 
   const [errors, setErrors] = React.useState([]);
 
   const [state, setState] = React.useState({
-    invId: inv.id,
-    dateDone: moment().format("yyyy-MM-DDThh:mm"),
-    type: "Removed",
+    modifiedDate: dayjs().format("YYYY-MM-DDTHH:MM"),
   });
 
   const findError = (type) => {
@@ -23,27 +22,20 @@ const TakeOut = ({ open, onClose, inv }) => {
   };
 
   const onTakeOut = () => {
-    postEndpoint(`/inventory/takeout/${inv.id}`, state, 3)
-      .then((res) => {
-        console.log("ruunning");
-        onClose();
-        getInvList();
-      })
-      .catch((a) => setErrors(a));
+    putEndpoint(`/inventory/takeout/${inv.id}`, state).then((res) => {
+      console.log(res);
+      onClose();
+      getInvList();
+    });
+    //.catch((errors) => setErrors(errors));
   };
 
   const onChange = (e) => {
-    const { value, name } = e.target;
-    setState((prev) => ({ ...prev, [name]: value }));
+    onChangeSimple(e, state, setState);
   };
 
   return (
-    <ModalCont
-      open={open}
-      onClose={onClose}
-      onAction={onTakeOut}
-      title={inv.name}
-    >
+    <ModalCont open={open} onClose={onClose} title={inv.name}>
       <Grid
         container
         justifyContent="space-between"
@@ -65,12 +57,15 @@ const TakeOut = ({ open, onClose, inv }) => {
           <InputComp
             type="datetime-local"
             label="Date Created"
-            name="dateDone"
+            name="modifiedDate"
             onChange={onChange}
-            value={state.dateDone}
+            value={state.modifiedDate}
           />
         </Grid>
       </Grid>
+      <div className="modal-btns">
+        <BtnComp label="Save" onClick={onTakeOut} />
+      </div>
     </ModalCont>
   );
 };

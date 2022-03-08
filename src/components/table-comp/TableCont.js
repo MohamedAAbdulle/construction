@@ -7,9 +7,6 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Menu,
-  MenuItem,
-  IconButton,
 } from "@material-ui/core";
 import "./table-cont.sass";
 

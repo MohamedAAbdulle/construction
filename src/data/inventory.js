@@ -6,7 +6,7 @@ const inventory = [
     quantity: 136,
     status: 0,
     threshold: 100,
-    dateModified: "2022-03-02T15:20",
+    modifiedDate: "2022-03-02T15:20",
   },
   {
     id: 2,
@@ -15,7 +15,7 @@ const inventory = [
     quantity: 101,
     status: 0,
     threshold: 100,
-    dateModified: "2022-04-02T15:20",
+    modifiedDate: "2022-04-02T15:20",
   },
   {
     id: 3,
@@ -24,7 +24,7 @@ const inventory = [
     quantity: 0,
     status: 0,
     threshold: 100,
-    dateModified: "2022-01-02T15:20",
+    modifiedDate: "2022-01-02T15:20",
   },
   {
     id: 4,
@@ -33,17 +33,17 @@ const inventory = [
     quantity: 56,
     status: 0,
     threshold: 100,
-    dateModified: "2022-09-02T15:20",
+    modifiedDate: "2022-09-02T15:20",
   },
   {
     id: 5,
     name: "Timber",
-    description: "Y8" ,
+    description: "Y8",
     unit: "Pieces",
     quantity: 100,
     status: 0,
     threshold: 100,
-    dateModified: "2022-01-02T15:20",
+    modifiedDate: "2022-01-02T15:20",
   },
 ];
 export default inventory;

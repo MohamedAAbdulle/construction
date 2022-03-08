@@ -1,16 +1,13 @@
-import { appContext } from "AppContext";
 import React from "react";
+import { getEndpoint } from "services/apiFunctions";
 
 const inventoryContext = React.createContext();
 
 const InventoryContext = (props) => {
   const [invList, setInvList] = React.useState([]);
 
-  const { getEndpoint } = React.useContext(appContext);
-
   const getInvList = () => {
     getEndpoint("/inventory").then((res) => {
-      //console.log(res);
       setInvList(res);
     });
   };

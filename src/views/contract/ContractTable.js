@@ -61,7 +61,7 @@ const ContractTable = () => {
                     <TableCell align="center">{row.contractor}</TableCell>
                     <TableCell align="center">{row.totalPrice}</TableCell>
                     <TableCell align="center">
-                      {dateReadable(row.dateModified)}
+                      {dateReadable(row.modifiedDate)}
                     </TableCell>
                     <TableCell align="center">
                       {row.status || "Inprogress"}

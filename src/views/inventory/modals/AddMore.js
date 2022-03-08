@@ -1,21 +1,21 @@
 import React from "react";
 import ModalCont from "components/modalCont/ModalCont";
-import { Grid, Button } from "@material-ui/core";
-import { docType, accountType } from "utils/enums";
+import { Grid } from "@material-ui/core";
+import { accountType } from "utils/enums";
 import { appContext } from "AppContext";
 import InputComp from "components/input/InputComp";
 import { inventoryContext } from "../InventoryContext";
 import Documents from "components/documents/Documents";
+import BtnComp from "components/btn-comp/BtnComp";
+import { putEndpoint } from "services/apiFunctions";
+import onChangeSimple from "utils/onChangeSimple";
+import dayjs from "dayjs";
 
 const Addmore = ({ open, onClose, inv }) => {
-  const { postEndpoint } = React.useContext(appContext);
   const { getInvList } = React.useContext(inventoryContext);
 
   const [state, setState] = React.useState({
-    invId: inv.id,
-    invName: inv.name,
-    unit: inv.unit,
-    type: "Added",
+    modifiedDate: dayjs().format("YYYY-MM-DDTHH:MM"),
   });
 
   const [errors, setErrors] = React.useState([]);
@@ -25,17 +25,16 @@ const Addmore = ({ open, onClose, inv }) => {
   };
 
   const onAddMore = () => {
-    postEndpoint(`/inventory/addmore/${inv.id}`, { ...state, invId: inv.id }, 3)
+    putEndpoint(`/inventory/addmore/${inv.id}`, state)
       .then(() => {
         onClose();
         getInvList();
       })
-      .catch((a) => setErrors(a));
+      .catch((a) => console.log(setErrors(a)));
   };
 
   const onChange = (e) => {
-    const { name, value } = e.target;
-    setState((prev) => ({ ...prev, [name]: value }));
+    onChangeSimple(e, state, setState);
   };
 
   const a = [
@@ -47,14 +46,18 @@ const Addmore = ({ open, onClose, inv }) => {
     <ModalCont
       open={open}
       onClose={onClose}
-      onAction={onAddMore}
       title={
         <div>
           <h3 style={{ margin: 0 }}>{inv.name}</h3>
         </div>
       }
     >
-      <Grid container justifyContent="space-between" alignItems="center" spacing={2}>
+      <Grid
+        container
+        justifyContent="space-between"
+        alignItems="center"
+        spacing={2}
+      >
         <Grid item xs={6}>
           <InputComp
             type="number"
@@ -69,7 +72,7 @@ const Addmore = ({ open, onClose, inv }) => {
           <InputComp
             type="datetime-local"
             label="Date Created"
-            name="dateDone"
+            name="modifiedDate"
             onChange={onChange}
           />
         </Grid>
@@ -103,6 +106,9 @@ const Addmore = ({ open, onClose, inv }) => {
         </Grid>
       </Grid>
       <Documents documents={a} />
+      <div className="modal-btns">
+        <BtnComp label="Save" onClick={onAddMore} />
+      </div>
     </ModalCont>
   );
 };
