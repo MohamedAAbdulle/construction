@@ -1,11 +1,12 @@
 import { ChevronRightRounded, ChevronLeftRounded } from "@material-ui/icons";
-import BtnComp from "components/btn-comp/BtnComp";
 import InputComp from "components/input/InputComp";
-import dayjs from "dayjs";
 import React from "react";
+import { workerContext } from "views/workers/WorkerContext";
 import "./activity-date-range.sass";
 
-const ActivityDateRange = ({ activeWeek, setActiveWeek }) => {
+const ActivityDateRange = () => {
+  const { activeWeek, setActiveWeek } = React.useContext(workerContext);
+
   const changeActiveWeek = (type) => {
     if (type === "next") {
       setActiveWeek(activeWeek.date(activeWeek.date() + 7));

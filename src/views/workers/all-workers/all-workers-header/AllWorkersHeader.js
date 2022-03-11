@@ -1,13 +1,11 @@
 import { Grid } from "@material-ui/core";
 import BtnComp from "components/btn-comp/BtnComp";
-import StickySlider from "components/sliderModal/StickySlider";
-import dayjs from "dayjs";
+import InputComp from "components/input/InputComp";
 import React from "react";
 import WorkersTab from "views/workers/workers-tab/WorkersTab";
-import ActivityDateRange from "./activity-date-range/ActivityDateRange";
-import NewActiveWorkerSlider from "./create-active-worker/NewActiveWorkerSlider";
+import Createworker from "./CreateWorker";
 
-const ActiveWorkersHeader = () => {
+const AllWorkersHeader = () => {
   const [openNewActive, setOpenNewActive] = React.useState(false);
 
   return (
@@ -22,23 +20,21 @@ const ActiveWorkersHeader = () => {
           <WorkersTab />
         </Grid>
         <Grid item>
-          <ActivityDateRange />
+          <InputComp type="search" />
         </Grid>
 
         <Grid item>
           <BtnComp
-            label="New Active Worker"
+            label="Create Worker"
             onClick={() => {
               setOpenNewActive(true);
             }}
           />
         </Grid>
       </Grid>
-      <StickySlider clickState={openNewActive} setClickState={setOpenNewActive}>
-        <NewActiveWorkerSlider setOpenNewActive={setOpenNewActive} />
-      </StickySlider>
+      {openNewActive && <Createworker open={true} setOpen={setOpenNewActive} />}
     </div>
   );
 };
 
-export default ActiveWorkersHeader;
+export default AllWorkersHeader;

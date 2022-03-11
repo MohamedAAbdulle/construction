@@ -1,15 +1,16 @@
 import React from "react";
 import ActiveWorkersTable from "./ActiveWorkersTable";
 import ActiveWorkersHeader from "./active-worker-head/ActiveWorkersHeader";
-import { ActiveWorkersContext } from "./ActiveWorkerContext";
+import { workerContext } from "../WorkerContext";
 
 const ActiveWorkers = () => {
+  const { getActiveWorkers, activeWeek } = React.useContext(workerContext);
+
+  React.useEffect(() => getActiveWorkers(), [activeWeek]);
   return (
     <div>
-      <ActiveWorkersContext>
-        <ActiveWorkersHeader />
-        <ActiveWorkersTable />
-      </ActiveWorkersContext>
+      <ActiveWorkersHeader />
+      <ActiveWorkersTable />
     </div>
   );
 };

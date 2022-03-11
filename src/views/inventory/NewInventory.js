@@ -22,9 +22,7 @@ const NewInventory = ({ open, setOpen }) => {
 
   const addInventory = () => {
     postEndpoint(`/inventory`, newInv).then((res) => {
-      console.log(res);
       if (res.status === 200) {
-        console.log("OK");
         setOpen(false);
         getInvList();
       } else {

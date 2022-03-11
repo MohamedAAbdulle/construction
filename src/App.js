@@ -8,8 +8,8 @@ import Topbar from "views/topbar/Topbar";
 import "react-toastify/dist/ReactToastify.css";
 import "./utilities.sass";
 import "./app.sass";
-import ActiveWorkers from "views/workers/active-workers/ActiveWorkers";
 import Dashboard from "views/dashboard/Dashboard";
+import Workers from "views/workers/Workers";
 
 export default function App() {
   return (
@@ -28,7 +28,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Inventory />} />
           <Route path="/inventory" element={<Inventory />} />
-          <Route path="/workers" element={<ActiveWorkers />} />
+          <Route path="/workers" element={<Workers />} />
           <Route path="/accounting" element={<Accounting />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/sub-contracts" element={<Contracts />} />
