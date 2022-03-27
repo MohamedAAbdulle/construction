@@ -1,8 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-let baseUrl = "https://localhost:5001";
-//let baseUrl = "https://2s3dfyvsm0.execute-api.us-east-1.amazonaws.com";
+//let baseUrl = "https://localhost:5001";
+let baseUrl = "https://2s3dfyvsm0.execute-api.us-east-1.amazonaws.com";
 
 const errorHandler = (res) => {
   let errorMessage = "Unknown Error Occured";

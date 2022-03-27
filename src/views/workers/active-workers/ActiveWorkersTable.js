@@ -84,10 +84,10 @@ const ActiveWorkersTable = () => {
       weeklyChartList[7],
       <Ellipsis
         menus={[
-          {
+          /* {
             onClick: () => {},
             label: "Pay Worker",
-          },
+          }, */
           {
             onClick: () => setOpenInactivate(activeWorker),
             label: "Inactivate",
