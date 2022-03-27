@@ -1,19 +1,17 @@
 const accounting = [
   {
     id: 1,
-    invId: 1,
-    invName: "Cement",
+    inventoryId: 1,
     unit: "Bags",
     quantity: 45,
     supplierId: 1,
-    supplierName: "Sway Builders",
     status: "Delivered",
     price: 24500,
     dateDone: "2022-03-05T15:29",
   },
   {
     id: 2,
-    invId: 2,
+    inventoryId: 2,
     invName: "Hollow Pots",
     unit: "Pieces",
     quantity: 101,
@@ -25,7 +23,7 @@ const accounting = [
   },
   {
     id: 1,
-    invId: 1,
+    inventoryId: 1,
     invName: "Cement",
     unit: "Bags",
     quantity: 136,
@@ -37,7 +35,7 @@ const accounting = [
   },
   {
     id: 2,
-    invId: 2,
+    inventoryId: 2,
     invName: "Hollow Pots",
     unit: "Pieces",
     quantity: 101,

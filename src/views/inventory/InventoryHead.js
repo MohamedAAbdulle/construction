@@ -1,4 +1,4 @@
-import { Button, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 import BtnComp from "components/btn-comp/BtnComp";
 import InputComp from "components/input/InputComp";
@@ -9,7 +9,12 @@ const InventoryHead = () => {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <Grid container justifyContent="space-between" alignItems="center" style={{margin: "20px 0 15px"}}>
+    <Grid
+      container
+      justifyContent="space-between"
+      alignItems="center"
+      style={{ margin: "20px 0 15px" }}
+    >
       <Grid item>
         <InputComp postfix={<Search />} placeholder="Search Inventory" />
       </Grid>

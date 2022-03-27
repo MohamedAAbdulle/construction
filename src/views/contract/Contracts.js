@@ -1,16 +1,17 @@
 import React from "react";
-import ContractHead from "./ContractHeader";
-import ContractTable from "./ContractTable";
 import "./contract.css";
-import { ContractContext } from "./ContractContext";
+/* import ContractHead from "./ContractHeader";
+import ContractTable from "./ContractTable";
+import { ContractContext } from "./ContractContext"; */
 
 const Contracts = () => {
   return (
     <div>
-      <ContractContext>
+      <h2 className="coming-soon">Accounting Coming Soon.....</h2>
+      {/* <ContractContext>
         <ContractHead />
         <ContractTable />
-      </ContractContext>
+      </ContractContext> */}
     </div>
   );
 };

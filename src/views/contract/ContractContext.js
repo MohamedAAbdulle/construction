@@ -1,4 +1,4 @@
-import { appContext } from "AppContext";
+import contracts from "data/contracts";
 import React from "react";
 
 const contractContext = React.createContext();
@@ -6,13 +6,8 @@ const contractContext = React.createContext();
 const ContractContext = (props) => {
   const [contractList, setContractList] = React.useState([]);
 
-  const { getEndpoint } = React.useContext(appContext);
-
   const getContracts = () => {
-    getEndpoint("/contracts").then((res) => {
-      console.log({ "res:": res });
-      setContractList(res);
-    });
+    setContractList(contracts);
   };
 
   React.useEffect(getContracts, []);

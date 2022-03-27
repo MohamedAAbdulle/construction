@@ -20,7 +20,7 @@ const AllWorkersHeader = () => {
           <WorkersTab />
         </Grid>
         <Grid item>
-          <InputComp type="search" />
+          <InputComp type="search" placeholder="Search Worker" />
         </Grid>
 
         <Grid item>

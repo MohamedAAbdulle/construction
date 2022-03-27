@@ -1,16 +1,21 @@
 import React from "react";
 import TableCont from "components/table-comp/TableCont";
 import Ellipsis from "components/ellipsis/Ellipsis";
-import { Cancel, CheckCircle } from "@material-ui/icons";
 import { workerContext } from "../WorkerContext";
 import DeleteModal from "components/delete-modal/DeleteModal";
-import { deleteEndpoint } from "services/apiFunctions";
+import { deleteEndpoint, putEndpoint } from "services/apiFunctions";
+import { Switch } from "@material-ui/core";
+import findEnumName from "utils/findEnumValue";
+import { appContext } from "AppContext";
 
 const ActiveWorkersTable = () => {
+  const { appEnums } = React.useContext(appContext);
+
   const { activeWorkers, allWorkers, getActiveWorkers } =
     React.useContext(workerContext);
 
   const [openInactivate, setOpenInactivate] = React.useState(false);
+  const [openUpdateChart, setOpenUpdateChart] = React.useState(false);
 
   const inactivateWorker = (id) => {
     deleteEndpoint(`/workers/activeWorkers/${id}`).then(() => {
@@ -19,24 +24,51 @@ const ActiveWorkersTable = () => {
     });
   };
 
+  const updateChart = ({ worker, index }) => {
+    let a = worker.chart[index];
+    let b = a;
+    if (worker.chart[index]) {
+      b = worker.chart[index] === "0" ? "1" : "0";
+    }
+    let r = worker.chart.split("");
+    r.splice(index, 1, b);
+
+    putEndpoint(
+      `/workers/activeWorkers/chart/${worker.id}?chart=${r.join("")}`,
+      {}
+    ).then((res) => {
+      if (res && res.status === 200) {
+        setOpenUpdateChart(false);
+        getActiveWorkers();
+      }
+    });
+  };
+
   const data = activeWorkers.map((activeWorker) => {
     const weeklyChartList = [];
     let total = 0;
 
-    //format the weeklychart and total pay.
-    for (let i = 0; i < 8; i++) {
-      let s;
-      if (parseInt(activeWorker.chart[i])) {
-        s = <CheckCircle className="Present" />;
-        if (i < 7) total += activeWorker.rate;
-      } else s = <Cancel className="Absent" />;
-      weeklyChartList.push(s);
-    }
-
     //get active worker Info from all workers list.
-    const foundWorker = allWorkers.find((w) => w.id === 3) || {};
+    const foundWorker =
+      allWorkers.find((w) => w.id === activeWorker.workerId) || {};
     const { name, idNumber, workerType, rate } = foundWorker;
     activeWorker = { ...activeWorker, name, idNumber, workerType, rate };
+
+    //format the weeklychart and total pay.
+    for (let i = 0; i < 8; i++) {
+      let d = activeWorker.chart[i];
+      let s;
+      s = (
+        <Switch
+          checked={Boolean(parseInt(d))}
+          onChange={() =>
+            setOpenUpdateChart({ worker: activeWorker, index: i })
+          }
+        />
+      );
+      weeklyChartList.push(s);
+      if (i < 7 && parseInt(d)) total += activeWorker.rate;
+    }
 
     return [
       <div>
@@ -44,7 +76,7 @@ const ActiveWorkersTable = () => {
         <div className="sec-cell">{activeWorker.idNumber}</div>
       </div>,
       <div>
-        <div>{activeWorker.workerType}</div>
+        <div>{findEnumName(activeWorker.workerType, appEnums.WorkerType)}</div>
         <div className="sec-cell">{activeWorker.rate}</div>
       </div>,
       ...weeklyChartList.slice(0, -1),
@@ -52,7 +84,10 @@ const ActiveWorkersTable = () => {
       weeklyChartList[7],
       <Ellipsis
         menus={[
-          { onClick: () => {}, label: "Pay Worker" },
+          {
+            onClick: () => {},
+            label: "Pay Worker",
+          },
           {
             onClick: () => setOpenInactivate(activeWorker),
             label: "Inactivate",
@@ -88,6 +123,15 @@ const ActiveWorkersTable = () => {
           message={`${openInactivate.name} will be Inactivated!`}
           title="Inactivate Worker"
           btnTitle="Inactivate"
+        />
+      )}
+      {openUpdateChart && (
+        <DeleteModal
+          onClose={() => setOpenUpdateChart(false)}
+          deleteAction={() => updateChart(openUpdateChart)}
+          message={`${openUpdateChart.worker.name}'s chart will be update!`}
+          title="Update Chart"
+          btnTitle="Update Chart"
         />
       )}
     </>

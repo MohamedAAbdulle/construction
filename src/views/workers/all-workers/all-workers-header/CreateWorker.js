@@ -6,9 +6,11 @@ import onChangeSimple from "utils/onChangeSimple";
 import ModalCont from "components/modalCont/ModalCont";
 import { postEndpoint, putEndpoint } from "services/apiFunctions";
 import { workerContext } from "views/workers/WorkerContext";
+import { appContext } from "AppContext";
 
 const Createworker = ({ open, setOpen, state }) => {
   const { getAllWorkers } = React.useContext(workerContext);
+  const { appEnums } = React.useContext(appContext);
 
   const [errors, setErrors] = React.useState({});
   const [worker, setWorker] = React.useState(state || {});
@@ -28,19 +30,20 @@ const Createworker = ({ open, setOpen, state }) => {
   const saveWorker = () => {
     state
       ? putEndpoint(`/workers/${worker.id}`, worker).then((res) => {
-          if (res.status === 200) {
+          if (res && res.status === 200) {
             setOpen(false);
             getAllWorkers();
-          } else {
-            setErrors(res);
+          } else if (res && res.errors) {
+            setErrors(res.errors);
           }
         })
       : postEndpoint(`/workers`, worker).then((res) => {
-          if (res.status === 200) {
+          console.log(res);
+          if (res && res.status === 200) {
             setOpen(false);
             getAllWorkers();
-          } else {
-            setErrors(res);
+          } else if (res && res.errors) {
+            setErrors(res.errors);
           }
         });
   };
@@ -81,7 +84,8 @@ const Createworker = ({ open, setOpen, state }) => {
             value={worker.workerType || ""}
             error={findError("WorkerType")}
             name="workerType"
-            type="number"
+            type="select"
+            options={appEnums.WorkerType}
             required
             label="WorkerType"
           />

@@ -12,36 +12,61 @@ import { AccountCircle } from "@material-ui/icons";
 import { NavLink } from "react-router-dom";
 import "./topbar.sass";
 import logo from "assests/logo.svg";
+import StickySlider from "components/sliderModal/StickySlider";
+import Settings from "./Settings";
 
 const Topbar = () => {
-  const [active, setActive] = React.useState("inv");
+  const [active, setActive] = React.useState(window.location.pathname);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [open, setOpen] = React.useState(false);
 
   return (
     <AppBar position="static">
       <Toolbar className="top-bar">
         <Grid container justifyContent="space-between" alignItems="center">
           <Grid item>
-            <img src={logo} className="logo" />
+            <img src={logo} alt="logo" className="logo" />
           </Grid>
           <Grid item>
             <NavLink to="/inventory" className="route-nav">
               <Button
                 color="inherit"
-                id={active === "inv" ? "active-nav" : ""}
-                onClick={() => setActive("inv")}
+                id={
+                  active === "/inventory" || active === "/" ? "active-nav" : ""
+                }
+                onClick={() => setActive("/inventory")}
               >
                 Inventory
+              </Button>
+            </NavLink>
+
+            <NavLink to="/orders" className="route-nav">
+              <Button
+                color="inherit"
+                id={active === "/orders" ? "active-nav" : ""}
+                onClick={() => setActive("/orders")}
+              >
+                Orders
               </Button>
             </NavLink>
 
             <NavLink to="/workers" className="route-nav">
               <Button
                 color="inherit"
-                id={active === "work" ? "active-nav" : ""}
-                onClick={() => setActive("work")}
+                id={active === "/workers" ? "active-nav" : ""}
+                onClick={() => setActive("/workers")}
               >
                 Workers
+              </Button>
+            </NavLink>
+
+            <NavLink to="/suppliers" className="route-nav">
+              <Button
+                color="inherit"
+                id={active === "/suppliers" ? "active-nav" : ""}
+                onClick={() => setActive("/suppliers")}
+              >
+                Suppliers
               </Button>
             </NavLink>
 
@@ -55,21 +80,11 @@ const Topbar = () => {
               </Button>
             </NavLink>
 
-            <NavLink to="/accounting" className="route-nav">
-              <Button
-                color="inherit"
-                id={active === "acc" ? "active-nav" : ""}
-                onClick={() => setActive("acc")}
-              >
-                Accounting
-              </Button>
-            </NavLink>
-
             <NavLink to="/dashboard" className="route-nav">
               <Button
                 color="inherit"
-                id={active === "dash" ? "active-nav" : ""}
-                onClick={() => setActive("dash")}
+                id={active === "/dashboard" ? "active-nav" : ""}
+                onClick={() => setActive("/dashboard")}
               >
                 Dashboard
               </Button>
@@ -95,11 +110,21 @@ const Topbar = () => {
             >
               <MenuItem>My profile</MenuItem>
               <MenuItem>Sign Out</MenuItem>
-              <MenuItem>Setting</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setOpen(true);
+                  setAnchorEl(null);
+                }}
+              >
+                Setting
+              </MenuItem>
             </Menu>
           </Grid>
         </Grid>
       </Toolbar>
+      <StickySlider clickState={open} setClickState={setOpen}>
+        <Settings closeSlider={() => setOpen(false)} order={{}} />
+      </StickySlider>
     </AppBar>
   );
 };

@@ -1,21 +1,18 @@
 import React from "react";
 import ModalCont from "components/modalCont/ModalCont";
 import { Grid } from "@material-ui/core";
-import { accountType } from "utils/enums";
-import { appContext } from "AppContext";
 import InputComp from "components/input/InputComp";
-import { inventoryContext } from "../InventoryContext";
-import Documents from "components/documents/Documents";
 import BtnComp from "components/btn-comp/BtnComp";
 import { putEndpoint } from "services/apiFunctions";
 import onChangeSimple from "utils/onChangeSimple";
 import dayjs from "dayjs";
+import { appContext } from "AppContext";
 
 const Addmore = ({ open, onClose, inv }) => {
-  const { getInvList } = React.useContext(inventoryContext);
+  const { getInvList } = React.useContext(appContext);
 
   const [state, setState] = React.useState({
-    modifiedDate: dayjs().format("YYYY-MM-DDTHH:MM"),
+    modifiedDate: dayjs().format("YYYY-MM-DDTHH:mm"),
   });
 
   const [errors, setErrors] = React.useState([]);
@@ -76,7 +73,7 @@ const Addmore = ({ open, onClose, inv }) => {
             onChange={onChange}
           />
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <InputComp
             name="supplierName"
             error={findError("supplierName")}
@@ -103,9 +100,9 @@ const Addmore = ({ open, onClose, inv }) => {
             onChange={onChange}
             options={accountType}
           />
-        </Grid>
+        </Grid> */}
       </Grid>
-      <Documents documents={a} />
+      {/* <Documents documents={a} /> */}
       <div className="modal-btns">
         <BtnComp label="Save" onClick={onAddMore} />
       </div>

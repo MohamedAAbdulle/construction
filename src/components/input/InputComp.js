@@ -1,5 +1,6 @@
 import React from "react";
 import { TextField, InputAdornment, MenuItem } from "@material-ui/core";
+import { Search } from "@material-ui/icons";
 
 const InputComp = ({
   type,
@@ -32,12 +33,24 @@ const InputComp = ({
       {type === "select" ? (
         <TextField {...a} select>
           <MenuItem></MenuItem>
-          {options.map((type, index) => (
-            <MenuItem key={index} value={type.keyValue || type}>
-              {type.keyName || type}
-            </MenuItem>
-          ))}
+          {options &&
+            options.map((type, index) => (
+              <MenuItem key={index} value={type.keyValue || type}>
+                {type.keyName || type}
+              </MenuItem>
+            ))}
         </TextField>
+      ) : type === "search" ? (
+        <TextField
+          {...a}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <Search />
+              </InputAdornment>
+            ),
+          }}
+        />
       ) : (
         <TextField
           {...a}

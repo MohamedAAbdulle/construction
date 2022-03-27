@@ -1,24 +1,16 @@
 import React from "react";
 import ModalCont from "components/modalCont/ModalCont";
-import { Grid } from "@material-ui/core";
-import { appContext } from "AppContext";
 import { getEndpoint } from "services/apiFunctions";
 import dayjs from "dayjs";
 import "./InvHistory.sass";
 
 const InvHistory = ({ open, onClose, inv }) => {
-  const r = React.useContext(appContext);
   const [state, setState] = React.useState([]);
 
-  const getInvHistoryy = () => {
-    console.log("test");
-    r.getEndpoint(`/invhistory/${inv.id}`, 2).then((res) => setState(res));
-    getEndpoint(`/inventory/invhistory/${inv.id}`).then((res) =>
-      console.log(res)
-    );
-  };
   const getInvHistory = () => {
-    getEndpoint(`/inventory/invhistory/${inv.id}`).then((res) => setState(res));
+    getEndpoint(`/inventory/invhistory/${inv.id}`).then((res) =>
+      setState(res.reverse())
+    );
   };
 
   React.useEffect(getInvHistory, []);
@@ -38,7 +30,7 @@ const InvHistory = ({ open, onClose, inv }) => {
           {state.map((item, index) => (
             <div className="inv-history" key={index}>
               <div className={item.type}>{item.type}</div>
-              <div>{dayjs(item.dateDone).format("DD-MMM-YY, HH:MM")}</div>
+              <div>{dayjs(item.dateDone).format("DD-MMM-YY, HH:mm")}</div>
               <div>
                 <span className="quantity">{item.quantity}</span>
                 <span>{inv.unit}</span>

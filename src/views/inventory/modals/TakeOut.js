@@ -3,18 +3,18 @@ import ModalCont from "components/modalCont/ModalCont";
 import { Grid } from "@material-ui/core";
 import dayjs from "dayjs";
 import InputComp from "components/input/InputComp";
-import { inventoryContext } from "../InventoryContext";
 import BtnComp from "components/btn-comp/BtnComp";
 import { putEndpoint } from "services/apiFunctions";
 import onChangeSimple from "utils/onChangeSimple";
+import { appContext } from "AppContext";
 
 const TakeOut = ({ open, onClose, inv }) => {
-  const { getInvList } = React.useContext(inventoryContext);
+  const { getInvList } = React.useContext(appContext);
 
   const [errors, setErrors] = React.useState([]);
 
   const [state, setState] = React.useState({
-    modifiedDate: dayjs().format("YYYY-MM-DDTHH:MM"),
+    modifiedDate: dayjs().format("YYYY-MM-DDTHH:mm"),
   });
 
   const findError = (type) => {
@@ -23,9 +23,13 @@ const TakeOut = ({ open, onClose, inv }) => {
 
   const onTakeOut = () => {
     putEndpoint(`/inventory/takeout/${inv.id}`, state).then((res) => {
-      console.log(res);
-      onClose();
-      getInvList();
+      if (res && res.status === 200) {
+        console.log(res);
+        onClose();
+        getInvList();
+      } else if (res && res.errors) {
+        setErrors(res.errors);
+      }
     });
     //.catch((errors) => setErrors(errors));
   };

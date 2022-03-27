@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import React from "react";
 import { workerContext } from "../WorkerContext";
 import "./WorkersTab.sass";

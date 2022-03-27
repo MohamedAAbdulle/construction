@@ -4,11 +4,11 @@ import BtnComp from "components/btn-comp/BtnComp";
 import InputComp from "components/input/InputComp";
 import { Grid } from "@material-ui/core";
 import { putEndpoint } from "services/apiFunctions";
-import { inventoryContext } from "../InventoryContext";
 import onChangeSimple from "utils/onChangeSimple";
+import { appContext } from "AppContext";
 
 const EditInv = ({ open, onClose, inv }) => {
-  const { getInvList } = React.useContext(inventoryContext);
+  const { getInvList } = React.useContext(appContext);
 
   const [state, setState] = React.useState(inv);
 

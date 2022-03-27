@@ -2,6 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 let baseUrl = "https://localhost:5001";
+//let baseUrl = "https://2s3dfyvsm0.execute-api.us-east-1.amazonaws.com";
 
 const errorHandler = (res) => {
   let errorMessage = "Unknown Error Occured";
@@ -13,7 +14,8 @@ const errorHandler = (res) => {
       if (errors) {
         console.log(res.response);
         toast.error(errorMessage);
-        return errors;
+
+        return { errors };
       }
     }
   }

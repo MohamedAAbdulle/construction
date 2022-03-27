@@ -1,7 +1,5 @@
 import { Grid } from "@material-ui/core";
-import BtnComp from "components/btn-comp/BtnComp";
 import StickySlider from "components/sliderModal/StickySlider";
-import dayjs from "dayjs";
 import React from "react";
 import WorkersTab from "views/workers/workers-tab/WorkersTab";
 import ActivityDateRange from "./activity-date-range/ActivityDateRange";
@@ -25,14 +23,14 @@ const ActiveWorkersHeader = () => {
           <ActivityDateRange />
         </Grid>
 
-        <Grid item>
+        {/* <Grid item>
           <BtnComp
             label="New Active Worker"
             onClick={() => {
               setOpenNewActive(true);
             }}
           />
-        </Grid>
+        </Grid> */}
       </Grid>
       <StickySlider clickState={openNewActive} setClickState={setOpenNewActive}>
         <NewActiveWorkerSlider setOpenNewActive={setOpenNewActive} />

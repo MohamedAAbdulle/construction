@@ -1,18 +1,18 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import { inventoryContext } from "./InventoryContext";
 import dayjs from "dayjs";
 import { postEndpoint } from "services/apiFunctions";
 import onChangeSimple from "utils/onChangeSimple";
 import ModalCont from "components/modalCont/ModalCont";
 import InputComp from "components/input/InputComp";
 import BtnComp from "components/btn-comp/BtnComp";
+import { appContext } from "AppContext";
 
 const NewInventory = ({ open, setOpen }) => {
-  const { getInvList } = React.useContext(inventoryContext);
+  const { getInvList } = React.useContext(appContext);
 
   const [newInv, setNewInv] = React.useState({
-    modifiedDate: dayjs().format("YYYY-MM-DDTHH:MM"),
+    modifiedDate: dayjs().format("YYYY-MM-DDTHH:mm"),
   });
   const [errors, setErrors] = React.useState({});
 
@@ -22,11 +22,11 @@ const NewInventory = ({ open, setOpen }) => {
 
   const addInventory = () => {
     postEndpoint(`/inventory`, newInv).then((res) => {
-      if (res.status === 200) {
+      if (res && res.status === 200) {
         setOpen(false);
         getInvList();
-      } else {
-        setErrors(res);
+      } else if (res && res.errors) {
+        setErrors(res.errors);
       }
     });
   };

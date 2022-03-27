@@ -1,11 +1,11 @@
 import React from "react";
 import ModalCont from "components/modalCont/ModalCont";
 import { deleteEndpoint } from "services/apiFunctions";
-import { inventoryContext } from "../InventoryContext";
 import BtnComp from "components/btn-comp/BtnComp";
+import { appContext } from "AppContext";
 
 const DeleteInv = ({ open, id, onClose }) => {
-  const { getInvList } = React.useContext(inventoryContext);
+  const { getInvList } = React.useContext(appContext);
 
   const deleteInv = () => {
     deleteEndpoint(`/inventory/${id}`).then(() => {

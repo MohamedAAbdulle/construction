@@ -4,12 +4,16 @@ import Ellipsis from "components/ellipsis/Ellipsis";
 import { workerContext } from "../../WorkerContext";
 import Createworker from "../all-workers-header/CreateWorker";
 import DeleteModal from "components/delete-modal/DeleteModal";
-import { deleteEndpoint } from "services/apiFunctions";
+import { deleteEndpoint, postEndpoint } from "services/apiFunctions";
+import dayjs from "dayjs";
+import { appContext } from "AppContext";
+import findEnumName from "utils/findEnumValue";
 
 const AllWorkersTable = () => {
-  const { getAllWorkers } = React.useContext(workerContext);
+  const { appEnums } = React.useContext(appContext);
+  const { getAllWorkers, activeWeek, allWorkers } =
+    React.useContext(workerContext);
 
-  const { allWorkers } = React.useContext(workerContext);
   const [openEditActive, setOpenEditWorker] = React.useState(false);
   const [openDeleteWorker, setOpenDeleteWorker] = React.useState(false);
 
@@ -19,18 +23,28 @@ const AllWorkersTable = () => {
       setOpenDeleteWorker(false);
     });
   };
+  const activateWorker = (id) => {
+    let dayNumber = dayjs().day() - 1;
+    let a = "00000000".split("");
+    a.splice(dayNumber, 1, "1");
+    postEndpoint(`/workers/activeworkers`, {
+      workerId: id,
+      chart: a.join(""),
+      date: activeWeek.format("YYYY-MM-DD"),
+    });
+  };
 
   const data = allWorkers.map((r) => {
     return [
       <div>{r.name}</div>,
       <div>{r.idNumber}</div>,
-      <div>{r.workerType}</div>,
+      <div>{findEnumName(r.workerType, appEnums.WorkerType)}</div>,
       <div>{r.rate}</div>,
 
       <Ellipsis
         menus={[
           {
-            onClick: () => {},
+            onClick: () => activateWorker(r.id),
             label: "Activate",
           },
           {

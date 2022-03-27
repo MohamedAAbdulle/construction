@@ -6,7 +6,7 @@ import React from "react";
 import { docType } from "utils/enums";
 
 const Documents = ({ documents }) => {
-  const [newDoc, setNewDoc] = React.useState({});
+  //const [newDoc, setNewDoc] = React.useState({});
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   return (

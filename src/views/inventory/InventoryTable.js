@@ -1,7 +1,6 @@
 import React from "react";
 import { inventoryStatus } from "utils/enums";
 import "./Inventory.css";
-import { inventoryContext } from "./InventoryContext";
 import AddMore from "./modals/AddMore";
 import TakeOut from "./modals/TakeOut";
 import InvHistory from "./modals/InvHistory";
@@ -10,11 +9,10 @@ import Ellipsis from "components/ellipsis/Ellipsis";
 import dayjs from "dayjs";
 import DeleteInv from "./modals/DeleteInv";
 import EditInv from "./modals/EditInv";
+import { appContext } from "AppContext";
 
 export default function Inventory() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const { invList } = React.useContext(inventoryContext);
+  const { invList } = React.useContext(appContext);
 
   const getInventoryStatus = (inv) => {
     let a = "";
@@ -31,7 +29,6 @@ export default function Inventory() {
   const [selectedInv, setSelectedInv] = React.useState({});
 
   const tableAction = (type, inv) => {
-    setAnchorEl(null);
     setSelectedInv(inv);
     setModal(type);
   };

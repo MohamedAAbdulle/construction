@@ -5,17 +5,13 @@ import SubContract from "./SubContract";
 import AddSubContract from "./modals/AddSubContract";
 import { Add, Close } from "@material-ui/icons";
 import BtnComp from "components/btn-comp/BtnComp";
-import { appContext } from "AppContext";
-import { contractContext } from "./ContractContext";
 
 const NewContract = ({ closeSlider }) => {
-  const { postEndpoint } = React.useContext(appContext);
-  const { getContracts } = React.useContext(contractContext);
-
   const [state, setState] = React.useState({
     totalPrice: 0,
     subContracts: [],
   });
+
   const [open, setOpen] = React.useState(false);
 
   const onChange = (e) => {
@@ -27,10 +23,10 @@ const NewContract = ({ closeSlider }) => {
     const newSub = { name, pricePoints: [] };
     setState({ ...state, subContracts: [...state.subContracts, newSub] });
   };
+
   const onPricePointAdd = (name, newPricepoint) => {
     setState((prev) => {
       const p = prev.subContracts.find((p) => p.name === name);
-      console.log(p);
       if (p) {
         p.pricePoints.push(newPricepoint);
         prev.totalPrice += parseFloat(newPricepoint.priceAmount);
@@ -40,11 +36,11 @@ const NewContract = ({ closeSlider }) => {
   };
 
   const onSave = () => {
-    postEndpoint("/contracts", state).then(() => getContracts());
+    //postEndpoint("/contracts", state).then(() => getContracts());
   };
 
   return (
-    <div className="gg">
+    <div>
       <div className="slider-header">
         <Grid container justifyContent="space-between" align-items="end">
           <Grid item>New Contract</Grid>

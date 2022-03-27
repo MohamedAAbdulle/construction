@@ -1,0 +1,21 @@
+.searcher
+  position: relative
+  .searcher-results-comp
+    position: absolute
+    box-shadow: 0 0 10px gray
+    padding: 10px
+    background: white
+    z-index: 2
+    margin-top: 4px
+    width: 100%
+    border-radius: 4px
+    .searcher-result
+      padding: 10px 6px
+      cursor: pointer
+      &:not(:last-child)
+        border-bottom: 1px solid rgb(200,200,200)
+
+    .no-result
+      margin: 0
+      font-style: italic
+      font-size: 13px

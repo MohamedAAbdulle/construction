@@ -1,7 +1,6 @@
 import React from "react";
-import { Button, Grid, IconButton, Modal } from "@material-ui/core";
+import { Grid, IconButton, Modal } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
-import BtnComp from "components/btn-comp/BtnComp";
 import "./ModalCont.sass";
 
 const NewInventory = ({ open, onClose, title, children }) => {

@@ -1,19 +1,17 @@
-import { appContext } from "AppContext";
 import React from "react";
+import { getEndpoint } from "services/apiFunctions";
 
 const accountingContx = React.createContext();
 
 const AccountingContx = (props) => {
-  const { getEndpoint } = React.useContext(appContext);
-
   const [initialAccount, setInitialAccounts] = React.useState([]);
   const [accounts, setAccounts] = React.useState([]);
 
   const getAccounts = () => {
-    getEndpoint("/accounting").then((acc) => {
-      console.log(acc);
-      setInitialAccounts(acc);
-      setAccounts(acc);
+    getEndpoint("/Orders").then((res) => {
+      console.log(res);
+      setAccounts(res.reverse());
+      setInitialAccounts(res.reverse());
     });
   };
 

@@ -1,5 +1,4 @@
 import React from "react";
-import NewContract from "./NewContract";
 import {
   Table,
   TableBody,
