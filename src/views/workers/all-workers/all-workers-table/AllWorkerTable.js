@@ -24,7 +24,9 @@ const AllWorkersTable = () => {
     });
   };
   const activateWorker = (id) => {
-    let dayNumber = dayjs().day(-1).day();
+    let dayNumber = dayjs()
+      .day(dayjs().day() - 1)
+      .day();
     let a = "00000000".split("");
     a.splice(dayNumber, 1, "1");
     postEndpoint(`/workers/activeworkers`, {
