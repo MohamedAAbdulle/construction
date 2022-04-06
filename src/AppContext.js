@@ -6,6 +6,7 @@ const AppContext = (props) => {
   const [invList, setInvList] = React.useState([]);
   const [suppliers, setSuppliers] = React.useState([]);
   const [appEnums, setAppEnums] = React.useState({ WorkerType: [] });
+  const [WorkerTypes, setWorkerTypes] = React.useState([]);
 
   const ccc = (l) => {
     let enums = {};
@@ -24,8 +25,14 @@ const AppContext = (props) => {
 
   const getEnums = () => {
     getEndpoint("/Settings/Enums").then((res) => {
-      console.log(res);
       ccc(res);
+    });
+  };
+
+  const getWorkerTypes = () => {
+    getEndpoint("/Workers/WorkerTypes").then((res) => {
+      console.log(res);
+      setWorkerTypes(res);
     });
   };
 
@@ -44,6 +51,7 @@ const AppContext = (props) => {
     getInvList();
     getSuppliers();
     getEnums();
+    getWorkerTypes();
   }, []);
   return (
     <appContext.Provider
@@ -53,7 +61,9 @@ const AppContext = (props) => {
         getSuppliers,
         suppliers,
         appEnums,
+        WorkerTypes,
         getEnums,
+        getWorkerTypes,
       }}
     >
       {props.children}

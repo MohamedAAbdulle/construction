@@ -7,10 +7,11 @@ import ModalCont from "components/modalCont/ModalCont";
 import { postEndpoint, putEndpoint } from "services/apiFunctions";
 import { workerContext } from "views/workers/WorkerContext";
 import { appContext } from "AppContext";
+import findEnumName, { findWorkerTypeRate } from "utils/findEnumValue";
 
 const Createworker = ({ open, setOpen, state }) => {
   const { getAllWorkers } = React.useContext(workerContext);
-  const { appEnums } = React.useContext(appContext);
+  const { WorkerTypes } = React.useContext(appContext);
 
   const [errors, setErrors] = React.useState({});
   const [worker, setWorker] = React.useState(state || {});
@@ -80,12 +81,21 @@ const Createworker = ({ open, setOpen, state }) => {
         </Grid>
         <Grid item xs={12} md={6}>
           <InputComp
-            onChange={changed}
+            onChange={(e) => {
+              setWorker((prev) => ({
+                ...prev,
+                workerType: e.target.value,
+                rate: findWorkerTypeRate(e.target.value, WorkerTypes),
+              }));
+            }}
             value={worker.workerType || ""}
             error={findError("WorkerType")}
             name="workerType"
             type="select"
-            options={appEnums.WorkerType}
+            options={WorkerTypes.map((a) => ({
+              keyValue: a.typeValue,
+              keyName: a.typeName,
+            }))}
             required
             label="WorkerType"
           />

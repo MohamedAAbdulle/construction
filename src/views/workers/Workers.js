@@ -11,11 +11,16 @@ const Workers = () => {
   );
 };
 const WorkersContent = () => {
-  const { getAllWorkers } = React.useContext(workerContext);
+  const { allWorkers } = React.useContext(workerContext);
 
-  React.useEffect(getAllWorkers, []);
   const { activeTab } = React.useContext(workerContext);
-  return activeTab === 1 ? <ActiveWorkers /> : <AllWorkers />;
+  return (
+    <>
+      {allWorkers && (
+        <>{activeTab === 1 ? <ActiveWorkers /> : <AllWorkers />}</>
+      )}
+    </>
+  );
 };
 
 export default Workers;

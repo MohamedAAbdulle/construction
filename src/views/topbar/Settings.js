@@ -5,18 +5,21 @@ import { postEndpoint, putEndpoint } from "services/apiFunctions";
 import onChangeSimple from "utils/onChangeSimple";
 import InputComp from "components/input/InputComp";
 import BtnComp from "components/btn-comp/BtnComp";
-import { Add, Close } from "@material-ui/icons";
+import { Add, Close, Save } from "@material-ui/icons";
 import ModalCont from "components/modalCont/ModalCont";
 import { appContext } from "AppContext";
 import "./settings.sass";
 import AddNewEnum from "./AddNewEnum";
+import WorkerTypeItem from "./WorkerTypeItem";
 
 const Settings = ({ closeSlider }) => {
   const [openNewQuote, setOpenNewQuote] = React.useState(false);
   //const [errors, setErrors] = React.useState({});
-  const { appEnums, getEnums } = React.useContext(appContext);
-  console.log(appEnums);
+  const { getWorkerTypes, WorkerTypes } = React.useContext(appContext);
 
+  const updateWorkerType = (worker) => {
+    putEndpoint(`/Workers/WorkerTypes`, worker).then(() => getWorkerTypes());
+  };
   return (
     <div className="settings">
       <div className="slider-header">
@@ -33,28 +36,27 @@ const Settings = ({ closeSlider }) => {
         </Grid>
       </div>
       <div className="slider-body">
-        <div className="card-comp">
+        <div className="card-comp worker-types">
           <div className="card-title">
             Worker Types
             <IconButton onClick={() => setOpenNewQuote(true)}>
               <Add />
             </IconButton>
           </div>
-          {appEnums.WorkerType&&appEnums.WorkerType.map((worker) => (
-            <div className="worker-list">
-              <span>{worker.keyValue}</span>
-              <div>
-                <InputComp onChange={() => {}} value={worker.keyName} />
-              </div>
-            </div>
-          ))}
+          {WorkerTypes &&
+            WorkerTypes.map((worker, index) => (
+              <WorkerTypeItem
+                worker={worker}
+                key={index}
+                updateWorkerType={updateWorkerType}
+              />
+            ))}
         </div>
       </div>
       {openNewQuote && (
         <AddNewEnum
           onClose={() => setOpenNewQuote(false)}
-          workerType={appEnums.WorkerType}
-          getEnums={getEnums}
+          getWorkerTypes={getWorkerTypes}
         />
       )}
     </div>

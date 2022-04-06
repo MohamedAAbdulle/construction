@@ -4,13 +4,32 @@ import ActiveWorkersHeader from "./active-worker-head/ActiveWorkersHeader";
 import { workerContext } from "../WorkerContext";
 
 const ActiveWorkers = () => {
-  const { getActiveWorkers, activeWeek } = React.useContext(workerContext);
+  const { activeWorkers, allWorkers, getActiveWorkers, activeWeek } =
+    React.useContext(workerContext);
 
-  React.useEffect(() => getActiveWorkers(), [activeWeek]);
+  const [totalPay, setTotalPay] = React.useState(0);
+  const updateTotalPay = (total) => {
+    let a = totalPay + total;
+    setTotalPay(100);
+  };
+
+  const vv = () => {
+    getActiveWorkers();
+  };
+
+  React.useEffect(vv, [activeWeek]);
+
   return (
     <div>
-      <ActiveWorkersHeader />
-      <ActiveWorkersTable />
+      <ActiveWorkersHeader totalPay={totalPay} />
+      {activeWorkers && (
+        <ActiveWorkersTable
+          updateTotalPay={setTotalPay}
+          activeWorkers={activeWorkers}
+          allWorkers={allWorkers}
+          getActiveWorkers={getActiveWorkers}
+        />
+      )}
     </div>
   );
 };

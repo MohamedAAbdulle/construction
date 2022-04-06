@@ -8,11 +8,13 @@ import { Switch } from "@material-ui/core";
 import findEnumName from "utils/findEnumValue";
 import { appContext } from "AppContext";
 
-const ActiveWorkersTable = () => {
-  const { appEnums } = React.useContext(appContext);
-
-  const { activeWorkers, allWorkers, getActiveWorkers } =
-    React.useContext(workerContext);
+const ActiveWorkersTable = ({
+  activeWorkers,
+  allWorkers,
+  getActiveWorkers,
+  updateTotalPay,
+}) => {
+  const { WorkerTypes } = React.useContext(appContext);
 
   const [openInactivate, setOpenInactivate] = React.useState(false);
   const [openUpdateChart, setOpenUpdateChart] = React.useState(false);
@@ -39,12 +41,13 @@ const ActiveWorkersTable = () => {
     ).then((res) => {
       if (res && res.status === 200) {
         setOpenUpdateChart(false);
-        getActiveWorkers();
+        getActiveWorkers(); //expensive. this is involves alot of work.
       }
     });
   };
 
-  const data = activeWorkers.map((activeWorker) => {
+  let allTotal = 0;
+  const data = activeWorkers.map((activeWorker, index) => {
     const weeklyChartList = [];
     let total = 0;
 
@@ -68,6 +71,13 @@ const ActiveWorkersTable = () => {
       );
       weeklyChartList.push(s);
       if (i < 7 && parseInt(d)) total += activeWorker.rate;
+      else if (i === 7) {
+        allTotal += total;
+        //updateTotalPay(total);
+      }
+    }
+    if (index === activeWorkers.length - 1) {
+      updateTotalPay(allTotal);
     }
 
     return [
@@ -76,7 +86,7 @@ const ActiveWorkersTable = () => {
         <div className="sec-cell">{activeWorker.idNumber}</div>
       </div>,
       <div>
-        <div>{findEnumName(activeWorker.workerType, appEnums.WorkerType)}</div>
+        <div>{findEnumName(activeWorker.workerType, WorkerTypes)}</div>
         <div className="sec-cell">{activeWorker.rate}</div>
       </div>,
       ...weeklyChartList.slice(0, -1),

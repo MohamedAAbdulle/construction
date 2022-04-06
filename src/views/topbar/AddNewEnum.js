@@ -10,23 +10,25 @@ import ModalCont from "components/modalCont/ModalCont";
 import { appContext } from "AppContext";
 import "./settings.sass";
 
-const AddNewEnum = ({ onClose, workerType, getEnums }) => {
-  const [newValue, setNewValue] = React.useState("");
+const AddNewEnum = ({ onClose, getWorkerTypes }) => {
+  const [newValue, setNewValue] = React.useState({});
   const CreateNewWorkType = () => {
-    if (newValue) {
-      postEndpoint(`/settings/enums`, {
-        enumType: "WorkerType",
-        keyValue: workerType ? workerType.length + 1 : 1,
-        keyName: newValue,
+    if (newValue.typeName) {
+      postEndpoint(`/Workers/WorkerTypes`, {
+        rate: newValue.rate,
+        typeName: newValue.typeName,
       }).then((res) => {
         if (res && res.status === 200) {
           onClose();
-          getEnums();
+          getWorkerTypes();
         } else if (res && res.errors) {
           //setErrors(res.errors);
         }
       });
     }
+  };
+  const changed = (e) => {
+    onChangeSimple(e, newValue, setNewValue);
   };
   return (
     <ModalCont open={true} onClose={onClose} title="Worker Type">
@@ -36,12 +38,21 @@ const AddNewEnum = ({ onClose, workerType, getEnums }) => {
         alignItems="center"
         spacing={2}
       >
-        <Grid item>
+        <Grid item sm={6}>
           <InputComp
-            onChange={(e) => setNewValue(e.target.value)}
-            name="price"
+            onChange={changed}
+            name="typeName"
             placeholder="New Worker Type"
             required
+          />
+        </Grid>
+        <Grid item sm={6}>
+          <InputComp
+            onChange={changed}
+            name="rate"
+            placeholder="Rate"
+            required
+            type="number"
           />
         </Grid>
       </Grid>

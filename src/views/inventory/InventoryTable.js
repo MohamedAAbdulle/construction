@@ -12,7 +12,7 @@ import EditInv from "./modals/EditInv";
 import { appContext } from "AppContext";
 
 export default function Inventory() {
-  const { invList } = React.useContext(appContext);
+  const { invList, getInvList } = React.useContext(appContext);
 
   const getInventoryStatus = (inv) => {
     let a = "";
@@ -37,6 +37,7 @@ export default function Inventory() {
     setModal("");
   };
 
+  React.useEffect(getInvList, []);
   return (
     <>
       {invList ? (

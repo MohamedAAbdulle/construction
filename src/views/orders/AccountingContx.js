@@ -9,9 +9,10 @@ const AccountingContx = (props) => {
 
   const getAccounts = () => {
     getEndpoint("/Orders").then((res) => {
-      console.log(res);
-      setAccounts(res.reverse());
-      setInitialAccounts(res.reverse());
+      let a = res.reverse();
+      console.log(a);
+      setAccounts(a);
+      setInitialAccounts(a);
     });
   };
 

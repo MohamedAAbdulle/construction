@@ -5,8 +5,8 @@ import { getEndpoint } from "services/apiFunctions";
 const workerContext = React.createContext();
 
 const WorkerContext = (props) => {
-  const [activeWorkers, setActiveWorkers] = React.useState([]);
-  const [allWorkers, setAllWorkers] = React.useState([]);
+  const [activeWorkers, setActiveWorkers] = React.useState();
+  const [allWorkers, setAllWorkers] = React.useState();
   const [activeWeek, setActiveWeek] = React.useState(
     dayjs().subtract(1, "days").day(1)
   );
@@ -14,7 +14,7 @@ const WorkerContext = (props) => {
 
   const getAllWorkers = () => {
     getEndpoint("/workers").then((res) => {
-      setAllWorkers(res);
+      setAllWorkers(res.reverse());
     });
   };
 
@@ -25,6 +25,11 @@ const WorkerContext = (props) => {
       setActiveWorkers(res);
     });
   };
+
+  React.useEffect(() => {
+    getAllWorkers();
+    //getActiveWorkers();
+  }, []);
 
   return (
     <workerContext.Provider
