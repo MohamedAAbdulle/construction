@@ -5,7 +5,7 @@ import { workerContext } from "../WorkerContext";
 import DeleteModal from "components/delete-modal/DeleteModal";
 import { deleteEndpoint, putEndpoint } from "services/apiFunctions";
 import { Switch } from "@material-ui/core";
-import findEnumName from "utils/findEnumValue";
+import findWorkerTypeName from "utils/findEnumValue";
 import { appContext } from "AppContext";
 
 const ActiveWorkersTable = ({
@@ -71,7 +71,7 @@ const ActiveWorkersTable = ({
       );
       weeklyChartList.push(s);
       if (i < 7 && parseInt(d)) total += activeWorker.rate;
-      else if (i === 7) {
+      else if (i === 7 && activeWorker.chart[i] === "0") {
         allTotal += total;
         //updateTotalPay(total);
       }
@@ -86,7 +86,7 @@ const ActiveWorkersTable = ({
         <div className="sec-cell">{activeWorker.idNumber}</div>
       </div>,
       <div>
-        <div>{findEnumName(activeWorker.workerType, WorkerTypes)}</div>
+        <div>{findWorkerTypeName(activeWorker.workerType, WorkerTypes)}</div>
         <div className="sec-cell">{activeWorker.rate}</div>
       </div>,
       ...weeklyChartList.slice(0, -1),

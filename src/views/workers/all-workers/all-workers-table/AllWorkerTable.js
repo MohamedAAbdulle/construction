@@ -7,7 +7,7 @@ import DeleteModal from "components/delete-modal/DeleteModal";
 import { deleteEndpoint, postEndpoint } from "services/apiFunctions";
 import dayjs from "dayjs";
 import { appContext } from "AppContext";
-import findEnumName from "utils/findEnumValue";
+import findWorkerTypeName from "utils/findEnumValue";
 
 const AllWorkersTable = () => {
   const { WorkerTypes } = React.useContext(appContext);
@@ -40,7 +40,7 @@ const AllWorkersTable = () => {
     return [
       <div>{r.name}</div>,
       <div>{r.idNumber}</div>,
-      <div>{findEnumName(r.workerType, WorkerTypes)}</div>,
+      <div>{findWorkerTypeName(r.workerType, WorkerTypes)}</div>,
       <div>{r.rate}</div>,
 
       <Ellipsis

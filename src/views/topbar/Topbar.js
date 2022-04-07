@@ -14,6 +14,7 @@ import "./topbar.sass";
 import logo from "assests/logo.svg";
 import StickySlider from "components/sliderModal/StickySlider";
 import Settings from "./Settings";
+import Ellipsis from "components/ellipsis/Ellipsis";
 
 const Topbar = () => {
   const [active, setActive] = React.useState(window.location.pathname);
@@ -91,34 +92,17 @@ const Topbar = () => {
             </NavLink>
           </Grid>
           <Grid item>
-            <IconButton
-              color="inherit"
-              onClick={(e) => {
-                setAnchorEl(e.target);
-              }}
-            >
-              <AccountCircle />
-            </IconButton>
-            <Menu
-              open={Boolean(anchorEl)}
-              anchorEl={anchorEl}
-              onClose={() => setAnchorEl(null)}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-            >
-              <MenuItem>My profile</MenuItem>
-              <MenuItem>Sign Out</MenuItem>
-              <MenuItem
-                onClick={() => {
-                  setOpen(true);
-                  setAnchorEl(null);
-                }}
-              >
-                Setting
-              </MenuItem>
-            </Menu>
+            <Ellipsis
+              cover={<AccountCircle style={{ color: "white" }} />}
+              menus={[
+                { onClick: () => {}, label: "My Profile" },
+                { onClick: () => {}, label: "Sign Out" },
+                {
+                  onClick: () => setOpen(true),
+                  label: "Settings",
+                },
+              ]}
+            />
           </Grid>
         </Grid>
       </Toolbar>

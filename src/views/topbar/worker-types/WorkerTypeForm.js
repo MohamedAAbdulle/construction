@@ -8,16 +8,17 @@ import BtnComp from "components/btn-comp/BtnComp";
 import { Add, Close } from "@material-ui/icons";
 import ModalCont from "components/modalCont/ModalCont";
 import { appContext } from "AppContext";
-import "./settings.sass";
+import "./worker-types.sass";
 
-const AddNewEnum = ({ onClose, getWorkerTypes }) => {
-  const [newValue, setNewValue] = React.useState({});
+const WorkerTypeForm = ({ onClose, getWorkerTypes, worker }) => {
+  const [newValue, setNewValue] = React.useState(worker);
   const CreateNewWorkType = () => {
     if (newValue.typeName) {
-      postEndpoint(`/Workers/WorkerTypes`, {
-        rate: newValue.rate,
-        typeName: newValue.typeName,
-      }).then((res) => {
+      let l;
+      if (newValue.typeValue) l = putEndpoint(`/Workers/WorkerTypes`, newValue);
+      else l = postEndpoint(`/Workers/WorkerTypes`, newValue);
+
+      l.then((res) => {
         if (res && res.status === 200) {
           onClose();
           getWorkerTypes();
@@ -27,6 +28,7 @@ const AddNewEnum = ({ onClose, getWorkerTypes }) => {
       });
     }
   };
+
   const changed = (e) => {
     onChangeSimple(e, newValue, setNewValue);
   };
@@ -40,6 +42,7 @@ const AddNewEnum = ({ onClose, getWorkerTypes }) => {
       >
         <Grid item sm={6}>
           <InputComp
+            value={newValue.typeName}
             onChange={changed}
             name="typeName"
             placeholder="New Worker Type"
@@ -48,6 +51,7 @@ const AddNewEnum = ({ onClose, getWorkerTypes }) => {
         </Grid>
         <Grid item sm={6}>
           <InputComp
+            value={newValue.rate}
             onChange={changed}
             name="rate"
             placeholder="Rate"
@@ -63,4 +67,4 @@ const AddNewEnum = ({ onClose, getWorkerTypes }) => {
   );
 };
 
-export default AddNewEnum;
+export default WorkerTypeForm;

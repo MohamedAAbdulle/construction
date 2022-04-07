@@ -7,7 +7,7 @@ import ModalCont from "components/modalCont/ModalCont";
 import { postEndpoint, putEndpoint } from "services/apiFunctions";
 import { workerContext } from "views/workers/WorkerContext";
 import { appContext } from "AppContext";
-import findEnumName, { findWorkerTypeRate } from "utils/findEnumValue";
+import { findWorkerTypeRate } from "utils/findEnumValue";
 
 const Createworker = ({ open, setOpen, state }) => {
   const { getAllWorkers } = React.useContext(workerContext);
@@ -67,18 +67,18 @@ const Createworker = ({ open, setOpen, state }) => {
             error={findError("Name")}
           />
         </Grid>
-
         <Grid item xs={12} md={6}>
           <InputComp
             onChange={changed}
-            value={worker.rate || ""}
-            error={findError("Rate")}
-            name="rate"
+            value={worker.idNumber || ""}
+            error={findError("IdNumber")}
+            name="idNumber"
             type="number"
             required
-            label="Rate"
+            label="IdNumber"
           />
         </Grid>
+
         <Grid item xs={12} md={6}>
           <InputComp
             onChange={(e) => {
@@ -103,12 +103,12 @@ const Createworker = ({ open, setOpen, state }) => {
         <Grid item xs={12} md={6}>
           <InputComp
             onChange={changed}
-            value={worker.idNumber || ""}
-            error={findError("IdNumber")}
-            name="idNumber"
+            value={worker.rate || ""}
+            error={findError("Rate")}
+            name="rate"
             type="number"
             required
-            label="IdNumber"
+            label="Rate"
           />
         </Grid>
       </Grid>
