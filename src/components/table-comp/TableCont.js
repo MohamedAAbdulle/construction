@@ -16,16 +16,20 @@ const TableCont = ({ tableTitles, dataList }) => {
       <Table aria-label="simple table">
         <TableHead>
           <TableRow className="table-head">
-            {tableTitles.map((title) => (
-              <TableCell align="center">{title}</TableCell>
+            {tableTitles.map((title, key) => (
+              <TableCell align="center" key={key}>
+                {title}
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {dataList.map((data) => (
-            <TableRow>
-              {data.map((cell) => (
-                <TableCell align="center">{cell}</TableCell>
+          {dataList.map((data, key) => (
+            <TableRow key={key}>
+              {data.map((cell, key) => (
+                <TableCell align="center" key={key}>
+                  {cell}
+                </TableCell>
               ))}
             </TableRow>
           ))}

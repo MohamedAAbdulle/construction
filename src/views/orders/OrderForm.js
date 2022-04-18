@@ -9,6 +9,7 @@ import { accountingContx } from "./AccountingContx";
 import { Close } from "@material-ui/icons";
 import Inventorysearcher from "components/searchers/InventorySearcher";
 import SupplierSearcher from "components/searchers/SupplierSearcher";
+import { accountTypesEnums } from "utils/enums";
 
 const OrderForm = ({ closeSlider, order }) => {
   const { getAccounts } = React.useContext(accountingContx);
@@ -102,16 +103,16 @@ const OrderForm = ({ closeSlider, order }) => {
                 error={findError("SupplierId")}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            {/* <Grid item xs={12} sm={6}>
               <InputComp
-                label="Quantity"
+                label="Total Quantity"
                 type="number"
                 name="quantity"
                 onChange={changed}
                 value={state.quantity}
                 error={findError("Quantity")}
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12} sm={6}>
               <InputComp
                 label="Price"
@@ -124,12 +125,22 @@ const OrderForm = ({ closeSlider, order }) => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <InputComp
+                label="Delivered Amount"
+                type="number"
+                name="delivered"
+                onChange={changed}
+                value={state.delivered}
+                error={findError("Delivered")}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <InputComp
                 label="Status"
                 type="select"
                 name="status"
                 onChange={changed}
                 value={state.status}
-                options={["Pending", "Delivered", "Invoiced", "Settled"]}
+                options={accountTypesEnums}
                 error={findError("Status")}
               />
             </Grid>

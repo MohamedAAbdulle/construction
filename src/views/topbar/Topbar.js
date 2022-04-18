@@ -18,7 +18,6 @@ import Ellipsis from "components/ellipsis/Ellipsis";
 
 const Topbar = () => {
   const [active, setActive] = React.useState(window.location.pathname);
-  const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -38,6 +37,25 @@ const Topbar = () => {
                 onClick={() => setActive("/inventory")}
               >
                 Inventory
+              </Button>
+            </NavLink>
+
+            <NavLink to="/tools" className="route-nav">
+              <Button
+                color="inherit"
+                id={active === "/tools" ? "active-nav" : ""}
+                onClick={() => setActive("/tools")}
+              >
+                Tools
+              </Button>
+            </NavLink>
+            <NavLink to="/tools-inuse" className="route-nav">
+              <Button
+                color="inherit"
+                id={active === "/tools-inuse" ? "active-nav" : ""}
+                onClick={() => setActive("/tools-inuse")}
+              >
+                Inuse-Tools
               </Button>
             </NavLink>
 

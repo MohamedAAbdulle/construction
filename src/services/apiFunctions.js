@@ -1,18 +1,18 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-//let baseUrl = "https://localhost:5001";
-let baseUrl = "https://2s3dfyvsm0.execute-api.us-east-1.amazonaws.com";
+let baseUrl = "https://localhost:5001";
+//let baseUrl = "https://2s3dfyvsm0.execute-api.us-east-1.amazonaws.com";
 
 const errorHandler = (res) => {
+  //test 404
   let errorMessage = "Unknown Error Occured";
   if (res.response) {
-    //console.log(res.response);
+    console.log(res.response);
     if (res.response.status === 400) {
       const { title, errors } = res.response.data || {};
       errorMessage = title ? title : "400: Bad Request";
       if (errors) {
-        console.log(res.response);
         toast.error(errorMessage);
 
         return { errors };

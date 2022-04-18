@@ -11,10 +11,11 @@ const SearchComp = ({
   label,
   placeholder,
   value,
+  disableSelection,
 }) => {
   const [foundItems, setFoundItems] = React.useState(false);
-  const [inputValue, setInputValue] = React.useState(value);
-  const [inputValue2, setInputValue2] = React.useState(value);
+  const [inputValue, setInputValue] = React.useState(value || "");
+  const [inputValue2, setInputValue2] = React.useState(value || "");
 
   const getSearchResult = (query) => {
     let r = [];
@@ -24,15 +25,17 @@ const SearchComp = ({
       );
     setFoundItems(r);
     setInputValue(query);
-    console.log("hello");
   };
+  console.log(disableSelection);
 
   const onSelect = (item) => {
     console.log(item);
-    setInputValue2(item.name);
-    setInputValue(item.name);
-    setFoundItems(false);
-    onAction(item);
+    if (!disableSelection || (disableSelection && !disableSelection(item))) {
+      setInputValue2(item.name);
+      setInputValue(item.name);
+      setFoundItems(false);
+      onAction(item);
+    }
   };
 
   const onBlur = () => {
@@ -57,8 +60,12 @@ const SearchComp = ({
           {foundItems && inputValue && (
             <div className="searcher-results-comp">
               {foundItems.length ? (
-                foundItems.map((i) => (
-                  <div className="searcher-result" onClick={() => onSelect(i)}>
+                foundItems.map((i, key) => (
+                  <div
+                    className="searcher-result"
+                    onClick={() => onSelect(i)}
+                    key={key}
+                  >
                     {resultFormat(i)}
                   </div>
                 ))

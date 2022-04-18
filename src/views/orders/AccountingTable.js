@@ -47,7 +47,7 @@ const AccountingTable = () => {
       <div>{r.supplierName}</div>,
       <div>{r.quantity}</div>,
       <div>{r.price}</div>,
-      <div>{dayjs(r.dateDone).format("DD-MM-YY, HH:mm")}</div>,
+      <div>{dayjs(r.dateDone).format("DD MMM 'YY, HH:mm")}</div>,
       <div className={r.status}>{r.status}</div>,
       <Ellipsis
         menus={[

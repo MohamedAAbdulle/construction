@@ -11,6 +11,8 @@ import "./app.sass";
 import Dashboard from "views/dashboard/Dashboard";
 import Workers from "views/workers/Workers";
 import Suppliers from "views/suppliers/Suppliers";
+import Tools from "views/tools/all-tools/Tools";
+import InUseTools from "views/tools/in-use-tools/InUseTools";
 
 export default function App() {
   return (
@@ -34,6 +36,8 @@ export default function App() {
           <Route path="/suppliers" element={<Suppliers />} />
           <Route path="/sub-contracts" element={<Contracts />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/tools" element={<Tools />} />
+          <Route path="/tools-inuse" element={<InUseTools />} />
         </Routes>
       </div>
     </div>
