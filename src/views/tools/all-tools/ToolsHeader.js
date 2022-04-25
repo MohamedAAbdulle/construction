@@ -2,15 +2,21 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 import BtnComp from "components/btn-comp/BtnComp";
 import ToolForm from "./ToolForm";
+import ToolsTab from "../tools-tab/ToolsTab";
 
-const ToolsHeader = () => {
+const AllToolsHeader = () => {
   const [open, setOpen] = React.useState(false);
 
   return (
     <>
-      <Grid container justifyContent="space-between" alignItems="center">
+      <Grid
+        container
+        justifyContent="space-between"
+        alignItems="center"
+        style={{ margin: "10px 0 20px" }}
+      >
         <Grid item>
-          <h2 className="page-title">Tools</h2>
+          <ToolsTab />
         </Grid>
 
         <Grid item>
@@ -22,4 +28,4 @@ const ToolsHeader = () => {
   );
 };
 
-export default ToolsHeader;
+export default AllToolsHeader;

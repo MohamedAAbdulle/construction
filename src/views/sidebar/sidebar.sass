@@ -1,0 +1,39 @@
+.sidebar
+  background: #8389a0
+  min-width: 180px
+  display: flex
+  flex-direction: column 
+  .sidebar-head
+    display: flex
+    justify-content: space-between
+    align-items: center
+    padding: 8px
+    margin-bottom: 28px
+    .logo
+      height: 35px
+  
+  .sidebar-navs
+    flex-grow: 1
+    .sidebar-nav
+      color: white
+      padding: 6px 8px
+      margin: 6px 0
+      cursor: pointer
+      display: flex
+      align-items: center
+      text-decoration: none
+      
+      i>*
+        vertical-align: middle
+      >:nth-child(2)
+        margin-left: 12px
+        flex-grow: 1
+      >:nth-child(3)
+        margin-left: 12px
+      &:hover
+        background: #55565e
+        border-radius: 12px
+  .sidebar-foot
+    padding: 8px
+    color: #d8dee8
+    font-size: 14px

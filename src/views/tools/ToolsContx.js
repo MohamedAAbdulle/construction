@@ -4,6 +4,7 @@ import { getEndpoint } from "services/apiFunctions";
 const toolsContx = React.createContext();
 
 const ToolsContx = (props) => {
+  const [activeTab, setActiveTab] = React.useState(1);
   const [tools, setTools] = React.useState([]);
   const [inUseTools, setInUseTools] = React.useState([]);
 
@@ -23,7 +24,16 @@ const ToolsContx = (props) => {
   React.useEffect(getTools, []);
 
   return (
-    <toolsContx.Provider value={{ tools, getTools, getInUseTools, inUseTools }}>
+    <toolsContx.Provider
+      value={{
+        tools,
+        getTools,
+        getInUseTools,
+        inUseTools,
+        activeTab,
+        setActiveTab,
+      }}
+    >
       {props.children}
     </toolsContx.Provider>
   );

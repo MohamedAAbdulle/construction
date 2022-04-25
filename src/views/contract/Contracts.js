@@ -7,7 +7,7 @@ import { ContractContext } from "./ContractContext"; */
 const Contracts = () => {
   return (
     <div>
-      <h2 className="coming-soon">Accounting Coming Soon.....</h2>
+      <h2 className="coming-soon">Sub-contract Coming Soon.....</h2>
       {/* <ContractContext>
         <ContractHead />
         <ContractTable />

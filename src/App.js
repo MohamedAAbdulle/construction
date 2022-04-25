@@ -11,8 +11,9 @@ import "./app.sass";
 import Dashboard from "views/dashboard/Dashboard";
 import Workers from "views/workers/Workers";
 import Suppliers from "views/suppliers/Suppliers";
-import Tools from "views/tools/all-tools/Tools";
 import InUseTools from "views/tools/in-use-tools/InUseTools";
+import Sidebar from "views/sidebar/Sidebar";
+import Tools from "views/tools/Tools";
 
 export default function App() {
   return (
@@ -26,7 +27,8 @@ export default function App() {
         draggable={true}
         progress={undefined}
       />
-      <Topbar />
+      {/* <Topbar /> */}
+      <Sidebar />
       <div className="main-view">
         <Routes>
           <Route path="/" element={<Inventory />} />

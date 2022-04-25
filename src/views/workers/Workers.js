@@ -17,7 +17,7 @@ const WorkersContent = () => {
   return (
     <>
       {allWorkers && (
-        <>{activeTab === 1 ? <ActiveWorkers /> : <AllWorkers />}</>
+        <>{activeTab === 1 ? <AllWorkers /> : <ActiveWorkers />}</>
       )}
     </>
   );

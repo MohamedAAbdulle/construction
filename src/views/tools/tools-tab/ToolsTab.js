@@ -1,27 +1,26 @@
 import React from "react";
-import { workerContext } from "../WorkerContext";
-import "./WorkersTab.sass";
+import { toolsContx } from "../ToolsContx";
+import "./toolsTab.sass";
 
-const WorkersTab = () => {
-  const { activeTab, setActiveTab } = React.useContext(workerContext);
+const ToolsTab = () => {
+  const { activeTab, setActiveTab } = React.useContext(toolsContx);
   return (
     <div className="workers-tab">
       <span
         className={activeTab === 1 ? "active" : ""}
         onClick={() => setActiveTab(1)}
       >
-        All Workers
+        All Tools
       </span>
       <span>/</span>
       <span
         className={activeTab === 2 ? "active" : ""}
         onClick={() => setActiveTab(2)}
       >
-        
-        Active Workers
+        In Use
       </span>
     </div>
   );
 };
 
-export default WorkersTab;
+export default ToolsTab;

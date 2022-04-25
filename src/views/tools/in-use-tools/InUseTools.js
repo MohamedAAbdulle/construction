@@ -5,13 +5,6 @@ import InUseToolsTable from "./InUseToolTable";
 import { getEndpoint } from "services/apiFunctions";
 
 const InUseTools = () => {
-  return (
-    <ToolsContx>
-      <InUseToolsBody />
-    </ToolsContx>
-  );
-};
-const InUseToolsBody = () => {
   const { tools, getInUseTools, inUseTools } = React.useContext(toolsContx);
   const [workers, setWorkers] = React.useState();
   const getWorkers = () => {
@@ -26,12 +19,8 @@ const InUseToolsBody = () => {
   React.useEffect(setUp, []);
   return (
     <div>
-      {tools && workers && inUseTools && (
-        <>
-          <InUseToolsHeader workers={workers} />
-          <InUseToolsTable workers={workers} />
-        </>
-      )}
+      <InUseToolsHeader workers={workers} />
+      {tools && workers && inUseTools && <InUseToolsTable workers={workers} />}
     </div>
   );
 };
