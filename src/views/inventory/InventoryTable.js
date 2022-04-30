@@ -10,6 +10,7 @@ import dayjs from "dayjs";
 import DeleteInv from "./modals/DeleteInv";
 import EditInv from "./modals/EditInv";
 import { appContext } from "AppContext";
+import { CircularProgress } from "@material-ui/core";
 
 export default function Inventory() {
   const { invList, getInvList } = React.useContext(appContext);
@@ -80,7 +81,8 @@ export default function Inventory() {
           ])}
         />
       ) : (
-        <h4 className="centered">Loading...</h4>
+        <CircularProgress/>
+        //<h4 className="centered">Loading...</h4>
       )}
 
       {modal === "add" && (

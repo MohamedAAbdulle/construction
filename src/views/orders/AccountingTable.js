@@ -24,18 +24,13 @@ const AccountingTable = () => {
   };
 
   const findElement = (id, type) => {
-    let objToReturn = {};
-    let element;
-    element =
-      type === "inventory"
-        ? invList.find((i) => i.id === id)
-        : type === "suppliers"
-        ? suppliers.find((i) => i.id === id)
-        : {};
-    if (element) {
-      objToReturn = element;
-    }
-    return objToReturn;
+    let element = {};
+    let list = type === "inventory" ? invList : suppliers;
+    list = list ? list : [];
+
+    element = list.find((i) => i.id === id) || {};
+
+    return element;
   };
   const data = accounts.map((r) => {
     let invInfo = findElement(r.inventoryId, "inventory");

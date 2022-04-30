@@ -73,7 +73,6 @@ const Createworker = ({ open, setOpen, state }) => {
             value={worker.idNumber || ""}
             error={findError("IdNumber")}
             name="idNumber"
-            type="number"
             required
             label="IdNumber"
           />

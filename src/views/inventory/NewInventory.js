@@ -24,7 +24,7 @@ const NewInventory = ({ open, setOpen }) => {
     postEndpoint(`/inventory`, newInv).then((res) => {
       if (res && res.status === 200) {
         setOpen(false);
-        getInvList();
+        getInvList(1);
       } else if (res && res.errors) {
         setErrors(res.errors);
       }

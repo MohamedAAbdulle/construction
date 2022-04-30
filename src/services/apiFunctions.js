@@ -1,8 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-//let baseUrl = "https://localhost:5001";
-let baseUrl = "https://2s3dfyvsm0.execute-api.us-east-1.amazonaws.com";
+let baseUrl = "https://localhost:5001";
+//let baseUrl = "https://2s3dfyvsm0.execute-api.us-east-1.amazonaws.com";
 
 const errorHandler = (res) => {
   //test 404
@@ -23,9 +23,17 @@ const errorHandler = (res) => {
 };
 
 export const getEndpoint = async (url) =>
-  await axios.get(baseUrl + url).then((res) => {
-    return res.data;
-  });
+  await axios
+    .get(baseUrl + url, {
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+        customerId: 4,
+      },
+    })
+    .then((res) => {
+      return res.data;
+    });
 
 export const postEndpoint = async (url, body) =>
   await axios
@@ -33,6 +41,7 @@ export const postEndpoint = async (url, body) =>
       headers: {
         accept: "application/json",
         "Content-Type": "application/json",
+        customerId: 4,
       },
     })
     .then((res) => {

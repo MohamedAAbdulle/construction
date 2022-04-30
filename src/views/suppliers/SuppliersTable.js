@@ -19,7 +19,7 @@ const SuppliersTable = () => {
     });
   };
 
-  React.useEffect(getSuppliers, []);
+  
 
   const data = suppliers.map((r) => {
     return [

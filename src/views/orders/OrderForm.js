@@ -103,7 +103,7 @@ const OrderForm = ({ closeSlider, order }) => {
                 error={findError("SupplierId")}
               />
             </Grid>
-            {/* <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={6}>
               <InputComp
                 label="Total Quantity"
                 type="number"
@@ -112,7 +112,7 @@ const OrderForm = ({ closeSlider, order }) => {
                 value={state.quantity}
                 error={findError("Quantity")}
               />
-            </Grid> */}
+            </Grid>
             <Grid item xs={12} sm={6}>
               <InputComp
                 label="Price"
@@ -123,7 +123,7 @@ const OrderForm = ({ closeSlider, order }) => {
                 error={findError("Price")}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            {/* <Grid item xs={12} sm={6}>
               <InputComp
                 label="Delivered Amount"
                 type="number"
@@ -132,7 +132,7 @@ const OrderForm = ({ closeSlider, order }) => {
                 value={state.delivered}
                 error={findError("Delivered")}
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12} sm={6}>
               <InputComp
                 label="Status"

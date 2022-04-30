@@ -10,7 +10,7 @@ import NewQuote from "./NewQuote";
 import { appContext } from "AppContext";
 
 const SupplierForm = ({ supplier, closeSlider }) => {
-  const { invList, getSuppliers } = React.useContext(appContext);
+  const { invList, getInvList, getSuppliers } = React.useContext(appContext);
   const [errors, setErrors] = React.useState({});
 
   const [state, setState] = React.useState(supplier || {});
@@ -65,7 +65,7 @@ const SupplierForm = ({ supplier, closeSlider }) => {
     }
     saveAction.then((res) => {
       if (res && res.status === 200) {
-        getSuppliers();
+        getSuppliers(1);
         closeSlider();
       } else if (res && res.errors) {
         setErrors(res.errors);
@@ -90,7 +90,10 @@ const SupplierForm = ({ supplier, closeSlider }) => {
       });
     }
   };
-  React.useEffect(getQuotes, []);
+  React.useEffect(() => {
+    getQuotes();
+    getInvList();
+  }, []);
 
   return (
     <div>
@@ -127,6 +130,7 @@ const SupplierForm = ({ supplier, closeSlider }) => {
                 value={state.phone}
                 label="Phone"
                 name="phone"
+                type="number"
                 error={findError("Supplier.Phone", errors)}
                 required
               />
