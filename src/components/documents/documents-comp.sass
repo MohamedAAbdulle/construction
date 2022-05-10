@@ -1,0 +1,19 @@
+.doc-comp
+  .file-record
+    font-size: 14px
+    color: #656464
+    >*
+      text-align: center
+    &.Created
+      color: #8cc18c
+    &.Deleted 
+      > *:not(:last-child)
+        text-decoration: line-through
+    *:last-child
+      margin: auto
+  .no-doc
+    color: #afa6a6
+    text-align: center
+    font-style: italic
+    font-weight: lighter
+    

@@ -17,6 +17,7 @@ const AppContext = (props) => {
   const getInvList = (hardFetch) => {
     (hardFetch || !invList) &&
       getEndpoint("/inventory").then((res) => {
+        console.log(res);
         setInvList(res.reverse());
       });
   };

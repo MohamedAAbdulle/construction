@@ -1,5 +1,5 @@
 import { Grid } from "@material-ui/core";
-import { Search } from "@material-ui/icons";
+
 import BtnComp from "components/btn-comp/BtnComp";
 import InputComp from "components/input/InputComp";
 import React from "react";
@@ -16,7 +16,7 @@ const InventoryHead = () => {
       style={{ margin: "20px 0 15px" }}
     >
       <Grid item>
-        <InputComp postfix={<Search />} placeholder="Search Inventory" />
+        <InputComp type="search" placeholder="Search Inventory" />
       </Grid>
 
       <Grid item>

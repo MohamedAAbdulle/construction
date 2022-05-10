@@ -46,7 +46,8 @@ body,html
   color: white
   border-radius: 1000px
 
-
+.negative-action
+  color: #d4442a
 
 
 .Sufficient,.Settled,.Present, .Added
@@ -62,6 +63,8 @@ body,html
 
 //mui
 
+.MuiIconButton-root
+  color: #117999 !important
 .MuiSwitch-colorSecondary
   color: #ccbfbe !important
   &.Mui-checked
@@ -70,6 +73,9 @@ body,html
       background-color:#079C04 !important
 .MuiSwitch-track
   background-color: #a69b9a !important
+.MuiInputLabel-outlined 
+  z-index: 0 !important
+
 //spinner  
 .MuiCircularProgress-root.MuiCircularProgress-indeterminate
   display: block
@@ -82,7 +88,7 @@ body,html
   border-radius: 4px
   margin: 0px 0 20px
   .card-title
-    margin-bottom: 30px
+    margin-bottom: 20px
     display: flex
     justify-content: space-between
     align-items: center
