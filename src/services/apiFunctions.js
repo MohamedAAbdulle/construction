@@ -2,11 +2,12 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 //let baseUrl = "https://localhost:5001";
-let baseUrl = "https://9mil0w4i35.execute-api.ap-south-1.amazonaws.com";
-const customerId = 5;
+let baseUrl = "https://ery9ct8r48.execute-api.ap-south-1.amazonaws.com";
+const customerId = 4;
 let headers = {
   accept: "application/json",
   "Content-Type": "application/json",
+  "Access-Control-Allow-Origin": "*",
   customerId,
 };
 
