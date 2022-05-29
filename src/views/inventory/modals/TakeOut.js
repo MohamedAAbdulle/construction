@@ -26,7 +26,7 @@ const TakeOut = ({ open, onClose, inv }) => {
       if (res && res.status === 200) {
         console.log(res);
         onClose();
-        getInvList();
+        getInvList(true);
       } else if (res && res.errors) {
         setErrors(res.errors);
       }

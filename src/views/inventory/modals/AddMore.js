@@ -25,7 +25,7 @@ const Addmore = ({ open, onClose, inv }) => {
     putEndpoint(`/inventory/addmore/${inv.id}`, state)
       .then(() => {
         onClose();
-        getInvList();
+        getInvList(true);
       })
       .catch((a) => console.log(setErrors(a)));
   };

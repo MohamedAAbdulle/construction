@@ -19,7 +19,7 @@ const EditInv = ({ open, onClose, inv }) => {
   const editAction = () => {
     putEndpoint(`/inventory/${inv.id}`, state).then((res) => {
       console.log(res);
-      getInvList();
+      getInvList(true);
       onClose();
     });
   };

@@ -9,11 +9,10 @@ import { getEndpoint } from "services/apiFunctions";
 import BtnComp from "components/btn-comp/BtnComp";
 import classNames from "classnames";
 
-const DocumentsComp = ({ docs, addFile, setDocs }) => {
+const DocumentsComp = ({ docs, setDocs }) => {
   const [newDoc, setNewDoc] = React.useState(false);
 
   const downloadDoc = (fileName) => {
-    
     getEndpoint(`/documents?fileName=${fileName}`, "blob").then((r) => {
       let x = new Blob([r]);
       const url = window.URL.createObjectURL(x);
@@ -26,6 +25,11 @@ const DocumentsComp = ({ docs, addFile, setDocs }) => {
       link.click();
     });
   };
+
+  const addFile = (doc) => {
+    setDocs([...docs, doc]);
+  };
+
   const deleteDoc = (id) => {
     setDocs((prev) => {
       let cc = [...prev];
@@ -46,7 +50,6 @@ const DocumentsComp = ({ docs, addFile, setDocs }) => {
     setDocs((prev) => {
       let cc = [...prev];
       cc.splice(index, 1);
-
       return cc;
     });
   };

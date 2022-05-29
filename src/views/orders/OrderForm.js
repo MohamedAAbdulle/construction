@@ -17,7 +17,7 @@ const OrderForm = ({ closeSlider, order }) => {
   const { getAccounts } = React.useContext(accountingContx);
   const [docs, setDocs] = React.useState([]);
 
-  const [formState, setFormState] = React.useState(new FormData());
+  const formState = new FormData();
 
   const [state, setState] = React.useState({
     ...order,
@@ -30,18 +30,8 @@ const OrderForm = ({ closeSlider, order }) => {
     onChangeSimple(e, state, setState);
   };
 
-  const addFile = (doc) => {
-    setFormState((prev) => {
-      let newState = prev;
-      newState.append("files", doc.fileData, doc.fileName);
-      return newState;
-    });
-    setDocs([...docs, doc]);
-  };
   const getDocs = () => {
-    console.log("effect");
     if (order.id) {
-      console.log("effect2");
       getEndpoint(`/orders/${order.id}`).then((res) => setDocs(res));
     }
   };
@@ -51,15 +41,23 @@ const OrderForm = ({ closeSlider, order }) => {
   const onSave = () => {
     let a;
     if (order.id) {
-      setFormState((prev) => {
-        let newState = prev;
-        newState.set(
-          "orderString",
-          JSON.stringify({ ...state, documents: docs })
-        );
-        return newState;
-      });
+      if (docs.length) {
+        let a = true;
+        docs.forEach((doc) => {
+          if (doc.status === "Created") {
+            a
+              ? formState.set("files", doc.fileData, doc.fileName)
+              : formState.append("files", doc.fileData, doc.fileName);
+            a = false;
+          }
+        });
+      }
+      formState.set(
+        "orderString",
+        JSON.stringify({ ...state, documents: docs })
+      );
       a = putEndpoint(`/orders/${state.id}`, formState);
+      //a = postEndpoint(`/hello`, formState);
     } else {
       a = postEndpoint(`/orders`, state);
       //a = postEndpoint(`/test`, docs[0]);
@@ -178,9 +176,7 @@ const OrderForm = ({ closeSlider, order }) => {
             </Grid>
           </Grid>
         </div>
-        {order.id && (
-          <DocumentsComp docs={docs} addFile={addFile} setDocs={setDocs} />
-        )}
+        {order.id && <DocumentsComp docs={docs} setDocs={setDocs} />}
       </div>
     </div>
   );

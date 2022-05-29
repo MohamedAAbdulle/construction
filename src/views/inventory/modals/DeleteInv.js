@@ -9,7 +9,7 @@ const DeleteInv = ({ open, id, onClose }) => {
 
   const deleteInv = () => {
     deleteEndpoint(`/inventory/${id}`).then(() => {
-      getInvList();
+      getInvList(true);
       onClose();
     });
   };
