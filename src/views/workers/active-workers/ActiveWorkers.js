@@ -2,6 +2,7 @@ import React from "react";
 import ActiveWorkersTable from "./ActiveWorkersTable";
 import ActiveWorkersHeader from "./active-worker-head/ActiveWorkersHeader";
 import { workerContext } from "../WorkerContext";
+import fetchStatus from "components/fetch-status/fetchStatus";
 
 const ActiveWorkers = () => {
   const { activeWorkers, allWorkers, getActiveWorkers, activeWeek } =
@@ -22,13 +23,17 @@ const ActiveWorkers = () => {
   return (
     <div>
       <ActiveWorkersHeader totalPay={totalPay} />
-      {activeWorkers && (
-        <ActiveWorkersTable
-          updateTotalPay={setTotalPay}
-          activeWorkers={activeWorkers}
-          allWorkers={allWorkers}
-          getActiveWorkers={getActiveWorkers}
-        />
+      {fetchStatus(
+        activeWorkers,
+        () => (
+          <ActiveWorkersTable
+            updateTotalPay={setTotalPay}
+            activeWorkers={activeWorkers}
+            allWorkers={allWorkers}
+            getActiveWorkers={getActiveWorkers}
+          />
+        ),
+        "No Active Worker"
       )}
     </div>
   );

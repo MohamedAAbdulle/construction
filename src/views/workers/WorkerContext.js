@@ -14,7 +14,8 @@ const WorkerContext = (props) => {
 
   const getAllWorkers = () => {
     getEndpoint("/workers").then((res) => {
-      setAllWorkers(res.reverse());
+      let data = res.failed ? res : res.reverse();
+      setAllWorkers(data);
     });
   };
 
@@ -22,7 +23,8 @@ const WorkerContext = (props) => {
     getEndpoint(
       `/workers/activeWorkers?weekof=${activeWeek.format("MM-DD-YYYY")}`
     ).then((res) => {
-      setActiveWorkers(res);
+      let data = res.failed ? res : res.reverse();
+      setActiveWorkers(data);
     });
   };
 

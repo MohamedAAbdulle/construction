@@ -11,10 +11,8 @@ const Tools = () => {
   );
 };
 const ToolsContent = () => {
-  const { tools } = React.useContext(toolsContx);
-
   const { activeTab } = React.useContext(toolsContx);
-  return <>{tools && <>{activeTab === 1 ? <AllTools /> : <InUseTools />}</>}</>;
+  return activeTab === 1 ? <AllTools /> : <InUseTools />;
 };
 
 export default Tools;

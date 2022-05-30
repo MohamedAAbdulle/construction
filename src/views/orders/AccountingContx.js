@@ -6,15 +6,14 @@ const accountingContx = React.createContext();
 
 const AccountingContx = (props) => {
   const { getInvList, getSuppliers } = React.useContext(appContext);
-  const [initialAccount, setInitialAccounts] = React.useState([]);
-  const [accounts, setAccounts] = React.useState([]);
+  const [initialAccount, setInitialAccounts] = React.useState();
+  const [accounts, setAccounts] = React.useState();
 
   const getAccounts = () => {
     getEndpoint("/Orders").then((res) => {
-      let a = res.reverse();
-      console.log(a);
-      setAccounts(a);
-      setInitialAccounts(a);
+      let data = res.failed ? res : res.reverse();
+      setAccounts(data);
+      setInitialAccounts(data);
     });
   };
 

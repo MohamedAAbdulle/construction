@@ -8,8 +8,9 @@ import dayjs from "dayjs";
 import { getEndpoint } from "services/apiFunctions";
 import BtnComp from "components/btn-comp/BtnComp";
 import classNames from "classnames";
+import fetchStatus from "components/fetch-status/fetchStatus";
 
-const DocumentsComp = ({ docs, setDocs }) => {
+const DocumentsComp = ({ docs, setDocs, url }) => {
   const [newDoc, setNewDoc] = React.useState(false);
 
   const downloadDoc = (fileName) => {
@@ -53,6 +54,14 @@ const DocumentsComp = ({ docs, setDocs }) => {
       return cc;
     });
   };
+
+  const getDocs = () => {
+    if (url) {
+      getEndpoint(url).then((res) => setDocs(res));
+    }
+  };
+
+  React.useEffect(getDocs, []);
   return (
     <div className="card-comp doc-comp">
       <div className="card-title">
@@ -61,55 +70,57 @@ const DocumentsComp = ({ docs, setDocs }) => {
           <Add />
         </IconButton>
       </div>
-      {docs.length ? (
-        <div>
-          {docs.map((file, index) => (
-            <Grid
-              container
-              justifyContent="space-between"
-              alignItems="center"
-              spacing={2}
-              className={`file-record ${file.status}`}
-              key={index}
-            >
-              <Grid item xs={4}>
-                {file.fileName}
+      {fetchStatus(
+        docs,
+        () => (
+          <div>
+            {docs.map((file, index) => (
+              <Grid
+                container
+                justifyContent="space-between"
+                alignItems="center"
+                spacing={2}
+                className={`file-record ${file.status}`}
+                key={index}
+              >
+                <Grid item xs={4}>
+                  {file.fileName}
+                </Grid>
+                <Grid item xs={2}>
+                  {file.fileType}
+                </Grid>
+                <Grid item xs={3}>
+                  {dayjs(file.dateCreated).format("DD MMM 'YY, HH:mm")}
+                </Grid>
+                <Grid item xs={3}>
+                  {file.status === "Deleted" ? (
+                    <BtnComp
+                      label="Restore"
+                      onClick={() => restoreDoc(file.id)}
+                      size="sm"
+                    />
+                  ) : file.status === "Created" ? (
+                    <BtnComp
+                      label="Cancel"
+                      onClick={() => cancelAddDoc(index)}
+                      size="sm"
+                    />
+                  ) : (
+                    <>
+                      <IconButton onClick={() => downloadDoc(file.fileName)}>
+                        <HiDownload />
+                      </IconButton>
+                      <IconButton onClick={() => deleteDoc(file.id)}>
+                        <Delete className="negative-action" />
+                      </IconButton>
+                    </>
+                  )}
+                </Grid>
               </Grid>
-              <Grid item xs={2}>
-                {file.fileType}
-              </Grid>
-              <Grid item xs={3}>
-                {dayjs(file.dateCreated).format("DD MMM 'YY, HH:mm")}
-              </Grid>
-              <Grid item xs={3}>
-                {file.status === "Deleted" ? (
-                  <BtnComp
-                    label="Restore"
-                    onClick={() => restoreDoc(file.id)}
-                    size="sm"
-                  />
-                ) : file.status === "Created" ? (
-                  <BtnComp
-                    label="Cancel"
-                    onClick={() => cancelAddDoc(index)}
-                    size="sm"
-                  />
-                ) : (
-                  <>
-                    <IconButton onClick={() => downloadDoc(file.fileName)}>
-                      <HiDownload />
-                    </IconButton>
-                    <IconButton onClick={() => deleteDoc(file.id)}>
-                      <Delete className="negative-action" />
-                    </IconButton>
-                  </>
-                )}
-              </Grid>
-            </Grid>
-          ))}
-        </div>
-      ) : (
-        <div className="no-doc">No Documents</div>
+            ))}
+          </div>
+        ),
+        "No Documents"
       )}
 
       {newDoc && (

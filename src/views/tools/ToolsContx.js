@@ -5,19 +5,20 @@ const toolsContx = React.createContext();
 
 const ToolsContx = (props) => {
   const [activeTab, setActiveTab] = React.useState(1);
-  const [tools, setTools] = React.useState([]);
+  const [tools, setTools] = React.useState();
   const [inUseTools, setInUseTools] = React.useState([]);
 
   const getTools = () => {
     getEndpoint("/tools").then((res) => {
-      let a = res.reverse();
-      setTools(a);
+      let data = res.failed ? res : res.reverse();
+      setTools(data);
     });
   };
 
   const getInUseTools = () => {
     getEndpoint(`/tools/inUse`).then((res) => {
-      setInUseTools(res.reverse());
+      let data = res.failed ? res : res.reverse();
+      setInUseTools(data);
     });
   };
 

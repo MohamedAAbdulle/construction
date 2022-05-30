@@ -32,10 +32,16 @@ const errorHandler = (res) => {
 export const getEndpoint = async (url, responseType) => {
   let a = { headers };
   if (responseType) a.responseType = responseType;
-  return await axios.get(baseUrl + url, a).then((res) => {
-    console.log(res);
-    return res.data;
-  });
+  return await axios
+    .get(baseUrl + url, a)
+    .then((res) => {
+      console.log(res);
+      return res.data;
+    })
+    .catch((error) => {
+      console.log(error.response);
+      return { failed: true };
+    });
 };
 
 export const postEndpoint = async (url, body) =>

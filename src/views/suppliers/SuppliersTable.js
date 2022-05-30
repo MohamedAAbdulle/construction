@@ -7,8 +7,7 @@ import { deleteEndpoint } from "services/apiFunctions";
 import SupplierForm from "views/suppliers/SupplierForm";
 import { appContext } from "AppContext";
 
-const SuppliersTable = () => {
-  const { getSuppliers, suppliers } = React.useContext(appContext);
+const SuppliersTable = ({ getSuppliers, suppliers }) => {
   const [openDeleteSupplier, setOpenDeleteSupplier] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
 
@@ -18,8 +17,6 @@ const SuppliersTable = () => {
       setOpenDeleteSupplier(false);
     });
   };
-
-  
 
   const data = suppliers.map((r) => {
     return [

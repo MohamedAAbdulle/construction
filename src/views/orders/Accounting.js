@@ -2,16 +2,33 @@ import React from "react";
 import AccountingHead from "./AccountingHead";
 import AccountingTable from "./AccountingTable";
 import "./accounting.css";
-import { AccountingContx } from "./AccountingContx";
+import { accountingContx, AccountingContx } from "./AccountingContx";
+import fetchStatus from "components/fetch-status/fetchStatus";
 
 const Accounting = () => {
   return (
     <div>
       <AccountingContx>
-        <AccountingHead />
-        <AccountingTable />
+        <AccountCont />
       </AccountingContx>
     </div>
+  );
+};
+
+const AccountCont = () => {
+  const { accounts } = React.useContext(accountingContx);
+
+  return (
+    <>
+      <AccountingHead />
+      {fetchStatus(
+        accounts,
+        () => (
+          <AccountingTable />
+        ),
+        "No Orders"
+      )}
+    </>
   );
 };
 

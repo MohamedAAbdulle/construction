@@ -9,8 +9,8 @@ const AppContext = (props) => {
 
   const getWorkerTypes = () => {
     getEndpoint("/Workers/WorkerTypes").then((res) => {
-      console.log(res);
-      setWorkerTypes(res);
+      let data = res.failed ? res : res.reverse();
+      setWorkerTypes(data);
     });
   };
 
@@ -18,13 +18,15 @@ const AppContext = (props) => {
     (hardFetch || !invList) &&
       getEndpoint("/inventory").then((res) => {
         console.log(res);
-        setInvList(res.reverse());
+        let data = res.failed ? res : res.reverse();
+        setInvList(data);
       });
   };
   const getSuppliers = (hardFetch) => {
     (hardFetch || !suppliers) &&
       getEndpoint("/suppliers").then((res) => {
-        setSuppliers(res.reverse());
+        let data = res.failed ? res : res.reverse();
+        setSuppliers(data);
       });
   };
 

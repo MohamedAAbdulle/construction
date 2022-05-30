@@ -1,4 +1,5 @@
 import { appContext } from "AppContext";
+import fetchStatus from "components/fetch-status/fetchStatus";
 import React from "react";
 import SuppliersHead from "./SuppliersHead";
 import SuppliersTable from "./SuppliersTable";
@@ -9,11 +10,13 @@ const Suppliers = () => {
   React.useEffect(getSuppliers, []);
   return (
     <div>
-      {suppliers && (
-        <>
-          <SuppliersHead />
-          <SuppliersTable />
-        </>
+      <SuppliersHead />
+      {fetchStatus(
+        suppliers,
+        () => (
+          <SuppliersTable suppliers={suppliers} getSuppliers={getSuppliers} />
+        ),
+        "No Suppliers"
       )}
     </div>
   );

@@ -9,12 +9,8 @@ import Ellipsis from "components/ellipsis/Ellipsis";
 import dayjs from "dayjs";
 import DeleteInv from "./modals/DeleteInv";
 import EditInv from "./modals/EditInv";
-import { appContext } from "AppContext";
-import { CircularProgress } from "@material-ui/core";
 
-export default function Inventory() {
-  const { invList, getInvList } = React.useContext(appContext);
-
+export default function Inventory({ invList }) {
   const getInventoryStatus = (inv) => {
     let a = "";
     if (inv.quantity <= 0) {
@@ -38,53 +34,47 @@ export default function Inventory() {
     setModal("");
   };
 
-  React.useEffect(getInvList, []);
   return (
     <>
-      {invList ? (
-        <TableCont
-          tableTitles={[
-            "Name",
-            "Unit",
-            "Quantity",
-            "Status",
-            "Last Modified",
-            "",
-          ]}
-          dataList={invList.map((inv) => [
-            inv.name,
-            inv.unit,
-            inv.quantity,
-            getInventoryStatus(inv),
-            dayjs(inv.modifiedDate).format("DD-MM-YY, HH:mm"),
-            <Ellipsis
-              menus={[
-                { onClick: () => tableAction("add", inv), label: "Add More" },
-                {
-                  onClick: () => tableAction("remove", inv),
-                  label: "Take Out",
-                },
-                {
-                  onClick: () => tableAction("history", inv),
-                  label: "History",
-                },
-                {
-                  onClick: () => tableAction("edit", inv),
-                  label: "Edit",
-                },
-                {
-                  onClick: () => tableAction("delete", inv),
-                  label: "Delete",
-                },
-              ]}
-            />,
-          ])}
-        />
-      ) : (
-        <CircularProgress/>
-        //<h4 className="centered">Loading...</h4>
-      )}
-
+      <TableCont
+        tableTitles={[
+          "Name",
+          "Unit",
+          "Quantity",
+          "Status",
+          "Last Modified",
+          "",
+        ]}
+        dataList={invList.map((inv) => [
+          inv.name,
+          inv.unit,
+          inv.quantity,
+          getInventoryStatus(inv),
+          dayjs(inv.modifiedDate).format("DD-MM-YY, HH:mm"),
+          <Ellipsis
+            menus={[
+              { onClick: () => tableAction("add", inv), label: "Add More" },
+              {
+                onClick: () => tableAction("remove", inv),
+                label: "Take Out",
+              },
+              {
+                onClick: () => tableAction("history", inv),
+                label: "History",
+              },
+              {
+                onClick: () => tableAction("edit", inv),
+                label: "Edit",
+              },
+              {
+                onClick: () => tableAction("delete", inv),
+                label: "Delete",
+              },
+            ]}
+          />,
+        ])}
+      />
+      )
       {modal === "add" && (
         <AddMore open={true} onClose={closeModal} inv={selectedInv} />
       )}

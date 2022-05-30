@@ -15,7 +15,7 @@ import DocumentsComp from "components/documents/DocumentsComp";
 
 const OrderForm = ({ closeSlider, order }) => {
   const { getAccounts } = React.useContext(accountingContx);
-  const [docs, setDocs] = React.useState([]);
+  const [docs, setDocs] = React.useState();
 
   const formState = new FormData();
 
@@ -30,18 +30,10 @@ const OrderForm = ({ closeSlider, order }) => {
     onChangeSimple(e, state, setState);
   };
 
-  const getDocs = () => {
-    if (order.id) {
-      getEndpoint(`/orders/${order.id}`).then((res) => setDocs(res));
-    }
-  };
-
-  React.useEffect(getDocs, []);
-
   const onSave = () => {
     let a;
     if (order.id) {
-      if (docs.length) {
+      if (docs && docs.length) {
         let a = true;
         docs.forEach((doc) => {
           if (doc.status === "Created") {
@@ -54,7 +46,7 @@ const OrderForm = ({ closeSlider, order }) => {
       }
       formState.set(
         "orderString",
-        JSON.stringify({ ...state, documents: docs })
+        JSON.stringify({ ...state, documents: docs || [] })
       );
       a = putEndpoint(`/orders/${state.id}`, formState);
       //a = postEndpoint(`/hello`, formState);
@@ -176,7 +168,13 @@ const OrderForm = ({ closeSlider, order }) => {
             </Grid>
           </Grid>
         </div>
-        {order.id && <DocumentsComp docs={docs} setDocs={setDocs} />}
+        {order.id && (
+          <DocumentsComp
+            docs={docs}
+            setDocs={setDocs}
+            url={`/orders/${order.id}`}
+          />
+        )}
       </div>
     </div>
   );

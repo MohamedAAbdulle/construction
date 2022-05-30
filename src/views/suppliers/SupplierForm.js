@@ -6,51 +6,19 @@ import { getEndpoint, postEndpoint, putEndpoint } from "services/apiFunctions";
 import onChangeSimple from "utils/onChangeSimple";
 import findError from "utils/findError";
 import { Add, Close, Delete } from "@material-ui/icons";
-import NewQuote from "./NewQuote";
+import NewQuote from "./quotes/NewQuote";
 import { appContext } from "AppContext";
+import Quotes from "./quotes/Quotes";
 
 const SupplierForm = ({ supplier, closeSlider }) => {
   const { invList, getInvList, getSuppliers } = React.useContext(appContext);
   const [errors, setErrors] = React.useState({});
 
   const [state, setState] = React.useState(supplier || {});
-  const [quotes, setQuotes] = React.useState([]);
-  const [deletedQuotes, setDeletedQuotes] = React.useState([]);
-  const [openNewQuote, setOpenNewQuote] = React.useState(false);
+  const [quotes, setQuotes] = React.useState();
 
   const onChanged = (e) => {
     onChangeSimple(e, state, setState);
-  };
-
-  const addQuote = (quote) => {
-    setQuotes([...quotes, { ...quote, status: "Created" }]);
-    setOpenNewQuote(false);
-  };
-
-  const editQuote = (e, index) => {
-    const { value, name } = e.target;
-    setQuotes((prev) => {
-      let newQuotes = JSON.parse(JSON.stringify(prev));
-      let modifiedQuote = newQuotes[index];
-      modifiedQuote[name] = value === "" ? value : parseInt(value);
-      if (modifiedQuote.id) {
-        modifiedQuote.status = "Modified";
-      }
-      return newQuotes;
-    });
-  };
-
-  const deleteQuote = (index) => {
-    setQuotes((prev) => {
-      let newQuotes = JSON.parse(JSON.stringify(prev));
-      let modifiedQuote = newQuotes[index];
-      if (modifiedQuote.id) {
-        modifiedQuote.status = "Deleted";
-        setDeletedQuotes([...deletedQuotes, modifiedQuote]);
-      }
-      newQuotes.splice(index, 1);
-      return newQuotes;
-    });
   };
 
   const onSave = () => {
@@ -58,7 +26,7 @@ const SupplierForm = ({ supplier, closeSlider }) => {
     if (state.id) {
       saveAction = putEndpoint(`/suppliers/${state.id}`, {
         supplier: state,
-        quotes: [...quotes, ...deletedQuotes],
+        quotes: [...quotes],
       });
     } else {
       saveAction = postEndpoint(`/suppliers`, state);
@@ -73,20 +41,11 @@ const SupplierForm = ({ supplier, closeSlider }) => {
     });
   };
 
-  const findInventory = (id) => {
-    let inv = invList.find((i) => i.id === id);
-    console.log(invList);
-    if (inv) {
-      return { name: inv.name, unit: inv.unit };
-    } else {
-      return {};
-    }
-  };
-
   const getQuotes = () => {
     if (state.id) {
       getEndpoint(`/suppliers/${state.id}/quotes`).then((res) => {
-        setQuotes(res);
+        let data = res.failed ? res : res.reverse();
+        setQuotes(data);
       });
     }
   };
@@ -159,57 +118,14 @@ const SupplierForm = ({ supplier, closeSlider }) => {
         </div>
 
         {state.id && (
-          <div className="card-comp">
-            <div className="card-title">
-              Quotes
-              <IconButton onClick={() => setOpenNewQuote(true)}>
-                <Add />
-              </IconButton>
-            </div>
-            {quotes.map((quote, index) => {
-              let invInfo = findInventory(quote.inventoryId);
-
-              return (
-                <Grid container spacing={2} key={index} alignItems="center">
-                  <Grid item xs={4}>
-                    <p>{invInfo.name}</p>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <InputComp
-                      onChange={(e) => editQuote(e, index)}
-                      value={quote.amount}
-                      postfix={invInfo.unit}
-                      label="Amount"
-                      name="amount"
-                      error={findError(`Quotes[${index}].Amount`, errors)}
-                      required
-                    />
-                  </Grid>
-                  <Grid item xs={3}>
-                    <InputComp
-                      onChange={(e) => editQuote(e, index)}
-                      value={quote.price}
-                      label="Price"
-                      name="price"
-                      error={findError(`Quotes[${index}].Price`, errors)}
-                      required
-                    />
-                  </Grid>
-
-                  <Grid item xs={2}>
-                    <IconButton onClick={() => deleteQuote(index)}>
-                      <Delete />
-                    </IconButton>
-                  </Grid>
-                </Grid>
-              );
-            })}
-          </div>
+          <Quotes
+            quotes={quotes}
+            setQuotes={setQuotes}
+            invList={invList}
+            errors={errors}
+          />
         )}
       </div>
-      {openNewQuote && (
-        <NewQuote onClose={() => setOpenNewQuote(false)} addQuote={addQuote} />
-      )}
     </div>
   );
 };
