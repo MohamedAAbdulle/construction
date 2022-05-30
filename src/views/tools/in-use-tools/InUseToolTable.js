@@ -20,8 +20,9 @@ const InUseToolsTable = ({ workers }) => {
 
   const data = inUseTools.map((r) => {
     console.log(r);
-    let AssociatedTool = tools.find((t) => t.id === r.toolId) || {};
-    let AssociatedWorker = workers.find((w) => w.id === r.workerId) || {};
+    let AssociatedTool = (tools || []).find((t) => t.id === r.toolId) || {};
+    let AssociatedWorker =
+      (workers || []).find((w) => w.id === r.workerId) || {};
 
     return [
       <div>{AssociatedTool.name}</div>,

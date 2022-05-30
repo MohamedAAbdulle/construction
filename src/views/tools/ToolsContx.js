@@ -6,7 +6,7 @@ const toolsContx = React.createContext();
 const ToolsContx = (props) => {
   const [activeTab, setActiveTab] = React.useState(1);
   const [tools, setTools] = React.useState();
-  const [inUseTools, setInUseTools] = React.useState([]);
+  const [inUseTools, setInUseTools] = React.useState();
 
   const getTools = () => {
     getEndpoint("/tools").then((res) => {
