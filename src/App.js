@@ -14,34 +14,64 @@ import Suppliers from "views/suppliers/Suppliers";
 import InUseTools from "views/tools/in-use-tools/InUseTools";
 import Sidebar from "views/sidebar/Sidebar";
 import Tools from "views/tools/Tools";
+import { CircularProgress } from "@material-ui/core";
+import { checkJwtStatus, getAccessToken, redirectToLogin } from "services/auth";
 
 export default function App() {
+  const [appContent, setAppContent] = React.useState(<CircularProgress />);
+
+  const setUp = async () => {
+    const status = checkJwtStatus();
+    if (status === "VALID") {
+      setAppContent(<AppAuthorized />);
+    } else if (status === "EXPIRED" || status === "MISSING") {
+      var urlParams = new URLSearchParams(window.location.search);
+      var code = urlParams.get("code");
+      if (!code) {
+        redirectToLogin();
+      } else {
+        await getAccessToken(status).then(() => {
+          setAppContent(<AppAuthorized />);
+        });
+      }
+    }
+  };
+  React.useEffect(() => {
+    setUp();
+  }, []);
+  const AppAuthorized = () => {
+    return (
+      <>
+        <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar={true}
+          closeOnClick={true}
+          pauseOnHover={true}
+          draggable={true}
+          progress={undefined}
+        />
+        {/* <Topbar /> */}
+        <Sidebar />
+        <div className="main-view">
+          <Routes>
+            <Route path="/" element={<Inventory />} />
+            <Route path="/inventory" element={<Inventory />} />
+            <Route path="/orders" element={<Accounting />} />
+            <Route path="/workers" element={<Workers />} />
+            <Route path="/suppliers" element={<Suppliers />} />
+            <Route path="/sub-contracts" element={<Contracts />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/tools" element={<Tools />} />
+            <Route path="/tools-inuse" element={<InUseTools />} />
+          </Routes>
+        </div>
+      </>
+    );
+  };
   return (
     <div className="app" id="mine">
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={true}
-        closeOnClick={true}
-        pauseOnHover={true}
-        draggable={true}
-        progress={undefined}
-      />
-      {/* <Topbar /> */}
-      <Sidebar />
-      <div className="main-view">
-        <Routes>
-          <Route path="/" element={<Inventory />} />
-          <Route path="/inventory" element={<Inventory />} />
-          <Route path="/orders" element={<Accounting />} />
-          <Route path="/workers" element={<Workers />} />
-          <Route path="/suppliers" element={<Suppliers />} />
-          <Route path="/sub-contracts" element={<Contracts />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/tools" element={<Tools />} />
-          <Route path="/tools-inuse" element={<InUseTools />} />
-        </Routes>
-      </div>
+      {appContent}
     </div>
   );
 }

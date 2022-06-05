@@ -7,6 +7,7 @@ import Ellipsis from "components/ellipsis/Ellipsis";
 import StickySlider from "components/sliderModal/StickySlider";
 import Settings from "views/sidebar/profile/Settings";
 import sidebarRoutes from "./sidebarRoutes";
+import { logoutRedirect } from "services/auth";
 
 const Sidebar = () => {
   const [open, setOpen] = React.useState(false);
@@ -19,7 +20,12 @@ const Sidebar = () => {
           cover={<AccountCircle style={{ color: "white" }} />}
           menus={[
             { onClick: () => {}, label: "My Profile" },
-            { onClick: () => {}, label: "Sign Out" },
+            {
+              onClick: () => {
+                logoutRedirect();
+              },
+              label: "Sign Out",
+            },
             {
               onClick: () => setOpen(true),
               label: "Settings",
