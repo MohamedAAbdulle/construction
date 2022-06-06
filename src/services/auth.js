@@ -2,23 +2,27 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 
 const getRedirectURIOrigin = () => {
-  /* if (env === envEnum.local) */ return "http://localhost:3000/";
-  /* if (env === envEnum.dev)
+  if (window.location.host === "localhost:3000") {
+    return "http://localhost:3000/";
+  } else {
     return "https://master.d2bjs3tgdzol7q.amplifyapp.com/";
-
-  return "https://master.d2bjs3tgdzol7q.amplifyapp.com/"; */
+  }
 };
-const url = "https://construction.auth.ap-south-1.amazoncognito.com";
+const auth_base_url = "https://construction.auth.ap-south-1.amazoncognito.com";
 const client_id = "7lt3eklrmteuqrcmqp3rl9itbk";
 let redirect_uri = getRedirectURIOrigin();
 
 const getTokens = async (params) => {
-  return await axios.post(url + "/oauth2/token?" + params, JSON.stringify({}), {
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Accept: "*/*",
-    },
-  });
+  return await axios.post(
+    auth_base_url + "/oauth2/token?" + params,
+    JSON.stringify({}),
+    {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "*/*",
+      },
+    }
+  );
 };
 
 export const getAccessToken = async (status) => {
@@ -83,14 +87,21 @@ export async function redirectToLogin() {
     redirect_uri,
   };
   let formattedParrM = new URLSearchParams(parrMm).toString();
-  window.location = url + "/oauth2/authorize?" + formattedParrM;
+  window.location = auth_base_url + "/oauth2/authorize?" + formattedParrM;
 }
 
-export function logoutRedirect() {
+export function logoutRedirect(url) {
+  let logout_uri = "https://www.google.com/";
+
+  if (url && typeof url === "string") {
+    logout_uri = getRedirectURIOrigin() + url;
+  }
+
   let s = {
     client_id: "7lt3eklrmteuqrcmqp3rl9itbk",
-    logout_uri: "https://www.google.com/",
+    logout_uri,
   };
+
   sessionStorage.removeItem("cachedJwt");
   let c = new URLSearchParams(s).toString();
   window.location = `https://construction.auth.ap-south-1.amazoncognito.com/logout?${c}`;
