@@ -11,7 +11,7 @@ import WorkerSearcher from "components/searchers/WorkerSearcher";
 import ToolSearcher from "components/searchers/ToolSearcher";
 
 const NewInUse = ({ closeModal, workers }) => {
-  const { getInUseTools, tools } = React.useContext(toolsContx);
+  const { getInUseTools, tools, getTools } = React.useContext(toolsContx);
   const [tool, setTool] = React.useState({
     dateAssigned: dayjs().format("YYYY-MM-DDTHH:mm"),
   });
@@ -27,6 +27,7 @@ const NewInUse = ({ closeModal, workers }) => {
       if (res && res.status === 200) {
         closeModal();
         getInUseTools();
+        getTools();
       } else if (res && res.errors) {
         setErrors(res.errors);
       }

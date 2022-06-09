@@ -6,13 +6,15 @@ import dayjs from "dayjs";
 import { toolsContx } from "../ToolsContx";
 
 const InUseToolsTable = ({ workers }) => {
-  const { tools, getInUseTools, inUseTools } = React.useContext(toolsContx);
+  const { tools, getInUseTools, inUseTools, getTools } =
+    React.useContext(toolsContx);
 
   const returnTool = (tool) => {
     deleteEndpoint(
       `/tools/inUse?workerId=${tool.workerId}&toolId=${tool.toolId}`
     ).then(() => {
       getInUseTools();
+      getTools();
     });
   };
 

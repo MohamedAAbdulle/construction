@@ -74,7 +74,7 @@ export default function Inventory({ invList }) {
           />,
         ])}
       />
-      )
+
       {modal === "add" && (
         <AddMore open={true} onClose={closeModal} inv={selectedInv} />
       )}

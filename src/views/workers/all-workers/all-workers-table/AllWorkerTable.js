@@ -11,8 +11,7 @@ import findWorkerTypeName from "utils/findEnumValue";
 
 const AllWorkersTable = () => {
   const { WorkerTypes } = React.useContext(appContext);
-  const { getAllWorkers, allWorkers } =
-    React.useContext(workerContext);
+  const { getAllWorkers, allWorkers } = React.useContext(workerContext);
 
   const [openEditActive, setOpenEditWorker] = React.useState(false);
   const [openDeleteWorker, setOpenDeleteWorker] = React.useState(false);
@@ -32,7 +31,7 @@ const AllWorkersTable = () => {
     postEndpoint(`/workers/activeworkers`, {
       workerId: id,
       chart: a.join(""),
-      date: dayjs().subtract(1, "days").day(1),
+      date: dayjs().subtract(1, "days").day(1).format("YYYY-MM-DD"),
     });
   };
 
