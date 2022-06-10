@@ -32,7 +32,7 @@ export const getAccessToken = async (status) => {
     code,
     client_id,
     grant_type: "authorization_code",
-    redirect_uri: "http://localhost:3000/",
+    redirect_uri,
   };
   let formattedParrM = new URLSearchParams(parrMm).toString();
 
