@@ -3,7 +3,9 @@ import { toast } from "react-toastify";
 
 //let baseUrl = "https://localhost:5001";
 let baseUrl = "https://ery9ct8r48.execute-api.ap-south-1.amazonaws.com";
-const customerId = 4;
+let cachedJwt = JSON.parse(sessionStorage.getItem("cachedJwt"));
+let userInfo = (cachedJwt || {}).userInfo;
+const customerId = (userInfo || {})["custom:customerId"] || 0;
 let headers = {
   accept: "application/json",
   "Content-Type": "application/json",
@@ -21,7 +23,6 @@ const errorHandler = (res) => {
       errorMessage = title ? title : "400: Bad Request";
       if (errors) {
         toast.error(errorMessage);
-
         return { errors };
       }
     }

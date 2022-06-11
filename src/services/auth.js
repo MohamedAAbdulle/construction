@@ -36,7 +36,7 @@ export const getAccessToken = async (status) => {
   };
   let formattedParrM = new URLSearchParams(parrMm).toString();
 
-  getTokens(formattedParrM).then((res) => {
+  return getTokens(formattedParrM).then((res) => {
     console.log(res);
     const {
       access_token,

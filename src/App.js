@@ -30,9 +30,13 @@ export default function App() {
       if (!code) {
         redirectToLogin();
       } else {
-        await getAccessToken(status).then(() => {
-          setAppContent(<AppAuthorized />);
-        });
+        await getAccessToken(status)
+          .then((res) => {
+            setAppContent(<AppAuthorized />);
+          })
+          .catch((res) => {
+            setAppContent(<p>Failed to load</p>);
+          });
       }
     }
   };
