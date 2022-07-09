@@ -6,7 +6,7 @@ const getRedirectURIOrigin = () => {
     return "http://localhost:3000/";
   } else {
     //return "https://master.d2bjs3tgdzol7q.amplifyapp.com/";
-    return "https://urrdan-builders.com/";
+    return "https://www.urrdan-builders.com/";
   }
 };
 const auth_base_url = "https://construction.auth.ap-south-1.amazoncognito.com";
