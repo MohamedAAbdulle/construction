@@ -3,16 +3,19 @@ import { toast } from "react-toastify";
 
 //let baseUrl = "https://localhost:5001";
 let baseUrl = "https://ery9ct8r48.execute-api.ap-south-1.amazonaws.com";
-let cachedJwt = JSON.parse(sessionStorage.getItem("cachedJwt"));
-let userInfo = (cachedJwt || {}).userInfo;
-const customerId = (userInfo || {})["custom:customerId"] || 0;
-let headers = {
-  accept: "application/json",
-  "Content-Type": "application/json",
-  "Access-Control-Allow-Origin": "*",
-  customerId,
+const headerSetup = () => {
+  let cachedJwt = JSON.parse(sessionStorage.getItem("cachedJwt"));
+  let userInfo = (cachedJwt || {}).userInfo;
+  const customerId = (userInfo || {})["custom:customerId"] || 0;
+  return {
+    headers: {
+      accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      customerId,
+    },
+  };
 };
-
 const errorHandler = (res) => {
   //test 404
   let errorMessage = "Unknown Error Occured";
@@ -31,10 +34,10 @@ const errorHandler = (res) => {
 };
 
 export const getEndpoint = async (url, responseType) => {
-  let a = { headers };
-  if (responseType) a.responseType = responseType;
+  const { headers } = headerSetup();
+  if (responseType) headers.responseType = responseType;
   return await axios
-    .get(baseUrl + url, a)
+    .get(baseUrl + url, { headers })
     .then((res) => {
       console.log(res);
       return res.data;
@@ -47,9 +50,7 @@ export const getEndpoint = async (url, responseType) => {
 
 export const postEndpoint = async (url, body) =>
   await axios
-    .post(baseUrl + url, body, {
-      headers,
-    })
+    .post(baseUrl + url, body, headerSetup())
     .then((res) => {
       toast.success(res.data);
       return res;
@@ -58,9 +59,7 @@ export const postEndpoint = async (url, body) =>
 
 export const putEndpoint = async (url, body) =>
   await axios
-    .put(baseUrl + url, body, {
-      headers,
-    })
+    .put(baseUrl + url, body, headerSetup())
     .then((res) => {
       toast.success(res.data);
       return res;

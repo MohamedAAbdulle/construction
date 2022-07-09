@@ -4,7 +4,7 @@ import { ToastContainer } from "react-toastify";
 import Accounting from "views/orders/Accounting";
 import Contracts from "views/contract/Contracts";
 import Inventory from "views/inventory/Inventory";
-import Topbar from "views/topbar/Topbar";
+import { AppContext } from "AppContext";
 import "react-toastify/dist/ReactToastify.css";
 import "./utilities.sass";
 import "./app.sass";
@@ -45,7 +45,7 @@ export default function App() {
   }, []);
   const AppAuthorized = () => {
     return (
-      <>
+      <AppContext>
         <ToastContainer
           position="top-center"
           autoClose={3000}
@@ -70,7 +70,7 @@ export default function App() {
             <Route path="/tools-inuse" element={<InUseTools />} />
           </Routes>
         </div>
-      </>
+      </AppContext>
     );
   };
   return (
