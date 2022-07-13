@@ -6,7 +6,7 @@ import WorkersTab from "views/workers/workers-tab/WorkersTab";
 import ActivityDateRange from "./activity-date-range/ActivityDateRange";
 import NewActiveWorkerSlider from "./create-active-worker/NewActiveWorkerSlider";
 
-const ActiveWorkersHeader = ({ totalPay }) => {
+const ActiveWorkersHeader = ({ totalPay, activeWorkers }) => {
   const [openNewActive, setOpenNewActive] = React.useState(false);
 
   return (
@@ -23,7 +23,11 @@ const ActiveWorkersHeader = ({ totalPay }) => {
 
         <Grid item className="active-workers-total-pay">
           <span style={{ marginRight: "10px" }}>Total Pay:</span>
-          <span className="bold"> {digitsToCurrency(totalPay)}</span>
+          <span className="bold">
+            {digitsToCurrency(
+              activeWorkers && activeWorkers.length ? totalPay : 0
+            )}
+          </span>
         </Grid>
 
         <Grid item>

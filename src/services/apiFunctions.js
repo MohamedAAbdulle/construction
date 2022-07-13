@@ -39,7 +39,7 @@ export const getEndpoint = async (url, responseType) => {
   return await axios
     .get(baseUrl + url, { headers })
     .then((res) => {
-      console.log(res);
+      //console.log(res);
       return res.data;
     })
     .catch((error) => {

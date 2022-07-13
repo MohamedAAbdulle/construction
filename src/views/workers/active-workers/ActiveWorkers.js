@@ -5,29 +5,29 @@ import { workerContext } from "../WorkerContext";
 import fetchStatus from "components/fetch-status/fetchStatus";
 
 const ActiveWorkers = () => {
-  const { activeWorkers, allWorkers, getActiveWorkers, activeWeek } =
-    React.useContext(workerContext);
+  const {
+    activeWorkers,
+    allWorkers,
+    getActiveWorkers,
+    activeWeek,
+    totalPay,
+    updateTotalPay,
+  } = React.useContext(workerContext);
 
-  const [totalPay, setTotalPay] = React.useState(0);
-  const updateTotalPay = (total) => {
-    let a = totalPay + total;
-    setTotalPay(100);
-  };
-
-  const vv = () => {
+  const setUp = () => {
     getActiveWorkers();
   };
 
-  React.useEffect(vv, [activeWeek]);
+  React.useEffect(setUp, [activeWeek]);
 
   return (
     <div>
-      <ActiveWorkersHeader totalPay={totalPay} />
+      <ActiveWorkersHeader totalPay={totalPay} activeWorkers={activeWorkers} />
       {fetchStatus(
         activeWorkers,
         () => (
           <ActiveWorkersTable
-            updateTotalPay={setTotalPay}
+            updateTotalPay={updateTotalPay}
             activeWorkers={activeWorkers}
             allWorkers={allWorkers}
             getActiveWorkers={getActiveWorkers}

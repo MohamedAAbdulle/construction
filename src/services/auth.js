@@ -64,6 +64,7 @@ export const getAccessToken = async (status) => {
       expiresAt,
       refreshAt,
       userInfo,
+      //userInfo: { ...userInfo, ["custom:customerId"]: 2 },
     };
     sessionStorage.setItem("cachedJwt", JSON.stringify(jwt));
   });
