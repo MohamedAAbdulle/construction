@@ -29,6 +29,7 @@ const getTokens = async (params) => {
 export const getAccessToken = async (status) => {
   var urlParams = new URLSearchParams(window.location.search);
   var code = urlParams.get("code");
+  window.history.pushState({}, "", "/");
   let parrMm = {
     code,
     client_id,
@@ -52,7 +53,7 @@ export const getAccessToken = async (status) => {
     const refreshAt = new Date(
       // Upon user's activity, refresh 5 minutes before token actually expires.
       // User inactivity till the access token expires will force re-authentication
-      Date.now() + (expires_in - 20 * 60) * 1000
+      Date.now() + (expires_in - 1 * 60) * 1000
     );
 
     const jwt = {
@@ -75,7 +76,7 @@ export const checkJwtStatus = () => {
   if (cachedJwt) {
     if (cachedJwt.refreshAt > new Date().toISOString()) return "VALID";
     else if (cachedJwt.expiresAt <= new Date().toISOString()) return "EXPIRED";
-    else return "REFRESH";
+    else return "VALID"; //"REFRESH";
   } else {
     return "MISSING";
   }

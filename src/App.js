@@ -24,17 +24,20 @@ export default function App() {
     const status = checkJwtStatus();
     if (status === "VALID") {
       setAppContent(<AppAuthorized />);
-    } else if (status === "EXPIRED" || status === "MISSING") {
+
+      //} else if (status === "EXPIRED" || status === "MISSING") {
+      //handle REFRESH separately
+    } else {
       var urlParams = new URLSearchParams(window.location.search);
       var code = urlParams.get("code");
       if (!code) {
         redirectToLogin();
       } else {
-        await getAccessToken(status)
-          .then((res) => {
+        await getAccessToken()
+          .then(() => {
             setAppContent(<AppAuthorized />);
           })
-          .catch((res) => {
+          .catch(() => {
             setAppContent(<p>Failed to load</p>);
           });
       }
