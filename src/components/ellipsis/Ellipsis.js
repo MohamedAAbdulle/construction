@@ -18,17 +18,19 @@ const Ellipsis = ({ menus, cover }) => {
         anchorEl={anchorEl}
         onClose={() => setAnchorEl(null)}
       >
-        {menus.map((menu, index) => (
-          <MenuItem
-            onClick={() => {
-              menu.onClick();
-              setAnchorEl(null);
-            }}
-            key={index}
-          >
-            {menu.label}
-          </MenuItem>
-        ))}
+        {menus
+          .filter((menu) => menu)
+          .map((menu, index) => (
+            <MenuItem
+              onClick={() => {
+                menu.onClick();
+                setAnchorEl(null);
+              }}
+              key={index}
+            >
+              {menu.label}
+            </MenuItem>
+          ))}
       </Menu>
     </>
   );

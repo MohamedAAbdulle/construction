@@ -1,50 +1,86 @@
 import React from "react";
 import ModalCont from "components/modalCont/ModalCont";
 import InputComp from "components/input/InputComp";
-import { Grid } from "@material-ui/core";
-import { pricePointType } from "utils/enums";
+import { contractStatus } from "utils/enums";
+import BtnComp from "components/btn-comp/BtnComp";
+import dateFormatter from "utils/dateFormatter";
 
-const AddPricePoint = ({ onClose, onAction, subName }) => {
-  const [state, setState] = React.useState({});
+const AddPricePoint = ({ onClose, onContractItemChanged, open }) => {
+  const [cont, index] = open;
+  const [state, setState] = React.useState(cont || {});
   const onChange = (e) => {
     const { value, name } = e.target;
     setState({ ...state, [name]: value });
   };
-  const on_action = () => {
-    if (state.priceType && state.priceAmount) {
-      onAction(subName, state);
-      onClose();
-    }
+
+  const onSave = () => {
+    //handle validation
+    let _action = "Created";
+    if (state.id) _action = "Edited";
+    onContractItemChanged(index, { ...state, _action });
+    onClose();
   };
+
   return (
     <div>
-      <ModalCont open={true} onClose={onClose} onAction={on_action}>
-        <Grid
-          container
-          justifyContent="space-between"
-          alignItems="center"
-          spacing={2}
-        >
-          <Grid item xs={6}>
+      <ModalCont open={true} onClose={onClose} title="Contract Edit">
+        <div className="row g-4">
+          <div className="col-12 col-md-4">
             <InputComp
-              type="select"
-              label="Price Type"
-              name="priceType"
+              label="Name"
+              name="title"
               required
               onChange={onChange}
-              options={pricePointType}
+              value={state.title}
             />
-          </Grid>
-          <Grid item xs={6}>
+          </div>
+
+          <div className="col-12 col-md-4">
             <InputComp
               type="number"
-              label="Price Amount"
-              name="priceAmount"
+              label="Price"
+              name="price"
+              value={state.price}
               required
               onChange={onChange}
             />
-          </Grid>
-        </Grid>
+          </div>
+          <div className="col-12 col-md-4">
+            <InputComp
+              type="select"
+              label="Status"
+              name="status"
+              required
+              onChange={onChange}
+              options={contractStatus}
+              value={state.status}
+            />
+          </div>
+          <div className="col-12 col-md-4">
+            <InputComp
+              type="date"
+              label="Start Date"
+              name="startDate"
+              required
+              onChange={onChange}
+              value={dateFormatter(state.startDate, "YYYY-MM-DD")}
+            />
+            
+          </div>
+          <div className="col-12 col-md-4">
+            <InputComp
+              type="date"
+              label="End Date"
+              name="endDate"
+              required
+              onChange={onChange}
+              value={dateFormatter(state.endDate, "YYYY-MM-DD")}
+            />
+          </div>
+        </div>
+        <div className="modal-btns">
+          <BtnComp label="Save" onClick={onSave} />
+        </div>
       </ModalCont>
     </div>
   );

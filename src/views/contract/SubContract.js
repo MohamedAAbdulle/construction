@@ -1,52 +1,97 @@
 import { Grid, IconButton } from "@material-ui/core";
 import React from "react";
 import AddPricePoint from "./modals/AddPricePoint";
-import { Add, MoreVert } from "@material-ui/icons";
+import { Add } from "@material-ui/icons";
 import { digitsToCurrency } from "utils/currencyFormatter";
 import BtnComp from "components/btn-comp/BtnComp";
+import TableCont from "components/table-comp/TableCont";
+import Ellipsis from "components/ellipsis/Ellipsis";
+import fetchStatus from "components/fetch-status/fetchStatus";
+import dateFormatter from "utils/dateFormatter";
 
-const SubContract = ({ sub, onPricePointAdd }) => {
+const SubContract = ({ conts, onContractItemChanged }) => {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <div className="sub-contract">
-      <Grid container justifyContent="space-between" alignItems="center">
-        <Grid item>
-          <h3>{sub.name}</h3>
-        </Grid>
-        <Grid item>
-          <BtnComp label="ADD" icon={<Add />} onClick={() => setOpen(true)} />
-        </Grid>
-      </Grid>
+    <div className="contract-items card-comp">
+      <div className="card-title">
+        Contract Items
+        <BtnComp
+          label="ADD"
+          icon={<Add />}
+          onClick={() => setOpen([])}
+          size="sm"
+        />
+      </div>
 
-      {sub.pricePoints.map((pricePoint, key) => (
-        <Grid
-          container
-          justifyContent="space-between"
-          alignItems="center"
-          key={key}
-          style={{
-            maxWidth: "700px",
-            background: "#c0c2c9",
-            margin: "10px auto",
-            padding: "0px 20px",
-            borderRadius: "5px",
-          }}
-        >
-          <Grid item>{pricePoint.priceType}</Grid>
-          <Grid item> {digitsToCurrency(pricePoint.priceAmount)}</Grid>
-          <Grid item>
-            <IconButton onClick={() => {}}>
-              <MoreVert />
-            </IconButton>
-          </Grid>
-        </Grid>
-      ))}
+      {fetchStatus(
+        conts,
+        () => (
+          <TableCont
+            tableTitles={[
+              "Contract item",
+              "Price",
+              "Start & End",
+              "Status",
+              "",
+            ]}
+            classes={conts.map((x) => x._action)}
+            dataList={conts.map((cont, index) => [
+              cont.title,
+              digitsToCurrency(cont.price),
+              `${dateFormatter(cont.startDate, "DD,MMM")} -- ${dateFormatter(
+                cont.endDate,
+                "DD,MMM"
+              )}`,
+              cont.status,
+              <Ellipsis
+                menus={[
+                  {
+                    onClick: () => {
+                      setOpen([cont, index]);
+                    },
+                    label: "Edit",
+                  },
+                  {
+                    onClick: () => {},
+                    label: "Documents",
+                  },
+
+                  cont._action !== "Deleted" &&
+                    cont._action !== "Created" && {
+                      onClick: () => {
+                        onContractItemChanged(index, {
+                          ...cont,
+                          _action: "Deleted",
+                        });
+                      },
+                      label: "Delete",
+                    },
+
+                  cont._action && {
+                    onClick: () => {
+                      onContractItemChanged(index, {
+                        ...cont,
+                        _action: "Canceled",
+                      });
+                    },
+                    label: "Cancel",
+                  },
+                ]}
+              />,
+            ])}
+          />
+        ),
+        "No Contract Items"
+      )}
+
       {open && (
         <AddPricePoint
           onClose={() => setOpen(false)}
-          subName={sub.name}
-          onAction={onPricePointAdd}
+          open={open}
+          onContractItemChanged={onContractItemChanged}
+          //subName={sub.name}
+          //onAction={onPricePointAdd}
         />
       )}
     </div>

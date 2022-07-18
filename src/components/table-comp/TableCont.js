@@ -10,7 +10,8 @@ import {
 } from "@material-ui/core";
 import "./table-cont.sass";
 
-const TableCont = ({ tableTitles, dataList }) => {
+const TableCont = ({ tableTitles, dataList, classes }) => {
+  classes = classes || [];
   return (
     <TableContainer component={Paper} className="table-cont">
       <Table aria-label="simple table">
@@ -25,7 +26,7 @@ const TableCont = ({ tableTitles, dataList }) => {
         </TableHead>
         <TableBody>
           {dataList.map((data, key) => (
-            <TableRow key={key}>
+            <TableRow key={key} className={classes[key]}>
               {data.map((cell, key) => (
                 <TableCell align="center" key={key}>
                   {cell}
