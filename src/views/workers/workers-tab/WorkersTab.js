@@ -5,7 +5,7 @@ import "./WorkersTab.sass";
 const WorkersTab = () => {
   const { activeTab, setActiveTab } = React.useContext(workerContext);
   return (
-    <div className="workers-tab">
+    <div className="page-tab">
       <span
         className={activeTab === 1 ? "active" : ""}
         onClick={() => setActiveTab(1)}

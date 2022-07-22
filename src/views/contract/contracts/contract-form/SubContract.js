@@ -1,6 +1,6 @@
 import { Grid, IconButton } from "@material-ui/core";
 import React from "react";
-import AddPricePoint from "./modals/AddPricePoint";
+import AddContractItem from "./AddContractItem";
 import { Add } from "@material-ui/icons";
 import { digitsToCurrency } from "utils/currencyFormatter";
 import BtnComp from "components/btn-comp/BtnComp";
@@ -86,7 +86,7 @@ const SubContract = ({ conts, onContractItemChanged }) => {
       )}
 
       {open && (
-        <AddPricePoint
+        <AddContractItem
           onClose={() => setOpen(false)}
           open={open}
           onContractItemChanged={onContractItemChanged}

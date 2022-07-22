@@ -3,7 +3,8 @@ import { Search } from "@material-ui/icons";
 import InputComp from "components/input/InputComp";
 import StickySlider from "components/sliderModal/StickySlider";
 import React from "react";
-import NewContract from "./NewContract";
+import ContractTab from "../ContractsTab";
+import NewContract from "./contract-form/NewContract";
 
 const ContractHead = () => {
   const [open, setOpen] = React.useState(false);
@@ -12,7 +13,7 @@ const ContractHead = () => {
     <>
       <Grid container justifyContent="space-between" alignItems="center">
         <Grid item>
-          <h2 className="page-title">Contracts</h2>
+          <ContractTab />
         </Grid>
         <Grid item>
           <InputComp postfix={<Search />} placeholder="Search Contracts" />

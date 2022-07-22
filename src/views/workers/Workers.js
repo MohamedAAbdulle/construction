@@ -11,7 +11,6 @@ const Workers = () => {
   );
 };
 const WorkersContent = () => {
-  const { allWorkers } = React.useContext(workerContext);
 
   const { activeTab } = React.useContext(workerContext);
   return <>{activeTab === 1 ? <AllWorkers /> : <ActiveWorkers />}</>;

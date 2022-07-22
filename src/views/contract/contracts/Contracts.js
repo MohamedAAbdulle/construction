@@ -1,16 +1,14 @@
 import React from "react";
+import { ContractContext } from "../ContractContext";
 import "./contract.sass";
 import ContractHead from "./ContractHeader";
 import ContractTable from "./ContractTable";
-import { ContractContext } from "./ContractContext";
 
 const Contracts = () => {
   return (
     <div>
-      <ContractContext>
-        <ContractHead />
-        <ContractTable />
-      </ContractContext>
+      <ContractHead />
+      <ContractTable />
     </div>
   );
 };

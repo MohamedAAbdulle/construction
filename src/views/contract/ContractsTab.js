@@ -1,25 +1,25 @@
 import React from "react";
-import { toolsContx } from "../ToolsContx";
+import { contractContext } from "./ContractContext";
 
-const ToolsTab = () => {
-  const { activeTab, setActiveTab } = React.useContext(toolsContx);
+const ContractTab = () => {
+  const { activeTab, setActiveTab } = React.useContext(contractContext);
   return (
     <div className="page-tab">
       <span
         className={activeTab === 1 ? "active" : ""}
         onClick={() => setActiveTab(1)}
       >
-        All Tools
+        Contracts
       </span>
       <span>/</span>
       <span
         className={activeTab === 2 ? "active" : ""}
         onClick={() => setActiveTab(2)}
       >
-        In Use
+        Contractors
       </span>
     </div>
   );
 };
 
-export default ToolsTab;
+export default ContractTab;

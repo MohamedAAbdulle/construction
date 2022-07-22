@@ -5,7 +5,7 @@ import { contractStatus } from "utils/enums";
 import BtnComp from "components/btn-comp/BtnComp";
 import dateFormatter from "utils/dateFormatter";
 
-const AddPricePoint = ({ onClose, onContractItemChanged, open }) => {
+const AddContractItem = ({ onClose, onContractItemChanged, open }) => {
   const [cont, index] = open;
   const [state, setState] = React.useState(cont || {});
   const onChange = (e) => {
@@ -65,7 +65,6 @@ const AddPricePoint = ({ onClose, onContractItemChanged, open }) => {
               onChange={onChange}
               value={dateFormatter(state.startDate, "YYYY-MM-DD")}
             />
-            
           </div>
           <div className="col-12 col-md-4">
             <InputComp
@@ -86,4 +85,4 @@ const AddPricePoint = ({ onClose, onContractItemChanged, open }) => {
   );
 };
 
-export default AddPricePoint;
+export default AddContractItem;

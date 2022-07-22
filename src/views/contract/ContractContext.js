@@ -4,6 +4,12 @@ import React from "react";
 const contractContext = React.createContext();
 
 const ContractContext = (props) => {
+  const [activeTab, setActiveTab] = React.useState(1);
+  const aa = (x) => {
+    console.log(x);
+    setActiveTab(x);
+  };
+
   const [contractList, setContractList] = React.useState([]);
 
   const getContracts = () => {
@@ -13,7 +19,9 @@ const ContractContext = (props) => {
   React.useEffect(getContracts, []);
 
   return (
-    <contractContext.Provider value={{ contractList, getContracts }}>
+    <contractContext.Provider
+      value={{ contractList, getContracts, activeTab, setActiveTab: aa }}
+    >
       {props.children}
     </contractContext.Provider>
   );
