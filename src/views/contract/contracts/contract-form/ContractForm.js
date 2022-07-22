@@ -1,14 +1,16 @@
 import React from "react";
-import { Button, Grid, IconButton } from "@material-ui/core";
+import { Grid, IconButton } from "@material-ui/core";
 import InputComp from "components/input/InputComp";
 import SubContract from "./SubContract";
-import { Add, Close } from "@material-ui/icons";
+import { Close } from "@material-ui/icons";
 import BtnComp from "components/btn-comp/BtnComp";
 import DocumentsComp from "components/documents/DocumentsComp";
+import ContractorSearcher from "components/searchers/ContractorSearcher";
+import { contractContext } from "views/contract/ContractContext";
 
 const ContractForm = ({ closeSlider, initialContract, formLabel }) => {
+  const { contractors } = React.useContext(contractContext);
   const [state, setState] = React.useState(initialContract);
-
   React.useEffect(() => setState(initialContract), [initialContract]);
   React.useEffect(() => {
     let totalPrice = state.conts
@@ -68,13 +70,18 @@ const ContractForm = ({ closeSlider, initialContract, formLabel }) => {
       <div className="slider-body">
         <div className="card-comp ">
           <div className="card-title">Contract Summary</div>
-          <div className="row g-3 ">
+          <div className="row g-4 ">
             <div className="col-12 col-xxl-5">
-              <InputComp
-                label="Contractor"
-                name="contractor"
-                onChange={onChange}
-                value={state.contractor}
+              <ContractorSearcher
+                value={state.contractor || ""}
+                list={contractors}
+                onAction={(contrator) =>
+                  setState({
+                    ...state,
+                    name: contrator.name,
+                    contractorId: contrator.id,
+                  })
+                }
               />
             </div>
             <div className="col col-12 col-lg-7 col-xxl-4">

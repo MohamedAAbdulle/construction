@@ -1,26 +1,34 @@
-import contracts from "data/contracts";
+import { contractorsD, contractsD } from "data/contracts";
 import React from "react";
 
 const contractContext = React.createContext();
 
 const ContractContext = (props) => {
   const [activeTab, setActiveTab] = React.useState(1);
-  const aa = (x) => {
-    console.log(x);
-    setActiveTab(x);
-  };
 
-  const [contractList, setContractList] = React.useState([]);
+  const [contracts, setContractList] = React.useState();
+  const [contractors, setContractors] = React.useState();
+
+  const getContractors = () => {
+    setContractors(contractorsD);
+  };
 
   const getContracts = () => {
-    setContractList(contracts);
+    setContractList(contractsD);
   };
 
-  React.useEffect(getContracts, []);
+  React.useEffect(getContractors, []);
 
   return (
     <contractContext.Provider
-      value={{ contractList, getContracts, activeTab, setActiveTab: aa }}
+      value={{
+        contracts,
+        contractors,
+        activeTab,
+        getContracts,
+        getContractors,
+        setActiveTab,
+      }}
     >
       {props.children}
     </contractContext.Provider>

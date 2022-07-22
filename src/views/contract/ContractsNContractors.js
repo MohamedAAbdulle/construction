@@ -12,7 +12,6 @@ const ContractsNContractors = () => {
 };
 const ContractsContent = () => {
   const { activeTab } = React.useContext(contractContext);
-  console.log(activeTab);
   return activeTab === 1 ? <Contracts /> : <Contractors />;
 };
 

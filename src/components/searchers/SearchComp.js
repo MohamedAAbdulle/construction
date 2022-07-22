@@ -26,7 +26,6 @@ const SearchComp = ({
     setFoundItems(r);
     setInputValue(query);
   };
-  console.log(disableSelection);
 
   const onSelect = (item) => {
     console.log(item);

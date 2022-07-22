@@ -1,10 +1,10 @@
 import React from "react";
-import ContractForm from "./ContractForm";
+import ContractorForm from "./ContractorForm";
 
 const NewContrator = ({ closeSlider }) => {
   let initialContract = {};
   return (
-    <ContractForm
+    <ContractorForm
       closeSlider={closeSlider}
       formLabel="New Contractor"
       initialContract={initialContract}

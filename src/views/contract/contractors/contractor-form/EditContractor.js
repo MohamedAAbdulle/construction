@@ -1,11 +1,11 @@
 import React from "react";
 import { getEndpoint } from "services/apiFunctions";
-import ContractForm from "./ContractForm";
+import ContractorForm from "./ContractorForm";
 
 const EditContrator = ({ closeSlider, open }) => {
   return (
     <>
-      <ContractForm
+      <ContractorForm
         closeSlider={closeSlider}
         formLabel="Edit Contractor"
         initialContract={open}

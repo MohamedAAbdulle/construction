@@ -7,33 +7,35 @@ import dateFormatter from "utils/dateFormatter";
 import EditContrator from "./contractor-form/EditContractor";
 import { contractContext } from "../ContractContext";
 
-const ContractTable = () => {
-  const { contractList } = React.useContext(contractContext);
+const ContractorsTable = ({ contractors }) => {
   const [open, setOpen] = React.useState(false);
   return (
     <>
       <TableCont
-        tableTitles={[
-          "Name",
-          "Contractor",
-          "Total Price",
-          "Date Modified",
-          "Status",
-          "",
-        ]}
-        dataList={contractList.map((inv) => [
-          inv.contract,
-          inv.contractor,
-          digitsToCurrency(inv.totalPrice),
-          dateFormatter(inv.modifiedDate,"DD-MMM-YY HH:mm"),
-          inv.status,
+        tableTitles={["Name", "Phone", "Email", ""]}
+        dataList={contractors.map((contractor) => [
+          contractor.name,
+          contractor.phone,
+          contractor.email,
           <Ellipsis
             menus={[
               {
                 onClick: () => {
-                  setOpen(inv);
+                  setOpen(contractor);
                 },
                 label: "Edit",
+              },
+              {
+                onClick: () => {},
+                label: "Contracts",
+              },
+              {
+                onClick: () => {},
+                label: "History",
+              },
+              {
+                onClick: () => {},
+                label: "Delete",
               },
             ]}
           />,
@@ -46,4 +48,4 @@ const ContractTable = () => {
   );
 };
 
-export default ContractTable;
+export default ContractorsTable;

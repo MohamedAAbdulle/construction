@@ -7,8 +7,7 @@ import dateFormatter from "utils/dateFormatter";
 import { contractContext } from "../ContractContext";
 import EditContract from "./contract-form/EditContract";
 
-const ContractTable = () => {
-  const { contractList } = React.useContext(contractContext);
+const ContractTable = ({ contracts }) => {
   const [open, setOpen] = React.useState(false);
   return (
     <>
@@ -21,11 +20,11 @@ const ContractTable = () => {
           "Status",
           "",
         ]}
-        dataList={contractList.map((inv) => [
+        dataList={contracts.map((inv) => [
           inv.contract,
           inv.contractor,
           digitsToCurrency(inv.totalPrice),
-          dateFormatter(inv.modifiedDate,"DD-MMM-YY HH:mm"),
+          dateFormatter(inv.modifiedDate, "DD-MMM-YY HH:mm"),
           inv.status,
           <Ellipsis
             menus={[

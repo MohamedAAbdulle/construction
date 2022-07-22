@@ -1,11 +1,10 @@
 import React from "react";
-import { Button, Grid, IconButton } from "@material-ui/core";
+import { Grid, IconButton } from "@material-ui/core";
 import InputComp from "components/input/InputComp";
-import { Add, Close } from "@material-ui/icons";
+import { Close } from "@material-ui/icons";
 import BtnComp from "components/btn-comp/BtnComp";
-import DocumentsComp from "components/documents/DocumentsComp";
 
-const ContractForm = ({ closeSlider, initialContract, formLabel }) => {
+const ContractorForm = ({ closeSlider, initialContract, formLabel }) => {
   const [state, setState] = React.useState(initialContract);
 
   const onChange = (e) => {
@@ -35,36 +34,29 @@ const ContractForm = ({ closeSlider, initialContract, formLabel }) => {
       </div>
       <div className="slider-body">
         <div className="card-comp ">
-          <div className="card-title"></div>
+          <div className="card-title">Contractor Info</div>
           <div className="row g-3 ">
             <div className="col-12 col-xxl-5">
               <InputComp
-                label="Contractor"
-                name="contractor"
+                label="Name"
+                name="name"
                 onChange={onChange}
-                value={state.contractor}
+                value={state.name}
               />
             </div>
             <div className="col col-12 col-lg-7 col-xxl-4">
               <InputComp
-                label="Contract"
-                name="contract"
+                label="Email"
+                name="email"
                 onChange={onChange}
-                value={state.contract}
+                value={state.email}
               />
             </div>
             <div className="col-12 col-lg-5 col-xxl-3">
               <InputComp
-                label="totalPrice"
-                value={state.totalPrice}
-                disabled
-                onChange={onChange}
-              />
-            </div>
-            <div className="col-12 col-lg-5 col-xxl-3">
-              <InputComp
-                label="totalPrice"
-                value={state.totalPrice}
+                label="Phone"
+                value={state.phone}
+                name="phone"
                 disabled
                 onChange={onChange}
               />
@@ -76,4 +68,4 @@ const ContractForm = ({ closeSlider, initialContract, formLabel }) => {
   );
 };
 
-export default ContractForm;
+export default ContractorForm;

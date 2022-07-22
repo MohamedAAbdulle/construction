@@ -6,7 +6,7 @@ import React from "react";
 import ContractTab from "../ContractsTab";
 import NewContrator from "./contractor-form/NewContractor";
 
-const ContractHead = () => {
+const ContractorsHead = () => {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -37,4 +37,4 @@ const ContractHead = () => {
   );
 };
 
-export default ContractHead;
+export default ContractorsHead;
