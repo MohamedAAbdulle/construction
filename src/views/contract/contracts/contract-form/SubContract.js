@@ -9,7 +9,7 @@ import Ellipsis from "components/ellipsis/Ellipsis";
 import fetchStatus from "components/fetch-status/fetchStatus";
 import dateFormatter from "utils/dateFormatter";
 
-const SubContract = ({ conts, onContractItemChanged }) => {
+const SubContract = ({ contractItems, onContractItemChanged }) => {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -25,7 +25,7 @@ const SubContract = ({ conts, onContractItemChanged }) => {
       </div>
 
       {fetchStatus(
-        conts,
+        contractItems,
         () => (
           <TableCont
             tableTitles={[
@@ -35,13 +35,13 @@ const SubContract = ({ conts, onContractItemChanged }) => {
               "Status",
               "",
             ]}
-            classes={conts.map((x) => x._action)}
-            dataList={conts.map((cont, index) => [
-              cont.title,
+            classes={contractItems.map((x) => x.editedAction)}
+            dataList={contractItems.map((cont, index) => [
+              cont.name,
               digitsToCurrency(cont.price),
-              `${dateFormatter(cont.startDate, "DD,MMM")} -- ${dateFormatter(
+              `${dateFormatter(cont.startDate, "DD-MM-YY")} to ${dateFormatter(
                 cont.endDate,
-                "DD,MMM"
+                "DD-MM-YY"
               )}`,
               cont.status,
               <Ellipsis
@@ -57,25 +57,25 @@ const SubContract = ({ conts, onContractItemChanged }) => {
                     label: "Documents",
                   },
 
-                  cont._action !== "Deleted" &&
-                    cont._action !== "Created" && {
+                  cont.editedAction !== "Deleted" &&
+                    cont.editedAction !== "Created" && {
                       onClick: () => {
                         onContractItemChanged(index, {
                           ...cont,
-                          _action: "Deleted",
+                          editedAction: "Deleted",
                         });
                       },
                       label: "Delete",
                     },
 
-                  cont._action && {
+                  cont.editedAction && {
                     onClick: () => {
                       onContractItemChanged(index, {
                         ...cont,
-                        _action: "Canceled",
+                        editedAction: "Canceled",
                       });
                     },
-                    label: "Cancel",
+                    label: "Reverse",
                   },
                 ]}
               />,

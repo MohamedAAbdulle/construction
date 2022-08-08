@@ -7,23 +7,26 @@ import BtnComp from "components/btn-comp/BtnComp";
 import DocumentsComp from "components/documents/DocumentsComp";
 import ContractorSearcher from "components/searchers/ContractorSearcher";
 import { contractContext } from "views/contract/ContractContext";
+import { putEndpoint } from "services/apiFunctions";
 
 const ContractForm = ({ closeSlider, initialContract, formLabel }) => {
-  const { contractors } = React.useContext(contractContext);
+  const { contractors, getContracts } = React.useContext(contractContext);
   const [state, setState] = React.useState(initialContract);
   React.useEffect(() => setState(initialContract), [initialContract]);
   React.useEffect(() => {
-    let totalPrice = state.conts
-      ? state.conts
-          .filter((cont) => cont._action !== "Deleted")
-          .reduce((total, cont) => {
-            if (cont) {
-              return total + parseInt(cont.price);
-            }
-          }, 0)
-      : -1;
+    let totalPrice =
+      state.contractItems && state.contractItems.length
+        ? state.contractItems
+            .filter((cont) => cont.editedAction !== "Deleted")
+            .reduce((total, cont) => {
+              if (cont) {
+                return total + parseInt(cont.price);
+              }
+            }, 0)
+        : 0;
     setState({ ...state, totalPrice });
-  }, [state.conts]);
+  }, [state.contractItems]);
+
   const onChange = (e) => {
     const { value, name } = e.target;
     setState({ ...state, [name]: value });
@@ -32,24 +35,38 @@ const ContractForm = ({ closeSlider, initialContract, formLabel }) => {
   const onContractItemChanged = (index, modifiedContractItem) => {
     const _state = JSON.parse(JSON.stringify(state));
     if (index === undefined) {
-      index = _state.conts.length;
+      index = _state.contractItems.length;
     }
 
-    if (modifiedContractItem._action === "Canceled") {
-      modifiedContractItem = initialContract.conts[index];
+    if (modifiedContractItem.editedAction === "Canceled") {
+      modifiedContractItem = initialContract.contractItems[index];
       console.log(modifiedContractItem);
     }
 
-    if (modifiedContractItem) _state.conts[index] = modifiedContractItem;
+    if (modifiedContractItem)
+      _state.contractItems[index] = modifiedContractItem;
     else {
-      _state.conts.splice(index, 1);
+      _state.contractItems.splice(index, 1);
     }
     setState(_state);
   };
 
   const onSave = () => {
     console.log(state);
-    //postEndpoint("/contracts", state).then(() => getContracts());
+    let modState = JSON.parse(JSON.stringify(state));
+    let contractItems = modState.contractItems || [];
+    delete modState.contractItems;
+    let newState = {
+      subContract: modState,
+      contractItems,
+    };
+
+    putEndpoint(`/subcontracts/${state.id}`, newState).then((res) => {
+      if (res && res.status === 200) {
+        getContracts();
+        closeSlider();
+      }
+    });
   };
 
   return (
@@ -73,12 +90,12 @@ const ContractForm = ({ closeSlider, initialContract, formLabel }) => {
           <div className="row g-4 ">
             <div className="col-12 col-xxl-5">
               <ContractorSearcher
-                value={state.contractor || ""}
+                value={state.contractorName || ""}
                 list={contractors}
                 onAction={(contrator) =>
                   setState({
                     ...state,
-                    name: contrator.name,
+                    contractorName: contrator.name,
                     contractorId: contrator.id,
                   })
                 }
@@ -87,18 +104,13 @@ const ContractForm = ({ closeSlider, initialContract, formLabel }) => {
             <div className="col col-12 col-lg-7 col-xxl-4">
               <InputComp
                 label="Contract"
-                name="contract"
+                name="name"
                 onChange={onChange}
-                value={state.contract}
+                value={state.name}
               />
             </div>
             <div className="col-12 col-lg-5 col-xxl-3">
-              <InputComp
-                label="totalPrice"
-                value={state.totalPrice}
-                disabled
-                onChange={onChange}
-              />
+              <InputComp label="totalPrice" value={state.totalPrice} disabled />
             </div>
           </div>
         </div>
@@ -106,7 +118,7 @@ const ContractForm = ({ closeSlider, initialContract, formLabel }) => {
         <DocumentsComp docs={[]} />
 
         <SubContract
-          conts={state.conts}
+          contractItems={state.contractItems}
           onContractItemChanged={onContractItemChanged}
         />
       </div>

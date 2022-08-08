@@ -1,5 +1,6 @@
 import { Button, Grid } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
+import BtnComp from "components/btn-comp/BtnComp";
 import InputComp from "components/input/InputComp";
 import StickySlider from "components/sliderModal/StickySlider";
 import React from "react";
@@ -20,14 +21,7 @@ const ContractorsHead = () => {
         </Grid>
 
         <Grid item>
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            onClick={() => setOpen(true)}
-          >
-            Create Contractor
-          </Button>
+          <BtnComp onClick={() => setOpen(true)} label="Create Contractor" />
         </Grid>
       </Grid>
       <StickySlider clickState={open} setClickState={setOpen}>

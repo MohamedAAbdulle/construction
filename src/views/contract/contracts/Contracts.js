@@ -6,7 +6,8 @@ import ContractHead from "./ContractHeader";
 import ContractTable from "./ContractTable";
 
 const Contracts = () => {
-  const { contracts, getContracts } = React.useContext(contractContext);
+  const { contracts, contractors, getContracts } =
+    React.useContext(contractContext);
   React.useEffect(getContracts, []);
   return (
     <div>
@@ -15,7 +16,7 @@ const Contracts = () => {
       {fetchStatus(
         contracts,
         () => (
-          <ContractTable contracts={contracts} />
+          <ContractTable contracts={contracts} contractors={contractors} />
         ),
         "No Subcontracts"
       )}

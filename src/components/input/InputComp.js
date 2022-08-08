@@ -13,6 +13,7 @@ const InputComp = ({
   error,
   required,
   options,
+  disabled,
 }) => {
   let a = {
     variant: "outlined",
@@ -27,6 +28,7 @@ const InputComp = ({
     error: Boolean(error),
     required: required,
     helperText: error,
+    disabled,
   };
   return (
     <>

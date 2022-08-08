@@ -1,5 +1,6 @@
 import { contractorsD, contractsD } from "data/contracts";
 import React from "react";
+import { getEndpoint } from "services/apiFunctions";
 
 const contractContext = React.createContext();
 
@@ -10,11 +11,11 @@ const ContractContext = (props) => {
   const [contractors, setContractors] = React.useState();
 
   const getContractors = () => {
-    setContractors(contractorsD);
+    getEndpoint("/SubContracts/contractors").then((res) => setContractors(res));
   };
 
   const getContracts = () => {
-    setContractList(contractsD);
+    getEndpoint("/SubContracts").then((res) => setContractList(res));
   };
 
   React.useEffect(getContractors, []);

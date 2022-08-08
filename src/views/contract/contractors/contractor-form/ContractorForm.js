@@ -3,18 +3,37 @@ import { Grid, IconButton } from "@material-ui/core";
 import InputComp from "components/input/InputComp";
 import { Close } from "@material-ui/icons";
 import BtnComp from "components/btn-comp/BtnComp";
+import { postEndpoint, putEndpoint } from "services/apiFunctions";
+import { contractContext } from "views/contract/ContractContext";
+import findError from "utils/findError";
+import onChangeSimple from "utils/onChangeSimple";
 
 const ContractorForm = ({ closeSlider, initialContract, formLabel }) => {
+  const { getContractors } = React.useContext(contractContext);
   const [state, setState] = React.useState(initialContract);
-
+  const [errors, setErrors] = React.useState({});
   const onChange = (e) => {
-    const { value, name } = e.target;
-    setState({ ...state, [name]: value });
+    onChangeSimple(e, state, setState);
   };
 
   const onSave = () => {
-    console.log(state);
-    //postEndpoint("/contracts", state).then(() => getContracts());
+    console.log(initialContract.id);
+    let endPoint = initialContract.id
+      ? putEndpoint(`/subcontracts/contractors/${initialContract.id}`, state)
+      : postEndpoint("/subcontracts/contractors", state);
+    endPoint.then((res) => {
+      if (res && res.status === 200) {
+        getContractors();
+        closeSlider();
+      } else if (res && res.errors) {
+        console.log(res.errors);
+        setErrors(res.errors);
+      }
+    });
+  };
+
+  const _findError = (error) => {
+    return findError(error, errors);
   };
 
   return (
@@ -42,6 +61,7 @@ const ContractorForm = ({ closeSlider, initialContract, formLabel }) => {
                 name="name"
                 onChange={onChange}
                 value={state.name}
+                error={_findError("Name")}
               />
             </div>
             <div className="col col-12 col-lg-7 col-xxl-4">
@@ -50,15 +70,17 @@ const ContractorForm = ({ closeSlider, initialContract, formLabel }) => {
                 name="email"
                 onChange={onChange}
                 value={state.email}
+                error={_findError("Email")}
               />
             </div>
             <div className="col-12 col-lg-5 col-xxl-3">
               <InputComp
                 label="Phone"
                 value={state.phone}
+                type="number"
                 name="phone"
-                disabled
                 onChange={onChange}
+                error={_findError("Phone")}
               />
             </div>
           </div>

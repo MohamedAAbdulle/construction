@@ -1,12 +1,15 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-//let baseUrl = "https://localhost:5001";
-let baseUrl = "https://ery9ct8r48.execute-api.ap-south-1.amazonaws.com";
+let testCustomerId;
+let baseUrl = "https://localhost:5001";
+//let baseUrl = "https://ery9ct8r48.execute-api.ap-south-1.amazonaws.com";
+if (window.location.hostname !== "localhost") testCustomerId = undefined;
 const headerSetup = () => {
   let cachedJwt = JSON.parse(sessionStorage.getItem("cachedJwt"));
   let userInfo = (cachedJwt || {}).userInfo;
-  const customerId = (userInfo || {})["custom:customerId"] || 0;
+  const customerId =
+    testCustomerId || (userInfo || {})["custom:customerId"] || 0;
   return {
     headers: {
       accept: "application/json",
@@ -68,6 +71,9 @@ export const putEndpoint = async (url, body) =>
 
 export const deleteEndpoint = async (url) =>
   await axios
-    .delete(baseUrl + url)
-    .then((res) => toast.success(res.data))
+    .delete(baseUrl + url, headerSetup())
+    .then((res) => {
+      toast.success(res.data);
+      return res;
+    })
     .catch(errorHandler);

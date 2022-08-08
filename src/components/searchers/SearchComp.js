@@ -44,6 +44,7 @@ const SearchComp = ({
 
   //React.useEffect(()=>setInputValue("nn"),[])
 
+  console.log(error);
   return (
     <ClickAwayListener onClickAway={onBlur}>
       <div className="searcher">

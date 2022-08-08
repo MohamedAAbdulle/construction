@@ -16,7 +16,7 @@ const EditInv = ({ open, onClose, inv }) => {
     onChangeSimple(e, state, setState);
   };
 
-  const editAction = () => {
+  const onEditAction = () => {
     putEndpoint(`/inventory/${inv.id}`, state).then((res) => {
       console.log(res);
       getInvList(true);
@@ -57,7 +57,7 @@ const EditInv = ({ open, onClose, inv }) => {
         </Grid>
       </Grid>
       <div className="modal-btns">
-        <BtnComp label="Save" onClick={editAction} />
+        <BtnComp label="Save" onClick={onEditAction} />
       </div>
     </ModalCont>
   );

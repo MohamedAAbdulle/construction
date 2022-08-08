@@ -2,13 +2,23 @@ import React from "react";
 import TableCont from "components/table-comp/TableCont";
 import Ellipsis from "components/ellipsis/Ellipsis";
 import StickySlider from "components/sliderModal/StickySlider";
-import { digitsToCurrency } from "utils/currencyFormatter";
-import dateFormatter from "utils/dateFormatter";
 import EditContrator from "./contractor-form/EditContractor";
+import { deleteEndpoint } from "services/apiFunctions";
 import { contractContext } from "../ContractContext";
+import DeleteModal from "components/delete-modal/DeleteModal";
 
 const ContractorsTable = ({ contractors }) => {
+  const { getContractors } = React.useContext(contractContext);
   const [open, setOpen] = React.useState(false);
+  const [openDeleteContractor, setOpenDeleteContractor] = React.useState(false);
+
+  const onDelete = (id) => {
+    deleteEndpoint(`/SubContracts/contractors/${id}`).then((res) => {
+      if (res && res.status === 200) {
+        getContractors();
+      }
+    });
+  };
   return (
     <>
       <TableCont
@@ -34,7 +44,7 @@ const ContractorsTable = ({ contractors }) => {
                 label: "History",
               },
               {
-                onClick: () => {},
+                onClick: () => setOpenDeleteContractor(contractor),
                 label: "Delete",
               },
             ]}
@@ -44,6 +54,19 @@ const ContractorsTable = ({ contractors }) => {
       <StickySlider clickState={Boolean(open)} setClickState={setOpen}>
         <EditContrator closeSlider={() => setOpen(false)} open={open} />
       </StickySlider>
+      {openDeleteContractor && (
+        <DeleteModal
+          onClose={() => setOpenDeleteContractor(false)}
+          deleteAction={() => onDelete(openDeleteContractor.id)}
+          message={
+            <>
+              <strong>{openDeleteContractor.name}</strong> will be permanently
+              deleted!
+            </>
+          }
+          title="Delete Contractor"
+        />
+      )}
     </>
   );
 };

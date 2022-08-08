@@ -7,7 +7,7 @@ export const accountTypesEnums = [
   "Settled",
 ];
 export const contractStatus = [
-  "Start",
+  "Ready",
   "Inprogress",
   "Completed",
   "Invoiced",
