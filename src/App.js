@@ -5,9 +5,8 @@ import Accounting from "views/orders/Accounting";
 import Inventory from "views/inventory/Inventory";
 import { AppContext } from "AppContext";
 import "react-toastify/dist/ReactToastify.css";
+import "assests/bootstrap-styles/bootstrap-styles.css";
 import "./app.sass";
-import "assests/bootstrap-helpers/bootstrap-helpers.css";
-import "./utilities.sass";
 import Dashboard from "views/dashboard/Dashboard";
 import Workers from "views/workers/Workers";
 import Suppliers from "views/suppliers/Suppliers";
@@ -17,6 +16,7 @@ import Tools from "views/tools/Tools";
 import { CircularProgress } from "@material-ui/core";
 import { checkJwtStatus, getAccessToken, redirectToLogin } from "services/auth";
 import ContractsNContractors from "views/contract/ContractsNContractors";
+import Miscellaneous from "views/misc/Miscellaneous";
 
 export default function App() {
   const [appContent, setAppContent] = React.useState(<CircularProgress />);
@@ -70,6 +70,7 @@ export default function App() {
             <Route path="/suppliers" element={<Suppliers />} />
             <Route path="/sub-contracts" element={<ContractsNContractors />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/miscellaneous" element={<Miscellaneous />} />
             <Route path="/tools" element={<Tools />} />
             <Route path="/tools-inuse" element={<InUseTools />} />
           </Routes>

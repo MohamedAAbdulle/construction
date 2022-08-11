@@ -53,6 +53,20 @@ const InputComp = ({
             ),
           }}
         />
+      ) : type === "textarea" ? (
+        <TextField
+          {...a}
+          inputProps={{ maxLength: 100 }}
+          multiline={true}
+          rows={2}
+          InputProps={
+            postfix && {
+              endAdornment: (
+                <InputAdornment position="end">{postfix}</InputAdornment>
+              ),
+            }
+          }
+        />
       ) : (
         <TextField
           {...a}

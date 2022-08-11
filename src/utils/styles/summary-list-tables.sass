@@ -1,0 +1,80 @@
+.summary-list
+  .red 
+    color: #fa4747
+  .blue 
+    color: #307fe9
+  .primary 
+    color: #eea123
+  .summary-list-header
+    &__filter
+      >:not(:first-child)
+        margin: 0 8px
+      >:first-child
+        margin-right: 8px
+  .rdt_Table
+        border-left: 1px solid #E2E6EA !important
+        border-right:  1px solid #E2E6EA !important
+        border-radius: 15px
+        box-shadow: 0px 1px 2px rgba(18, 62, 119, 0.05)
+        .rdt_TableHead
+            .rdt_TableHeadRow
+                padding: 10px 0
+                background-color: #dfdfdf !important
+                border-top: 1px solid #E2E6EA 
+                border-left: .5px solid #E2E6EA 
+                border-right: .5px solid #E2E6EA 
+                border-radius: 10px 10px 0 0
+                color: #202f53 !important
+                font-weight: 600 !important
+                text-transform: uppercase
+                @media screen and (max-width: 1399px)
+                  font-size: 11px !important
+                @media screen and (min-width: 1400px)
+                  font-size: 12px !important
+                .rdt_TableCol
+                  justify-content: center
+        .rdt_TableBody
+            .rdt_TableRow:nth-child(even) 
+              background: #fafafa
+            .rdt_TableRow
+                border: none
+                padding: 10px 0
+                .rdt_TableCell
+                  justify-content: center
+                  div:first-child
+                    //overflow: visible //potential bug
+                
+  .cell-elements
+    color: #202f53
+    white-space: initial !important
+    @media screen and (max-width: 1399px)
+        font-size: 11px !important
+    @media screen and (min-width: 1400px)
+        font-size: 12px !important
+    >div
+      white-space: initial !important
+    > * 
+      display: inline-block
+      vertical-align: middle
+    > *:nth-child(2) 
+      margin-left: 10px
+    .head 
+      display: block
+      font-weight: bold
+      margin-bottom: 5px
+      color: inherited
+    .foot 
+      font-size: 10px
+  .table-actions 
+    font-size: 22px
+    color: #202f53
+    display: flex
+    align-items: flex-end
+    overflow: visible
+    > :first-child 
+      margin-right: 20px 
+  
+    
+
+    
+            

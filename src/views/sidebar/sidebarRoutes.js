@@ -6,6 +6,7 @@ import { FaFileContract, FaFileSignature } from "react-icons/fa";
 import { TiArrowShuffle } from "react-icons/ti";
 import { AiOutlineBuild } from "react-icons/ai";
 import { RiBarChart2Line } from "react-icons/ri";
+import { MdAttachMoney } from "react-icons/md";
 
 const sidebarRoutes = [
   { title: "Inventory", route: "/inventory", icon: <AiOutlineBuild /> },
@@ -16,7 +17,12 @@ const sidebarRoutes = [
   {
     title: "Sub-contracts",
     route: "/sub-contracts",
-    icon: <FaFileSignature />, 
+    icon: <FaFileSignature />,
+  },
+  {
+    title: "Miscellaneous",
+    route: "/miscellaneous",
+    icon: <MdAttachMoney />,
   },
   { title: "Dashboard", route: "/dashboard", icon: <RiBarChart2Line /> },
 ];
