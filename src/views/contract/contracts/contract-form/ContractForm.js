@@ -22,6 +22,7 @@ const ContractForm = ({ closeSlider, initialContract, formLabel }) => {
               if (cont) {
                 return total + parseInt(cont.price);
               }
+              return total
             }, 0)
         : 0;
     setState({ ...state, totalPrice });

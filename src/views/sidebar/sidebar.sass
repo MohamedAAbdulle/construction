@@ -1,5 +1,5 @@
 .sidebar
-  background: #881588
+  background: var(--purple-dark)
   min-width: 180px
   display: flex
   flex-direction: column 
@@ -31,13 +31,12 @@
       >:nth-child(3)
         margin-left: 12px
       &:hover
-        background: #540d54
+        background: var(--purple)
         border-radius: 12px
   .sidebar-foot
     color: #d8dee8
     font-size: 14px
   @media screen and (max-width: 800px)
-    background: #881588
     min-width: 52px
     display: flex
     flex-direction: column 
@@ -61,6 +60,7 @@
         display: flex
         align-items: center
         text-decoration: none
+        justify-content: center
         
         i>*
           vertical-align: middle
@@ -70,9 +70,7 @@
           display: none
         >:nth-child(3)
           margin-left: 12px
-        &:hover
-          background: #55565e
-          border-radius: 12px
+        
     .sidebar-foot
       display: none
       padding: 8px

@@ -4,7 +4,7 @@ import BtnComp from "components/btn-comp/BtnComp";
 import InputComp from "components/input/InputComp";
 import { Grid } from "@material-ui/core";
 import { docType } from "utils/enums";
-import { postEndpoint } from "services/apiFunctions";
+//import { postEndpoint } from "services/apiFunctions";
 import dayjs from "dayjs";
 
 const NewDocument = ({ onClose, addFile }) => {

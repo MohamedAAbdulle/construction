@@ -34,11 +34,6 @@ const Addmore = ({ open, onClose, inv }) => {
     onChangeSimple(e, state, setState);
   };
 
-  const a = [
-    { type: "Delivery", name: "east-afric.js", date: "12/8/2021" },
-    { type: "Invoice", name: "document/dfsd.jpg", date: "12/8/2021" },
-  ];
-
   return (
     <ModalCont
       open={open}

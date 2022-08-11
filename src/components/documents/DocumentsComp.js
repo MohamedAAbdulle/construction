@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, IconButton, Menu, MenuItem } from "@material-ui/core";
+import { Grid, IconButton/* , Menu, MenuItem */ } from "@material-ui/core";
 import { HiDownload } from "react-icons/hi";
 import { Add, Delete } from "@material-ui/icons";
 import NewDocument from "./NewDocument";
@@ -7,7 +7,7 @@ import "./documents-comp.sass";
 import dayjs from "dayjs";
 import { getEndpoint } from "services/apiFunctions";
 import BtnComp from "components/btn-comp/BtnComp";
-import classNames from "classnames";
+//import classNames from "classnames";
 import fetchStatus from "components/fetch-status/fetchStatus";
 
 const DocumentsComp = ({ docs, setDocs, url }) => {

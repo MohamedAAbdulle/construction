@@ -1,4 +1,3 @@
-import { contractorsD, contractsD } from "data/contracts";
 import React from "react";
 import { getEndpoint } from "services/apiFunctions";
 

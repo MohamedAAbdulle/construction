@@ -5,7 +5,6 @@ import TableCont from "components/table-comp/TableCont";
 import React, { useState } from "react";
 import { deleteEndpoint } from "services/apiFunctions";
 import SupplierForm from "views/suppliers/SupplierForm";
-import { appContext } from "AppContext";
 
 const SuppliersTable = ({ getSuppliers, suppliers }) => {
   const [openDeleteSupplier, setOpenDeleteSupplier] = useState(false);

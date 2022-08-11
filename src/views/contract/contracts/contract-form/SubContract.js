@@ -1,4 +1,3 @@
-import { Grid, IconButton } from "@material-ui/core";
 import React from "react";
 import AddContractItem from "./AddContractItem";
 import { Add } from "@material-ui/icons";

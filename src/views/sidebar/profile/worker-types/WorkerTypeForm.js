@@ -1,13 +1,10 @@
 import React from "react";
-import { Grid, IconButton } from "@material-ui/core";
-import dayjs from "dayjs";
+import { Grid } from "@material-ui/core";
 import { postEndpoint, putEndpoint } from "services/apiFunctions";
 import onChangeSimple from "utils/onChangeSimple";
 import InputComp from "components/input/InputComp";
 import BtnComp from "components/btn-comp/BtnComp";
-import { Add, Close } from "@material-ui/icons";
 import ModalCont from "components/modalCont/ModalCont";
-import { appContext } from "AppContext";
 import "./worker-types.sass";
 
 const WorkerTypeForm = ({ onClose, getWorkerTypes, worker }) => {

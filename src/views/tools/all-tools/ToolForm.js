@@ -1,6 +1,5 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import dayjs from "dayjs";
 import { postEndpoint, putEndpoint } from "services/apiFunctions";
 import onChangeSimple from "utils/onChangeSimple";
 import ModalCont from "components/modalCont/ModalCont";

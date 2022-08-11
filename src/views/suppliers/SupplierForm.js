@@ -5,8 +5,7 @@ import { Grid, IconButton } from "@material-ui/core";
 import { getEndpoint, postEndpoint, putEndpoint } from "services/apiFunctions";
 import onChangeSimple from "utils/onChangeSimple";
 import findError from "utils/findError";
-import { Add, Close, Delete } from "@material-ui/icons";
-import NewQuote from "./quotes/NewQuote";
+import { Close } from "@material-ui/icons";
 import { appContext } from "AppContext";
 import Quotes from "./quotes/Quotes";
 

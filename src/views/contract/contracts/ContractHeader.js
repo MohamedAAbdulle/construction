@@ -1,8 +1,7 @@
-import { Button, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { Search } from "@material-ui/icons";
 import BtnComp from "components/btn-comp/BtnComp";
 import InputComp from "components/input/InputComp";
-import StickySlider from "components/sliderModal/StickySlider";
 import React from "react";
 import ContractTab from "../ContractsTab";
 import NewContract from "./contract-form/NewContract";

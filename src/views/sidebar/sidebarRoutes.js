@@ -1,8 +1,6 @@
-import { Book } from "@material-ui/icons";
-import { FaBeer } from "react-icons/fa";
 import { MdOutlineEngineering, MdOutlineShoppingCart } from "react-icons/md";
 import { VscTools } from "react-icons/vsc";
-import { FaFileContract, FaFileSignature } from "react-icons/fa";
+import {  FaFileSignature } from "react-icons/fa";
 import { TiArrowShuffle } from "react-icons/ti";
 import { AiOutlineBuild } from "react-icons/ai";
 import { RiBarChart2Line } from "react-icons/ri";

@@ -1,7 +1,6 @@
 import React from "react";
 import TableCont from "components/table-comp/TableCont";
 import Ellipsis from "components/ellipsis/Ellipsis";
-import { workerContext } from "../WorkerContext";
 import DeleteModal from "components/delete-modal/DeleteModal";
 import { deleteEndpoint, putEndpoint } from "services/apiFunctions";
 import { Switch } from "@material-ui/core";

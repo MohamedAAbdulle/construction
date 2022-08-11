@@ -1,10 +1,9 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 import dayjs from "dayjs";
-import { postEndpoint, putEndpoint } from "services/apiFunctions";
+import { postEndpoint } from "services/apiFunctions";
 import onChangeSimple from "utils/onChangeSimple";
 import ModalCont from "components/modalCont/ModalCont";
-import InputComp from "components/input/InputComp";
 import BtnComp from "components/btn-comp/BtnComp";
 import { toolsContx } from "../ToolsContx";
 import WorkerSearcher from "components/searchers/WorkerSearcher";
@@ -33,11 +32,7 @@ const NewInUse = ({ closeModal, workers }) => {
       }
     });
   };
-  const findError = (type) => {
-    if (errors[type]) {
-      return errors[type][0];
-    }
-  };
+  console.log(errors)
 
   return (
     <>

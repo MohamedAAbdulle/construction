@@ -19,7 +19,6 @@ const AddContractItem = ({ onClose, onContractItemChanged, open }) => {
   const [state, setState] = React.useState(cont || contractItemTemplate);
   const [errors, setErrors] = React.useState([]);
   const onChange = (e) => {
-    const { value, name } = e.target;
 
     onChangeSimple(e, state, setState);
     //setState({ ...state, [name]: value });

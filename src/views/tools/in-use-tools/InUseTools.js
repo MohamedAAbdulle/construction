@@ -1,12 +1,12 @@
 import React from "react";
-import { toolsContx, ToolsContx } from "../ToolsContx";
+import { toolsContx } from "../ToolsContx";
 import InUseToolsHeader from "./InUseToolsHeader";
 import InUseToolsTable from "./InUseToolTable";
 import { getEndpoint } from "services/apiFunctions";
 import fetchStatus from "components/fetch-status/fetchStatus";
 
 const InUseTools = () => {
-  const { tools, getInUseTools, inUseTools } = React.useContext(toolsContx);
+  const {  getInUseTools, inUseTools } = React.useContext(toolsContx);
   const [workers, setWorkers] = React.useState();
   const getWorkers = () => {
     getEndpoint("/workers").then((res) => {

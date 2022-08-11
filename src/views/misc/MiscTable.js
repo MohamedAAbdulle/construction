@@ -5,6 +5,7 @@ import dateFormatter from "utils/dateFormatter";
 import miscTableData, { miscList as _miscList } from "./miscTableData";
 import Ellipsis from "components/ellipsis/Ellipsis";
 import DataTable from "react-data-table-component";
+import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 
 const MiscTable = () => {
   const [miscList, setMiscList] = React.useState(_miscList);
@@ -22,7 +23,11 @@ const MiscTable = () => {
     return {
       type: data.type,
       price: digitsToCurrency(data.price),
-      description: <div>{data.description}</div>,
+      description: (
+        <Tooltip title={data.description}>
+          <div className="clickable">{data.description}</div>
+        </Tooltip>
+      ),
       dateCreated: dateFormatter(data.dateCreated, "MMM DD, YYYY"),
       actions: (
         <div className="table-actions">

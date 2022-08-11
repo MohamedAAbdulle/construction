@@ -1,8 +1,8 @@
-const findEnumName = (enumValue, enumType) => {
+/* const findEnumName = (enumValue, enumType) => {
   let f = enumType.find((i) => i.keyValue === enumValue);
   if (f) return f.keyName;
   else return enumValue;
-};
+}; */
 
 const findWorkerTypeName = (typeValue, enumType) => {
   let f = enumType.find((i) => i.typeValue === typeValue);
