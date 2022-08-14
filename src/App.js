@@ -17,6 +17,7 @@ import { CircularProgress } from "@material-ui/core";
 import { checkJwtStatus, getAccessToken, redirectToLogin } from "services/auth";
 import ContractsNContractors from "views/contract/ContractsNContractors";
 import Miscellaneous from "views/misc/Miscellaneous";
+import Topbar from "views/topbar/Topbar";
 
 export default function App() {
   const [appContent, setAppContent] = React.useState(<CircularProgress />);
@@ -59,9 +60,9 @@ export default function App() {
           draggable={true}
           progress={undefined}
         />
-        {/* <Topbar /> */}
         <Sidebar />
         <div className="main-view">
+        <Topbar />
           <Routes>
             <Route path="/" element={<Inventory />} />
             <Route path="/inventory" element={<Inventory />} />

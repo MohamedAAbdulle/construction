@@ -1,6 +1,5 @@
 import React from "react";
 import BtnComp from "components/btn-comp/BtnComp";
-import StickySlider from "components/sliderModal/StickySlider";
 import MiscForm from "./MiscForm";
 //import ToolForm from "./ToolForm";
 //import ToolsTab from "../tools-tab/ToolsTab";
@@ -19,9 +18,7 @@ const MiscHeader = () => {
         </div>
         <BtnComp label="Create Misc" onClick={() => setOpen(true)} />
       </div>
-      <StickySlider clickState={open} setClickState={setOpen}>
-        <MiscForm closeSlider={() => setOpen(false)} misc={{}} />
-      </StickySlider>
+      {open && <MiscForm closeModal={() => setOpen(false)} misc={{}} />}
     </div>
   );
 };

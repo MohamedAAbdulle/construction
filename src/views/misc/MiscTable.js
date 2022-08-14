@@ -1,23 +1,22 @@
 import React from "react";
-import { deleteEndpoint, getEndpoint } from "services/apiFunctions";
+import { deleteEndpoint } from "services/apiFunctions";
 import { digitsToCurrency } from "utils/currencyFormatter";
 import dateFormatter from "utils/dateFormatter";
-import miscTableData, { miscList as _miscList } from "./miscTableData";
+import miscTableData from "./miscTableData";
 import Ellipsis from "components/ellipsis/Ellipsis";
 import DataTable from "react-data-table-component";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
+import MiscForm from "./MiscForm";
+import DeleteModal from "components/delete-modal/DeleteModal";
 
-const MiscTable = () => {
-  const [miscList, setMiscList] = React.useState(_miscList);
-
-  const getMisc = () => {
-    getEndpoint("/inventory").then((res) => setMiscList(_miscList));
-  };
+const MiscTable = ({ miscList, getMiscs }) => {
+  const [openEdit, setOpenEdit] = React.useState(false);
+  const [openDelete, setOpenDelete] = React.useState(false);
   const deleteMisc = (id) => {
-    deleteEndpoint(`/misc/${id}`).then(() => getMisc());
+    deleteEndpoint(`/misc/${id}`).then(() => getMiscs());
   };
 
-  React.useEffect(getMisc, []);
+  React.useEffect(getMiscs, []);
 
   let _data = miscList.map((data) => {
     return {
@@ -34,11 +33,13 @@ const MiscTable = () => {
           <Ellipsis
             menus={[
               {
-                onClick: () => {},
+                onClick: () => {
+                  setOpenEdit(data);
+                },
                 label: "Edit",
               },
               {
-                onClick: deleteMisc,
+                onClick: () => setOpenDelete(data.id),
                 label: "Delete",
               },
             ]}
@@ -58,6 +59,17 @@ const MiscTable = () => {
         />
         {/* <CustomPagination setRequest={setRequest} request={request} /> */}
       </div>
+      {openEdit && (
+        <MiscForm closeModal={() => setOpenEdit(false)} misc={openEdit} />
+      )}
+      {openDelete && (
+        <DeleteModal
+          onClose={() => setOpenDelete(false)}
+          deleteAction={() => deleteMisc(openDelete)}
+          message={`This Tool will be permanently deleted!`}
+          title="Delete Tool"
+        />
+      )}
       {/* <StickySlider
         clickState={newCustomerOpen}
         setClickState={setNewCustomerOpen}

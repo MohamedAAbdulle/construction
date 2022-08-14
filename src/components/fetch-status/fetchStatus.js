@@ -3,7 +3,7 @@ import FailedToFetch from "components/fetch-status/FailedToFetch";
 import React from "react";
 
 const fetchStatus = (response, successComponent, emptyMessage) => {
-  //console.log(response);
+  console.log(response);
   if (response) {
     if (response.failed) return <FailedToFetch />;
     else if (response.length === 0)

@@ -13,3 +13,5 @@ export const contractStatus = [
   "Invoiced",
   "Settled",
 ];
+
+export const miscType = ["Buy", "Fine", "Others"];

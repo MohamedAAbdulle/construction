@@ -1,12 +1,20 @@
 .top-bar
-  background: #8389A0
-  .route-nav
+  display: none
+  background: var(--purple-dark)
+  color: white
+  .MuiIconButton-root
     color: white
+
+.page-navs
+  .MuiPaper-root
+    background: var(--purple-dark)
+    color: white
+    box-shadow: 0 0 10px black
+  a
+    color: inherit
     text-decoration: none
-    >button:not(#active-nav)
-      opacity: 0.9
-    #active-nav
-      font-weight: bold
-      font-size: 18px
-  .logo
-    height: 55px
+    .MuiListItemIcon-root
+      color: inherit
+      min-width: 30px
+    a
+
