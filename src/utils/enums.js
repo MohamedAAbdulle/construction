@@ -14,4 +14,4 @@ export const contractStatus = [
   "Settled",
 ];
 
-export const miscType = ["Buy", "Fine", "Others"];
+export const miscType = ["Buy", "Fine", "Salary", "Correction", "Others"];

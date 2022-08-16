@@ -1,8 +1,7 @@
 const miscTableData = [
   {
     name: "Misc Type",
-    selector: (row) => row.type,
-    
+    selector: (row) => row.miscType,
   },
   {
     name: "Misc Amount",
@@ -24,33 +23,6 @@ const miscTableData = [
     name: "ACTIONS",
     selector: (row) => row.actions,
     grow: 0.7,
-  },
-];
-
-export const miscList = [
-  {
-    id: 1,
-    price: 1200,
-    type: "Sale",
-    dateCreated: "2022-06-23T18:05",
-    description:
-      "Bought 18 pad Locks for the front gate and Door fixes for the office building",
-  },
-  {
-    id: 2,
-    price: 6800,
-    type: "Sale",
-    dateCreated: "2022-07-18T13:35",
-    description:
-      "Bought 18 pad Locks for the front gate and Door fixes for the office building",
-  },
-  {
-    id: 3,
-    price: 750,
-    type: "Sale",
-    dateCreated: "2022-07-11T13:35",
-    description:
-      "Bought 18 pad Locks for the front gate and Door fixes for the office building",
   },
 ];
 

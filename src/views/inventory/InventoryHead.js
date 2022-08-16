@@ -15,6 +15,7 @@ const InventoryHead = () => {
       alignItems="center"
       style={{ margin: "20px 0 15px" }}
     >
+      <div className="page-title">Inventory</div>
       <Grid item>
         <InputComp type="search" placeholder="Search Inventory" />
       </Grid>

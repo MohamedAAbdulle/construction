@@ -1,6 +1,10 @@
-import { MdOutlineEngineering, MdOutlineShoppingCart } from "react-icons/md";
+import {
+  MdOutlineEngineering,
+  MdOutlineShoppingCart,
+  MdOutlineSettings,
+} from "react-icons/md";
 import { VscTools } from "react-icons/vsc";
-import {  FaFileSignature } from "react-icons/fa";
+import { FaFileSignature } from "react-icons/fa";
 import { TiArrowShuffle } from "react-icons/ti";
 import { AiOutlineBuild } from "react-icons/ai";
 import { RiBarChart2Line } from "react-icons/ri";
@@ -22,7 +26,8 @@ const sidebarRoutes = [
     route: "/miscellaneous",
     icon: <MdAttachMoney />,
   },
-  { title: "Dashboard", route: "/dashboard", icon: <RiBarChart2Line /> },
+  { title: "Setting", route: "/setting", icon: <MdOutlineSettings /> },
+  { title: "Accounting", route: "/Accounting", icon: <RiBarChart2Line /> },
 ];
 
 export default sidebarRoutes;

@@ -5,8 +5,9 @@ import findError from "utils/findError";
 import onChangeSimple from "utils/onChangeSimple";
 import ModalCont from "components/modalCont/ModalCont";
 import { postEndpoint, putEndpoint } from "services/apiFunctions";
+import { miscType } from "utils/enums";
 
-const MiscForm = ({ closeModal, misc, getMisc }) => {
+const MiscForm = ({ closeModal, misc, getMiscs }) => {
   const [state, setState] = React.useState(misc || {});
   const [errors, setErrors] = React.useState([]);
 
@@ -25,7 +26,7 @@ const MiscForm = ({ closeModal, misc, getMisc }) => {
     endpoint.then((res) => {
       if (res && res.status === 200) {
         closeModal();
-        getMisc();
+        getMiscs();
       } else if (res && res.errors) {
         setErrors(res.errors);
       }
@@ -41,6 +42,7 @@ const MiscForm = ({ closeModal, misc, getMisc }) => {
       <div className="row gy-3">
         <div className="col-12 col-lg-6">
           <InputComp
+            type="number"
             label="Price"
             onChange={onChanged}
             value={state.price}
@@ -50,7 +52,9 @@ const MiscForm = ({ closeModal, misc, getMisc }) => {
         </div>
         <div className="col-12 col-lg-6">
           <InputComp
+            type="select"
             label="miscType"
+            options={miscType}
             onChange={onChanged}
             value={state.miscType}
             name="miscType"

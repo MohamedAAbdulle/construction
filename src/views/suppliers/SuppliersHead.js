@@ -11,12 +11,10 @@ const SuppliersHead = () => {
 
   return (
     <>
-      <Grid
-        container
-        justifyContent="space-between"
-        alignItems="center"
-        style={{ margin: "20px 0 15px" }}
-      >
+      <div className="d-flex justify-content-between align-items-center py-2">
+        <Grid item>
+          <div className="page-title">Suppliers</div>
+        </Grid>
         <Grid item>
           <InputComp postfix={<Search />} placeholder="Search Supplier" />
         </Grid>
@@ -24,7 +22,7 @@ const SuppliersHead = () => {
         <Grid item>
           <BtnComp label="Create Supplier" onClick={() => setOpen(true)} />
         </Grid>
-      </Grid>
+      </div>
       <StickySlider clickState={open} setClickState={setOpen}>
         <SupplierForm closeSlider={() => setOpen(false)} />
       </StickySlider>

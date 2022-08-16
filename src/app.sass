@@ -3,12 +3,16 @@
   background: #f4f4f4
   height: 100vh
   display: flex
-  .main-view
-    padding: 15px
+  .view-cont
+    padding: 0 15px 15px
     flex-grow: 1
     height: 100vh
     overflow: scroll
   @media screen and (max-width: 800px)
+    .view-cont
+      padding: 0
+    .main-view
+      padding: 0 12px 12px
     .sidebar
       display: none
     .top-bar

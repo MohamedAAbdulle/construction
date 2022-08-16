@@ -1,13 +1,13 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import Accounting from "views/orders/Accounting";
+import Orders from "views/orders/Orders";
 import Inventory from "views/inventory/Inventory";
 import { AppContext } from "AppContext";
 import "react-toastify/dist/ReactToastify.css";
 import "assests/bootstrap-styles/bootstrap-styles.css";
 import "./app.sass";
-import Dashboard from "views/dashboard/Dashboard";
+import Accounting from "views/accounting/Accounting";
 import Workers from "views/workers/Workers";
 import Suppliers from "views/suppliers/Suppliers";
 import InUseTools from "views/tools/in-use-tools/InUseTools";
@@ -18,6 +18,7 @@ import { checkJwtStatus, getAccessToken, redirectToLogin } from "services/auth";
 import ContractsNContractors from "views/contract/ContractsNContractors";
 import Miscellaneous from "views/misc/Miscellaneous";
 import Topbar from "views/topbar/Topbar";
+import Setting from "views/setting/Setting";
 
 export default function App() {
   const [appContent, setAppContent] = React.useState(<CircularProgress />);
@@ -61,20 +62,26 @@ export default function App() {
           progress={undefined}
         />
         <Sidebar />
-        <div className="main-view">
-        <Topbar />
-          <Routes>
-            <Route path="/" element={<Inventory />} />
-            <Route path="/inventory" element={<Inventory />} />
-            <Route path="/orders" element={<Accounting />} />
-            <Route path="/workers" element={<Workers />} />
-            <Route path="/suppliers" element={<Suppliers />} />
-            <Route path="/sub-contracts" element={<ContractsNContractors />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/miscellaneous" element={<Miscellaneous />} />
-            <Route path="/tools" element={<Tools />} />
-            <Route path="/tools-inuse" element={<InUseTools />} />
-          </Routes>
+        <div className="view-cont">
+          <Topbar />
+          <div className="main-view">
+            <Routes>
+              <Route path="/" element={<Inventory />} />
+              <Route path="/inventory" element={<Inventory />} />
+              <Route path="/orders" element={<Orders />} />
+              <Route path="/workers" element={<Workers />} />
+              <Route path="/suppliers" element={<Suppliers />} />
+              <Route
+                path="/sub-contracts"
+                element={<ContractsNContractors />}
+              />
+              <Route path="/Accounting" element={<Accounting />} />
+              <Route path="/miscellaneous" element={<Miscellaneous />} />
+              <Route path="/tools" element={<Tools />} />
+              <Route path="/tools-inuse" element={<InUseTools />} />
+              <Route path="/setting" element={<Setting />} />
+            </Routes>
+          </div>
         </div>
       </AppContext>
     );

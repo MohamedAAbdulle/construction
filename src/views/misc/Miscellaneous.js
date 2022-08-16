@@ -3,22 +3,30 @@ import React, { useEffect } from "react";
 import { getEndpoint } from "services/apiFunctions";
 import MiscHeader from "./MiscHeader";
 import MiscTable from "./MiscTable";
-import { miscList as _miscList } from "./miscTableData";
 
 const Miscellaneous = () => {
   const [miscList, setMiscList] = React.useState();
+  const [totalMisc, setTotalMisc] = React.useState();
 
   const getMiscs = () => {
-    getEndpoint("/miscs").then((res) => {
-      //let data = res.failed ? res : res.reverse();
-      //setMiscList(data);
-      setMiscList(_miscList);
+    getEndpoint("/misc").then((res) => {
+      let data = res.failed ? res : res.reverse();
+      setMiscList(data);
+      //setMiscList(_miscList);
+    });
+    getEndpoint("/misc/cash").then((res) => {
+      console.log(res);
+      if (res.failed) {
+        setTotalMisc(<i className="negative-action"> failed</i>);
+      } else {
+        setTotalMisc(res.amount);
+      }
     });
   };
   useEffect(getMiscs, []);
   return (
     <div>
-      <MiscHeader getMiscs={getMiscs} />
+      <MiscHeader getMiscs={getMiscs} totalMisc={totalMisc} />
       {fetchStatus(
         miscList,
         () => (

@@ -13,36 +13,42 @@ const MiscTable = ({ miscList, getMiscs }) => {
   const [openEdit, setOpenEdit] = React.useState(false);
   const [openDelete, setOpenDelete] = React.useState(false);
   const deleteMisc = (id) => {
-    deleteEndpoint(`/misc/${id}`).then(() => getMiscs());
+    deleteEndpoint(`/misc/${id}`).then(() => {
+      getMiscs();
+      setOpenDelete(false);
+    });
   };
 
-  React.useEffect(getMiscs, []);
-
   let _data = miscList.map((data) => {
+    let clas = data.miscType === "Deposit" ? "Settled" : "Pending";
     return {
-      type: data.type,
+      miscType: <div className={clas}>{data.miscType}</div>,
       price: digitsToCurrency(data.price),
       description: (
         <Tooltip title={data.description}>
-          <div className="clickable">{data.description}</div>
+          <div className="clickable">{data.description||"__"}</div>
         </Tooltip>
       ),
       dateCreated: dateFormatter(data.dateCreated, "MMM DD, YYYY"),
       actions: (
         <div className="table-actions">
           <Ellipsis
-            menus={[
-              {
-                onClick: () => {
-                  setOpenEdit(data);
-                },
-                label: "Edit",
-              },
-              {
-                onClick: () => setOpenDelete(data.id),
-                label: "Delete",
-              },
-            ]}
+            menus={
+              data.miscType === "Deposit"
+                ? []
+                : [
+                    {
+                      onClick: () => {
+                        setOpenEdit(data);
+                      },
+                      label: "Edit",
+                    },
+                    {
+                      onClick: () => setOpenDelete(data.id),
+                      label: "Delete",
+                    },
+                  ]
+            }
           ></Ellipsis>
         </div>
       ),
@@ -60,14 +66,18 @@ const MiscTable = ({ miscList, getMiscs }) => {
         {/* <CustomPagination setRequest={setRequest} request={request} /> */}
       </div>
       {openEdit && (
-        <MiscForm closeModal={() => setOpenEdit(false)} misc={openEdit} />
+        <MiscForm
+          closeModal={() => setOpenEdit(false)}
+          misc={openEdit}
+          getMiscs={getMiscs}
+        />
       )}
       {openDelete && (
         <DeleteModal
           onClose={() => setOpenDelete(false)}
           deleteAction={() => deleteMisc(openDelete)}
-          message={`This Tool will be permanently deleted!`}
-          title="Delete Tool"
+          message={`This Misc will be permanently deleted!`}
+          title="Delete Misc"
         />
       )}
       {/* <StickySlider

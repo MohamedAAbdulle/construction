@@ -4,14 +4,10 @@ import { NavLink } from "react-router-dom";
 import logo from "assests/logo.svg";
 import "./sidebar.sass";
 import Ellipsis from "components/ellipsis/Ellipsis";
-import StickySlider from "components/sliderModal/StickySlider";
-import Settings from "views/sidebar/profile/Settings";
 import sidebarRoutes from "./sidebarRoutes";
 import { logoutRedirect } from "services/auth";
 
 const Sidebar = () => {
-  const [open, setOpen] = React.useState(false);
-
   return (
     <div className="sidebar">
       <div className="sidebar-head">
@@ -26,10 +22,6 @@ const Sidebar = () => {
               },
               label: "Sign Out",
             },
-            {
-              onClick: () => setOpen(true),
-              label: "Settings",
-            },
           ]}
         />
       </div>
@@ -41,10 +33,6 @@ const Sidebar = () => {
           </NavLink>
         ))}
       </div>
-      <div className="sidebar-foot">&copy; 2022 All rights reserved</div>
-      <StickySlider clickState={open} setClickState={setOpen}>
-        <Settings closeSlider={() => setOpen(false)} order={{}} />
-      </StickySlider>
     </div>
   );
 };
