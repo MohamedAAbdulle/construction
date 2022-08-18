@@ -13,7 +13,9 @@ const EditContract = ({ closeSlider, open }) => {
         setInitialContract({ ...initialContract, contractItems: res });
       }
     );
-  React.useEffect(getContractItems, []);
+  React.useEffect(() => {
+    getContractItems();
+  }, []);
 
   return (
     <>

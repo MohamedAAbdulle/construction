@@ -2,10 +2,10 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 let testCustomerId;
-testCustomerId = 2;
 let baseUrl;
 baseUrl = "https://ery9ct8r48.execute-api.ap-south-1.amazonaws.com";
-baseUrl = "https://localhost:5001";
+//testCustomerId = 2;
+//baseUrl = "https://localhost:5001";
 if (window.location.hostname !== "localhost") {
   testCustomerId = undefined;
   baseUrl = "https://ery9ct8r48.execute-api.ap-south-1.amazonaws.com";
