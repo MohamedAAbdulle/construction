@@ -42,10 +42,11 @@ const errorHandler = (res) => {
 };
 
 export const getEndpoint = async (url, responseType) => {
-  const { headers } = headerSetup();
-  if (responseType) headers.responseType = responseType;
+  const extra = headerSetup();
+  if (responseType) extra.responseType = responseType;
+  console.log(extra)
   return await axios
-    .get(baseUrl + url, { headers })
+    .get(baseUrl + url, extra)
     .then((res) => {
       //console.log(res);
       return res.data;
