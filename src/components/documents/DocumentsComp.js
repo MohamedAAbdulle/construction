@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, IconButton /* , Menu, MenuItem */ } from "@material-ui/core";
 import { HiDownload } from "react-icons/hi";
-import { Add, Delete } from "@material-ui/icons";
+import {  Delete } from "@material-ui/icons";
 import NewDocument from "./NewDocument";
 import "./documents-comp.sass";
 import dayjs from "dayjs";

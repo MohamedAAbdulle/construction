@@ -1,6 +1,5 @@
 import React from "react";
 import ModalCont from "components/modalCont/ModalCont";
-import { Grid } from "@material-ui/core";
 import dayjs from "dayjs";
 import InputComp from "components/input/InputComp";
 import BtnComp from "components/btn-comp/BtnComp";

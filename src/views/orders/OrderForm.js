@@ -9,15 +9,10 @@ import { accountingContx } from "./AccountingContx";
 import { Close } from "@material-ui/icons";
 import Inventorysearcher from "components/searchers/InventorySearcher";
 import SupplierSearcher from "components/searchers/SupplierSearcher";
-import { orderStatus } from "utils/enums";
-import DocumentsComp from "components/documents/DocumentsComp";
 import findError from "utils/findError";
 
 const OrderForm = ({ closeSlider, order }) => {
   const { getAccounts } = React.useContext(accountingContx);
-  const [docs, setDocs] = React.useState();
-
-  const formState = new FormData();
 
   const [state, setState] = React.useState({
     ...order,

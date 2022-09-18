@@ -1,6 +1,5 @@
 import React from "react";
 import ModalCont from "components/modalCont/ModalCont";
-import { Grid } from "@material-ui/core";
 import InputComp from "components/input/InputComp";
 import BtnComp from "components/btn-comp/BtnComp";
 import { putEndpoint } from "services/apiFunctions";
@@ -18,7 +17,6 @@ const InvCorrection = ({ open, onClose, inv }) => {
     modifiedDate: dayjs().format("YYYY-MM-DDTHH:mm"),
   });
 
-  const [errors, setErrors] = React.useState([]);
 
   const onAddMore = () => {
     putEndpoint(`/inventory/quantity/${inv.id}`, state)
@@ -26,7 +24,7 @@ const InvCorrection = ({ open, onClose, inv }) => {
         onClose();
         getInvList(true);
       })
-      .catch((a) => console.log(setErrors(a)));
+      //.catch((a) => console.log(setErrors(a)));
   };
 
   const onChange = (e) => {
