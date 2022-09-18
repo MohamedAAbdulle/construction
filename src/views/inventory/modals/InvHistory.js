@@ -3,9 +3,10 @@ import ModalCont from "components/modalCont/ModalCont";
 import { getEndpoint } from "services/apiFunctions";
 import dayjs from "dayjs";
 import "./InvHistory.sass";
+import fetchStatus from "components/fetch-status/fetchStatus";
 
 const InvHistory = ({ open, onClose, inv }) => {
-  const [state, setState] = React.useState([]);
+  const [state, setState] = React.useState();
 
   const getInvHistory = () => {
     getEndpoint(`/inventory/invhistory/${inv.id}`).then((res) =>
@@ -15,32 +16,44 @@ const InvHistory = ({ open, onClose, inv }) => {
 
   React.useEffect(getInvHistory, []);
 
+  const colorType = (x) => {
+    if (x === "CorrectionAdd" || x === "Delivery") return "green";
+    else if (
+      x === "CorrectionRemove" ||
+      x === "DailyUsage" ||
+      x === "UndoDelivery"
+    )
+      return "red";
+  };
+  const typeShorten = (x) => {
+    if (x === "CorrectionAdd") return "Correction+";
+    if (x === "CorrectionRemove") return "Correction-";
+    else return x;
+  };
   return (
-    <ModalCont
-      open={open}
-      onClose={onClose}
-      title={
-        <div>
-          <h3 style={{ margin: 0 }}>{inv.name}</h3>
-        </div>
-      }
-    >
-      {state.length ? (
-        <>
-          {state.map((item, index) => (
-            <div className="inv-history" key={index}>
-              <div className={item.type}>{item.type}</div>
-              <div>{dayjs(item.dateDone).format("DD-MMM-YY, HH:mm")}</div>
-              <div>
-                <span className="quantity">{item.quantity}</span>
-                <span>{inv.unit}</span>
+    <ModalCont open={open} onClose={onClose} title={`History (${inv.name})`}>
+      {fetchStatus(
+        state,
+        () => (
+          <>
+            {state.map((item, index) => (
+              <div className="inv-history row gx-3 gy-3" key={index}>
+                <div className={`${colorType(item.type)} col-3`}>
+                  {typeShorten(item.type)}
+                </div>
+                <div className="col-4 text-nowrap">
+                  {dayjs(item.dateDone).format("DD-MMM-YY, HH:mm")}
+                </div>
+                <div className="col-3">
+                  <span className="quantity">{item.quantity}</span>
+                  <span>{inv.unit}</span>
+                </div>
+                <div className="link-like col-2 text-nowrap">See Docs</div>
               </div>
-              <div className="link-like">See Docs</div>
-            </div>
-          ))}
-        </>
-      ) : (
-        <p style={{ fontStyle: "italic" }}>No inventory history available.</p>
+            ))}
+          </>
+        ),
+        "No History Available"
       )}
     </ModalCont>
   );

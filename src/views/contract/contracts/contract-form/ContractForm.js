@@ -22,7 +22,7 @@ const ContractForm = ({ closeSlider, initialContract, formLabel }) => {
               if (cont) {
                 return total + parseInt(cont.price);
               }
-              return total
+              return total;
             }, 0)
         : 0;
     setState({ ...state, totalPrice });
@@ -116,7 +116,9 @@ const ContractForm = ({ closeSlider, initialContract, formLabel }) => {
           </div>
         </div>
 
-        <DocumentsComp docs={[]} />
+        <div className="card-comp">
+          <DocumentsComp docs={[]} />
+        </div>
 
         <SubContract
           contractItems={state.contractItems}

@@ -1,6 +1,6 @@
 import React from "react";
 import { TextField, Grid, MenuItem } from "@material-ui/core";
-import { accountTypesEnums } from "utils/enums";
+import { orderStatus } from "utils/enums";
 import { accountingContx } from "views/orders/AccountingContx";
 import StickySlider from "components/sliderModal/StickySlider";
 import OrderForm from "./OrderForm";
@@ -25,7 +25,7 @@ const AccountingHead = () => {
           onChange={filterAccounts}
           id="filter-select"
         >
-          {["All", ...accountTypesEnums].map((type, index) => (
+          {["All", ...orderStatus].map((type, index) => (
             <MenuItem key={index} value={type}>
               {type}
             </MenuItem>
@@ -34,7 +34,7 @@ const AccountingHead = () => {
         <div className="filter-select">
           <InputComp
             type="select"
-            options={accountTypesEnums}
+            options={orderStatus}
             placeholder="Filter Order"
           />
         </div>

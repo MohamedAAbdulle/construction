@@ -1,14 +1,19 @@
 import React from "react";
 import { inventoryStatus } from "utils/enums";
 import "./Inventory.css";
-import AddMore from "./modals/AddMore";
-import TakeOut from "./modals/TakeOut";
+import DailyUse from "./modals/DailyUse";
 import InvHistory from "./modals/InvHistory";
 import TableCont from "components/table-comp/TableCont";
 import Ellipsis from "components/ellipsis/Ellipsis";
-import dayjs from "dayjs";
 import DeleteInv from "./modals/DeleteInv";
 import EditInv from "./modals/EditInv";
+import dateFormatter from "utils/dateFormatter";
+import { FiChevronsRight } from "react-icons/fi";
+import { MdHistoryToggleOff } from "react-icons/md";
+import { TbEdit } from "react-icons/tb";
+import { MdOutlineDeleteForever } from "react-icons/md";
+import { BsCheck2Circle } from "react-icons/bs";
+import InvCorrection from "./modals/InvCorrection";
 
 export default function Inventory({ invList }) {
   const getInventoryStatus = (inv) => {
@@ -50,42 +55,51 @@ export default function Inventory({ invList }) {
           inv.unit,
           inv.quantity,
           getInventoryStatus(inv),
-          dayjs(inv.modifiedDate).format("DD-MM-YY, HH:mm"),
+          dateFormatter(inv.modifiedDate, "DD MMM 'YY, HH:mm"),
           <Ellipsis
             menus={[
-              { onClick: () => tableAction("add", inv), label: "Add More" },
               {
                 onClick: () => tableAction("remove", inv),
-                label: "Take Out",
+                label: "Daily Usage",
+                icon: <FiChevronsRight />,
               },
+
               {
-                onClick: () => tableAction("history", inv),
-                label: "History",
+                onClick: () => tableAction("add", inv),
+                label: "Correction",
+                icon: <BsCheck2Circle />,
               },
               {
                 onClick: () => tableAction("edit", inv),
                 label: "Edit",
+                icon: <TbEdit />,
+              },
+              {
+                onClick: () => tableAction("history", inv),
+                label: "History",
+                icon: <MdHistoryToggleOff />,
               },
               {
                 onClick: () => tableAction("delete", inv),
                 label: "Delete",
+                icon: <MdOutlineDeleteForever />,
               },
             ]}
           />,
         ])}
       />
 
-      {modal === "add" && (
-        <AddMore open={true} onClose={closeModal} inv={selectedInv} />
-      )}
       {modal === "remove" && (
-        <TakeOut open={true} onClose={closeModal} inv={selectedInv} />
+        <DailyUse open={true} onClose={closeModal} inv={selectedInv} />
       )}
-      {modal === "history" && (
-        <InvHistory open={true} onClose={closeModal} inv={selectedInv} />
+      {modal === "add" && (
+        <InvCorrection open={true} onClose={closeModal} inv={selectedInv} />
       )}
       {modal === "edit" && (
         <EditInv open={true} onClose={closeModal} inv={selectedInv} />
+      )}
+      {modal === "history" && (
+        <InvHistory open={true} onClose={closeModal} inv={selectedInv} />
       )}
       {modal === "delete" && (
         <DeleteInv open={true} onClose={closeModal} id={selectedInv.id} />

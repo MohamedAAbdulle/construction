@@ -1,5 +1,6 @@
 import { Menu, MenuItem, IconButton } from "@material-ui/core";
 import { MoreVert } from "@material-ui/icons";
+
 import React from "react";
 
 const Ellipsis = ({ menus, cover }) => {
@@ -28,6 +29,8 @@ const Ellipsis = ({ menus, cover }) => {
               }}
               key={index}
             >
+              {menu.icon}
+              <span className="mx-1"></span>
               {menu.label}
             </MenuItem>
           ))}

@@ -36,6 +36,7 @@ const EditInv = ({ open, onClose, inv }) => {
             required
           />
         </Grid>
+
         <Grid item xs={12} md={6}>
           <InputComp
             onChange={onChanged}

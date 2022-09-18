@@ -7,22 +7,21 @@ import { putEndpoint } from "services/apiFunctions";
 import onChangeSimple from "utils/onChangeSimple";
 import dayjs from "dayjs";
 import { appContext } from "AppContext";
+import findError from "utils/findError";
+import { invCorrectionType } from "utils/enums";
 
-const Addmore = ({ open, onClose, inv }) => {
+const InvCorrection = ({ open, onClose, inv }) => {
   const { getInvList } = React.useContext(appContext);
 
   const [state, setState] = React.useState({
+    type: "CorrectionAdd",
     modifiedDate: dayjs().format("YYYY-MM-DDTHH:mm"),
   });
 
   const [errors, setErrors] = React.useState([]);
 
-  const findError = (type) => {
-    return errors.includes(type);
-  };
-
   const onAddMore = () => {
-    putEndpoint(`/inventory/addmore/${inv.id}`, state)
+    putEndpoint(`/inventory/quantity/${inv.id}`, state)
       .then(() => {
         onClose();
         getInvList(true);
@@ -38,65 +37,46 @@ const Addmore = ({ open, onClose, inv }) => {
     <ModalCont
       open={open}
       onClose={onClose}
-      title={
-        <div>
-          <h3 style={{ margin: 0 }}>{inv.name}</h3>
-        </div>
-      }
+      title={`Correction (${inv.name})`}
     >
-      <Grid
-        container
-        justifyContent="space-between"
-        alignItems="center"
-        spacing={2}
-      >
-        <Grid item xs={6}>
+      <div className="row gy-3">
+        <div className="col-12 col-lg-6">
           <InputComp
-            type="number"
-            label="Amount To Add"
-            name="quantity"
-            error={findError("quantity")}
+            type="select"
+            label="Correction Type"
+            name="type"
+            error={findError("Type")}
             onChange={onChange}
-            postfix={inv.unit}
+            options={invCorrectionType}
+            value={state.type}
           />
-        </Grid>
-        <Grid item xs={6}>
+        </div>
+        <div className="col-12 col-lg-6">
           <InputComp
             type="datetime-local"
             label="Date Created"
             name="modifiedDate"
             onChange={onChange}
+            value={state.modifiedDate}
           />
-        </Grid>
-        {/* <Grid item xs={12}>
-          <InputComp
-            name="supplierName"
-            error={findError("supplierName")}
-            onChange={onChange}
-            label="Supply Name"
-          />
-        </Grid>
-        <Grid item xs={6}>
+        </div>
+        <div className="d-flex align-items-center">
+          <h3 className="fw-normal">{inv.quantity}</h3>
+          <h2 className="my-0 mx-2">
+            {state.type === "CorrectionAdd" ? "+" : "-"}
+          </h2>
+
           <InputComp
             type="number"
-            label="Price"
-            name="price"
-            error={findError("price")}
+            label="Amount"
+            name="quantity"
+            error={findError("Quantity")}
             onChange={onChange}
+            postfix={inv.unit}
           />
-        </Grid>
-        <Grid item xs={6}>
-          <InputComp
-            type="select"
-            select
-            label="Status"
-            name="status"
-            error={findError("status")}
-            onChange={onChange}
-            options={accountType}
-          />
-        </Grid> */}
-      </Grid>
+        </div>
+      </div>
+
       {/* <Documents documents={a} /> */}
       <div className="modal-btns">
         <BtnComp label="Save" onClick={onAddMore} />
@@ -105,4 +85,4 @@ const Addmore = ({ open, onClose, inv }) => {
   );
 };
 
-export default Addmore;
+export default InvCorrection;

@@ -3,7 +3,7 @@ import FailedToFetch from "components/fetch-status/FailedToFetch";
 import React from "react";
 
 const fetchStatus = (response, successComponent, emptyMessage) => {
-  console.log(response);
+  //console.log(response);
   if (response) {
     if (response.failed) return <FailedToFetch />;
     else if (response.length === 0)
@@ -20,7 +20,7 @@ const fetchStatus = (response, successComponent, emptyMessage) => {
         </p>
       );
     else return successComponent();
-  } else return <CircularProgress />;
+  } else return <CircularProgress className=""/>;
 };
 
 export default fetchStatus;

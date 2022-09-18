@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, IconButton/* , Menu, MenuItem */ } from "@material-ui/core";
+import { Grid, IconButton /* , Menu, MenuItem */ } from "@material-ui/core";
 import { HiDownload } from "react-icons/hi";
 import { Add, Delete } from "@material-ui/icons";
 import NewDocument from "./NewDocument";
@@ -18,6 +18,7 @@ const DocumentsComp = ({ docs, setDocs, url }) => {
       let x = new Blob([r]);
       const url = window.URL.createObjectURL(x);
       console.log(r.type);
+      console.log(url);
       let fileType = r.type.substring(r.type.lastIndexOf("/") + 1);
       const link = document.createElement("a");
       link.href = url;
@@ -63,13 +64,7 @@ const DocumentsComp = ({ docs, setDocs, url }) => {
 
   React.useEffect(getDocs, []);
   return (
-    <div className="card-comp doc-comp">
-      <div className="card-title">
-        Documents
-        <IconButton onClick={() => setNewDoc(true)}>
-          <Add />
-        </IconButton>
-      </div>
+    <div className=" doc-comp">
       {fetchStatus(
         docs,
         () => (
@@ -122,6 +117,10 @@ const DocumentsComp = ({ docs, setDocs, url }) => {
         ),
         "No Documents"
       )}
+
+      <p className="link-like text-center " onClick={() => setNewDoc(true)}>
+        Add Document
+      </p>
 
       {newDoc && (
         <NewDocument onClose={() => setNewDoc(false)} addFile={addFile} />

@@ -1,16 +1,17 @@
 import React from "react";
 import { Grid, IconButton } from "@material-ui/core";
 import dayjs from "dayjs";
-import {  postEndpoint, putEndpoint } from "services/apiFunctions";
+import { postEndpoint, putEndpoint } from "services/apiFunctions";
 import onChangeSimple from "utils/onChangeSimple";
 import InputComp from "components/input/InputComp";
 import BtnComp from "components/btn-comp/BtnComp";
 import { accountingContx } from "./AccountingContx";
-import {Close } from "@material-ui/icons";
+import { Close } from "@material-ui/icons";
 import Inventorysearcher from "components/searchers/InventorySearcher";
 import SupplierSearcher from "components/searchers/SupplierSearcher";
-import { accountTypesEnums } from "utils/enums";
+import { orderStatus } from "utils/enums";
 import DocumentsComp from "components/documents/DocumentsComp";
+import findError from "utils/findError";
 
 const OrderForm = ({ closeSlider, order }) => {
   const { getAccounts } = React.useContext(accountingContx);
@@ -30,30 +31,13 @@ const OrderForm = ({ closeSlider, order }) => {
   };
 
   const onSave = () => {
-    let a;
+    let endPoint;
     if (order.id) {
-      if (docs && docs.length) {
-        let a = true;
-        docs.forEach((doc) => {
-          if (doc.status === "Created") {
-            a
-              ? formState.set("files", doc.fileData, doc.fileName)
-              : formState.append("files", doc.fileData, doc.fileName);
-            a = false;
-          }
-        });
-      }
-      formState.set(
-        "orderString",
-        JSON.stringify({ ...state, documents: docs || [] })
-      );
-      a = putEndpoint(`/orders/${state.id}`, formState);
-      //a = postEndpoint(`/hello`, formState);
+      endPoint = putEndpoint(`/orders/${state.id}`, state);
     } else {
-      a = postEndpoint(`/orders`, state);
-      //a = postEndpoint(`/test`, docs[0]);
+      endPoint = postEndpoint(`/orders`, state);
     }
-    a.then((res) => {
+    endPoint.then((res) => {
       if (res && res.status === 200) {
         closeSlider();
         getAccounts();
@@ -63,10 +47,8 @@ const OrderForm = ({ closeSlider, order }) => {
     });
   };
 
-  const findError = (type) => {
-    if (errors[type]) {
-      return errors[type][0];
-    }
+  const _findError = (type) => {
+    findError(type, errors);
   };
 
   return (
@@ -106,7 +88,7 @@ const OrderForm = ({ closeSlider, order }) => {
                     },
                   })
                 }
-                error={findError("InventoryId")}
+                error={_findError("InventoryId")}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -121,7 +103,7 @@ const OrderForm = ({ closeSlider, order }) => {
                     },
                   })
                 }
-                error={findError("SupplierId")}
+                error={_findError("SupplierId")}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -131,7 +113,7 @@ const OrderForm = ({ closeSlider, order }) => {
                 name="quantity"
                 onChange={changed}
                 value={state.quantity}
-                error={findError("Quantity")}
+                error={_findError("Quantity")}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -141,7 +123,7 @@ const OrderForm = ({ closeSlider, order }) => {
                 name="price"
                 onChange={changed}
                 value={state.price}
-                error={findError("Price")}
+                error={_findError("Price")}
               />
             </Grid>
             {/* <Grid item xs={12} sm={6}>
@@ -154,26 +136,8 @@ const OrderForm = ({ closeSlider, order }) => {
                 error={findError("Delivered")}
               />
             </Grid> */}
-            <Grid item xs={12} sm={6}>
-              <InputComp
-                label="Status"
-                type="select"
-                name="status"
-                onChange={changed}
-                value={state.status}
-                options={accountTypesEnums}
-                error={findError("Status")}
-              />
-            </Grid>
           </Grid>
         </div>
-        {order.id && (
-          <DocumentsComp
-            docs={docs}
-            setDocs={setDocs}
-            url={`/orders/${order.id}`}
-          />
-        )}
       </div>
     </div>
   );

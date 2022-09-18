@@ -5,7 +5,7 @@ let testCustomerId;
 let baseUrl;
 baseUrl = "https://ery9ct8r48.execute-api.ap-south-1.amazonaws.com";
 //testCustomerId = 2;
-//baseUrl = "https://localhost:5001";
+baseUrl = "https://localhost:5001";
 if (window.location.hostname !== "localhost") {
   testCustomerId = undefined;
   baseUrl = "https://ery9ct8r48.execute-api.ap-south-1.amazonaws.com";
@@ -44,7 +44,6 @@ const errorHandler = (res) => {
 export const getEndpoint = async (url, responseType) => {
   const extra = headerSetup();
   if (responseType) extra.responseType = responseType;
-  console.log(extra)
   return await axios
     .get(baseUrl + url, extra)
     .then((res) => {

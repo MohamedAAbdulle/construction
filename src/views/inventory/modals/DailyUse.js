@@ -7,24 +7,21 @@ import BtnComp from "components/btn-comp/BtnComp";
 import { putEndpoint } from "services/apiFunctions";
 import onChangeSimple from "utils/onChangeSimple";
 import { appContext } from "AppContext";
+import findError from "utils/findError";
 
-const TakeOut = ({ open, onClose, inv }) => {
+const DailyUse = ({ open, onClose, inv }) => {
   const { getInvList } = React.useContext(appContext);
 
-  const [errors, setErrors] = React.useState([]);
+  const [errors, setErrors] = React.useState({});
 
   const [state, setState] = React.useState({
+    type: "DailyUsage",
     modifiedDate: dayjs().format("YYYY-MM-DDTHH:mm"),
   });
 
-  const findError = (type) => {
-    return errors.includes(type);
-  };
-
   const onTakeOut = () => {
-    putEndpoint(`/inventory/takeout/${inv.id}`, state).then((res) => {
+    putEndpoint(`/inventory/quantity/${inv.id}`, state).then((res) => {
       if (res && res.status === 200) {
-        console.log(res);
         onClose();
         getInvList(true);
       } else if (res && res.errors) {
@@ -39,34 +36,35 @@ const TakeOut = ({ open, onClose, inv }) => {
   };
 
   return (
-    <ModalCont open={open} onClose={onClose} title={inv.name}>
-      <Grid
-        container
-        justifyContent="space-between"
-        alignItems="center"
-        spacing={2}
-      >
-        <Grid item xs={5}>
-          <InputComp
-            type="number"
-            label="Amount To Remove"
-            name="quantity"
-            required
-            error={findError("quantity")}
-            onChange={onChange}
-            postfix={inv.unit}
-          />
-        </Grid>
-        <Grid item xs={7}>
+    <ModalCont open={open} onClose={onClose} title={`Daily Use (${inv.name})`}>
+      <div className="row gy-3">
+        <div className="col-lg-6">
+          <div className="d-flex align-items-center">
+            <h3 className="fw-normal m-0">{inv.quantity}</h3>
+            <h2 className="my-0 mx-2">-</h2>
+            <InputComp
+              type="number"
+              label="Amount To Remove"
+              name="quantity"
+              required
+              error={findError("Quantity", errors)}
+              onChange={onChange}
+              postfix={inv.unit}
+            />
+          </div>
+        </div>
+        <div className="col-lg-6">
           <InputComp
             type="datetime-local"
             label="Date Created"
             name="modifiedDate"
             onChange={onChange}
             value={state.modifiedDate}
+            error={findError("ModifiedDate", errors)}
           />
-        </Grid>
-      </Grid>
+        </div>
+      </div>
+
       <div className="modal-btns">
         <BtnComp label="Save" onClick={onTakeOut} />
       </div>
@@ -74,4 +72,4 @@ const TakeOut = ({ open, onClose, inv }) => {
   );
 };
 
-export default TakeOut;
+export default DailyUse;

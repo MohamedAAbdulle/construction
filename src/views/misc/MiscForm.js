@@ -9,7 +9,7 @@ import { miscType } from "utils/enums";
 
 const MiscForm = ({ closeModal, misc, getMiscs }) => {
   const [state, setState] = React.useState(misc || {});
-  const [errors, setErrors] = React.useState([]);
+  const [errors, setErrors] = React.useState({});
 
   const isNewMisc = Boolean(misc.id);
 

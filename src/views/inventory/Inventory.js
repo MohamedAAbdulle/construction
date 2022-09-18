@@ -6,7 +6,7 @@ import InventoryTable from "views/inventory/InventoryTable";
 
 const Inventory = () => {
   const { invList, getInvList } = React.useContext(appContext);
-  React.useEffect(getInvList, []);
+  React.useEffect(() => getInvList(), []);
   return (
     <div>
       <InventoryHead />
