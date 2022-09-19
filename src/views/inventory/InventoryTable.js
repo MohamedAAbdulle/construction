@@ -10,7 +10,7 @@ import EditInv from "./modals/EditInv";
 import dateFormatter from "utils/dateFormatter";
 import { FiChevronsRight } from "react-icons/fi";
 import { MdHistoryToggleOff } from "react-icons/md";
-import { TbEdit } from "react-icons/tb";
+import { FiEdit } from "react-icons/fi";
 import { MdOutlineDeleteForever } from "react-icons/md";
 import { BsCheck2Circle } from "react-icons/bs";
 import InvCorrection from "./modals/InvCorrection";
@@ -72,7 +72,7 @@ export default function Inventory({ invList }) {
               {
                 onClick: () => tableAction("edit", inv),
                 label: "Edit",
-                icon: <TbEdit />,
+                icon: <FiEdit />,
               },
               {
                 onClick: () => tableAction("history", inv),

@@ -8,7 +8,7 @@ import { appContext } from "AppContext";
 import StickySlider from "components/sliderModal/StickySlider";
 import OrderForm from "./OrderForm";
 import OrderDocs from "./models/OrderDocs";
-import { TbEdit } from "react-icons/tb";
+import { FiEdit } from "react-icons/fi";
 import { CgFileDocument } from "react-icons/cg";
 import { ImUndo2 } from "react-icons/im";
 import { RiShareForwardFill } from "react-icons/ri";
@@ -20,7 +20,7 @@ import dateFormatter from "utils/dateFormatter";
 const AccountingTable = () => {
   const { invList, suppliers } = React.useContext(appContext);
   const { accounts, getAccounts } = React.useContext(accountingContx);
-  
+
   //const [OpenUpdateStatus, setOpenUpdateStatus] = React.useState(false);
 
   const [openEdit, setOpenEdit] = React.useState(false);
@@ -38,7 +38,6 @@ const AccountingTable = () => {
     });
   };
 
-  
   const updateStatus = (id) => {
     putEndpoint(`/Orders/statusUpdate/${id}`).then(() => {
       getAccounts();
@@ -61,7 +60,7 @@ const AccountingTable = () => {
 
     return element;
   };
-  
+
   const data = accounts.map((r) => {
     let invInfo = findElement(r.inventoryId, "inventory");
     let supplierInfo = findElement(r.supplierId, "suppliers");
@@ -72,14 +71,14 @@ const AccountingTable = () => {
       <div>{r.supplierName}</div>,
       <div>{r.quantity}</div>,
       <div>{r.price}</div>,
-      <div>{ dateFormatter(r.dateDone,"DD MMM 'YY, HH:mm")}</div>,
+      <div>{dateFormatter(r.dateDone, "DD MMM 'YY, HH:mm")}</div>,
       <div className={r.status}>{r.status}</div>,
       <Ellipsis
         menus={[
           {
             onClick: () => setOpenEdit(r),
             label: "Edit",
-            icon: <TbEdit />,
+            icon: <FiEdit />,
           },
           {
             onClick: () => {
@@ -108,7 +107,7 @@ const AccountingTable = () => {
               setModal({ type: "delete-order", state: r.id });
             },
             label: "Delete",
-            icon: <MdOutlineDeleteForever/>
+            icon: <MdOutlineDeleteForever />,
           },
         ]}
       ></Ellipsis>,
