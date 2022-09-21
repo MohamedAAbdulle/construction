@@ -28,6 +28,7 @@ const Ellipsis = ({ menus, cover }) => {
                 setAnchorEl(null);
               }}
               key={index}
+              className={`purple ${menu.classes}`}
             >
               {menu.icon}
               <span className="mx-1"></span>

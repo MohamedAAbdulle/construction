@@ -4,6 +4,7 @@ import InUseToolsHeader from "./InUseToolsHeader";
 import InUseToolsTable from "./InUseToolTable";
 import { getEndpoint } from "services/apiFunctions";
 import fetchStatus from "components/fetch-status/fetchStatus";
+import { appContext } from "AppContext";
 
 const InUseTools = () => {
   const {  getInUseTools, inUseTools } = React.useContext(toolsContx);

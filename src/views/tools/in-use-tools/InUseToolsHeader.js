@@ -4,7 +4,7 @@ import BtnComp from "components/btn-comp/BtnComp";
 import NewInUse from "./NewInUse";
 import ToolsTab from "../tools-tab/ToolsTab";
 
-const InUseToolsHeader = ({ workers }) => {
+const InUseToolsHeader = () => {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -26,8 +26,6 @@ const InUseToolsHeader = ({ workers }) => {
       {open && (
         <NewInUse
           closeModal={() => setOpen(false)}
-          state={{}}
-          workers={workers}
         />
       )}
     </>

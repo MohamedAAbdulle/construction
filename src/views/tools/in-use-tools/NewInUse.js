@@ -8,11 +8,16 @@ import BtnComp from "components/btn-comp/BtnComp";
 import { toolsContx } from "../ToolsContx";
 import WorkerSearcher from "components/searchers/WorkerSearcher";
 import ToolSearcher from "components/searchers/ToolSearcher";
+import { appContext } from "AppContext";
+import InputComp from "components/input/InputComp";
+import findError from "utils/findError";
 
-const NewInUse = ({ closeModal, workers }) => {
+const NewInUse = ({ closeModal, passedTool }) => {
   const { getInUseTools, tools, getTools } = React.useContext(toolsContx);
+  const { workers, getWorkers } = React.useContext(appContext);
   const [tool, setTool] = React.useState({
     dateAssigned: dayjs().format("YYYY-MM-DDTHH:mm"),
+    toolId: passedTool?.id || null,
   });
 
   const [errors, setErrors] = React.useState({});
@@ -32,7 +37,9 @@ const NewInUse = ({ closeModal, workers }) => {
       }
     });
   };
-  console.log(errors)
+  React.useEffect(getWorkers, []);
+
+  console.log(errors);
 
   return (
     <>
@@ -44,24 +51,30 @@ const NewInUse = ({ closeModal, workers }) => {
           spacing={3}
         >
           <Grid item xs={12} md={6}>
-            <ToolSearcher
-              label="Tool"
-              list={tools}
-              onAction={(item) =>
-                changed({
-                  target: {
-                    value: item.id,
-                    name: "toolId",
-                    type: "number",
-                  },
-                })
-              }
-            />
+            {passedTool ? (
+              <InputComp disabled={true} value={passedTool.name} label="Tool" />
+            ) : (
+              <ToolSearcher
+                label="Tool"
+                list={tools}
+                error={findError("ToolId", errors)}
+                onAction={(item) =>
+                  changed({
+                    target: {
+                      value: item.id,
+                      name: "toolId",
+                      type: "number",
+                    },
+                  })
+                }
+              />
+            )}
           </Grid>
           <Grid item xs={12} md={6}>
             <WorkerSearcher
               label="Worker To Assign"
               list={workers}
+              error={findError("WorkerId", errors)}
               onAction={(item) =>
                 changed({
                   target: {

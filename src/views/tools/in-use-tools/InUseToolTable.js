@@ -11,7 +11,7 @@ const InUseToolsTable = ({ workers }) => {
 
   const returnTool = (tool) => {
     deleteEndpoint(
-      `/tools/inUse?workerId=${tool.workerId}&toolId=${tool.toolId}`
+      `/tools/inUse?workerId=${tool.workerId}&toolId=${tool.toolId}&dateAssigned=${tool.dateAssigned}`
     ).then(() => {
       getInUseTools();
       getTools();

@@ -14,6 +14,8 @@ import { ImUndo2 } from "react-icons/im";
 import { RiShareForwardFill } from "react-icons/ri";
 import { MdOutlineDeleteForever } from "react-icons/md";
 import dateFormatter from "utils/dateFormatter";
+import { orderStatus } from "utils/enums";
+import assignColor from "utils/assignColors";
 
 //import {} from "react-icons/hi";
 
@@ -66,13 +68,24 @@ const AccountingTable = () => {
     let supplierInfo = findElement(r.supplierId, "suppliers");
     r.supplierName = supplierInfo.name;
     r.inventoryName = invInfo.name;
+    let _status = r.status;
+    let colorList = ["orange", "yellow", "green"];
+    let statusIndex = orderStatus.indexOf(_status);
+    let nextStep =
+      statusIndex < 2 && statusIndex > -1
+        ? orderStatus[statusIndex + 1]
+        : undefined;
+    let prevStep = statusIndex > 0 ? orderStatus[statusIndex - 1] : undefined;
+
     return [
       <div>{r.inventoryName}</div>,
       <div>{r.supplierName}</div>,
       <div>{r.quantity}</div>,
       <div>{r.price}</div>,
       <div>{dateFormatter(r.dateDone, "DD MMM 'YY, HH:mm")}</div>,
-      <div className={r.status}>{r.status}</div>,
+      <div className={assignColor(orderStatus, colorList, _status)}>
+        {r.status}
+      </div>,
       <Ellipsis
         menus={[
           {
@@ -87,20 +100,21 @@ const AccountingTable = () => {
             label: "Documents",
             icon: <CgFileDocument />,
           },
-          {
+          nextStep && {
             onClick: () => {
               updateStatus(r.id);
               //setOpenUpdateStatus(r.id);
             },
-            label: "Next Step",
+            label: nextStep,
             icon: <RiShareForwardFill />,
           },
-          {
+          prevStep && {
             onClick: () => {
               undoStatus(r.id);
             },
-            label: "Undo Step",
+            label: prevStep,
             icon: <ImUndo2 />,
+            classes: "red",
           },
           {
             onClick: () => {
@@ -108,6 +122,7 @@ const AccountingTable = () => {
             },
             label: "Delete",
             icon: <MdOutlineDeleteForever />,
+            classes: "red",
           },
         ]}
       ></Ellipsis>,

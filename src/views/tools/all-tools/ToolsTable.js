@@ -5,9 +5,11 @@ import DeleteModal from "components/delete-modal/DeleteModal";
 import { deleteEndpoint } from "services/apiFunctions";
 import ToolForm from "./ToolForm";
 import { toolsContx } from "../ToolsContx";
+import NewInUse from "../in-use-tools/NewInUse";
 
 const ToolsTable = () => {
   const { tools, getTools } = React.useContext(toolsContx);
+  const [openAssign, setOpenAssign] = React.useState(false);
 
   const [openDeleteTool, setOpenDeleteTool] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
@@ -37,6 +39,12 @@ const ToolsTable = () => {
             },
             label: "Delete",
           },
+          {
+            onClick: () => {
+              setOpenAssign(r);
+            },
+            label: "Assign",
+          },
         ]}
       ></Ellipsis>,
     ];
@@ -58,6 +66,12 @@ const ToolsTable = () => {
       )}
       {openEdit && (
         <ToolForm closeModal={() => setOpenEdit(false)} state={openEdit} />
+      )}
+      {openAssign.id && (
+        <NewInUse
+          closeModal={() => setOpenAssign(false)}
+          passedTool={openAssign}
+        />
       )}
     </>
   );

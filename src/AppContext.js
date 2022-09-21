@@ -6,6 +6,7 @@ const AppContext = (props) => {
   const [invList, setInvList] = React.useState();
   const [suppliers, setSuppliers] = React.useState();
   const [WorkerTypes, setWorkerTypes] = React.useState([]);
+  const [workers, setWorkers] = React.useState();
 
   const getWorkerTypes = () => {
     getEndpoint("/Workers/WorkerTypes").then((res) => {
@@ -30,6 +31,14 @@ const AppContext = (props) => {
       });
   };
 
+  const getWorkers = (hardFetch) => {
+    (hardFetch || !workers) &&
+      getEndpoint("/workers").then((res) => {
+        let data = res.failed ? res : res.reverse();
+        setWorkers(data);
+      });
+  };
+
   React.useEffect(() => {
     getWorkerTypes();
   }, []);
@@ -42,6 +51,8 @@ const AppContext = (props) => {
         suppliers,
         WorkerTypes,
         getWorkerTypes,
+        workers,
+        getWorkers,
       }}
     >
       {props.children}

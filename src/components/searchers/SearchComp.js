@@ -12,6 +12,7 @@ const SearchComp = ({
   placeholder,
   value,
   disableSelection,
+  disabled,
 }) => {
   const [foundItems, setFoundItems] = React.useState(false);
   const [inputValue, setInputValue] = React.useState(value || "");
@@ -56,6 +57,7 @@ const SearchComp = ({
             value={inputValue}
             placeholder={placeholder}
             error={error}
+            disabled={disabled}
           />
           {foundItems && inputValue && (
             <div className="searcher-results-comp">
