@@ -1,33 +1,30 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
-import dayjs from "dayjs";
 import { postEndpoint } from "services/apiFunctions";
 import onChangeSimple from "utils/onChangeSimple";
 import ModalCont from "components/modalCont/ModalCont";
 import BtnComp from "components/btn-comp/BtnComp";
 import { toolsContx } from "../ToolsContx";
 import WorkerSearcher from "components/searchers/WorkerSearcher";
-import ToolSearcher from "components/searchers/ToolSearcher";
 import { appContext } from "AppContext";
 import InputComp from "components/input/InputComp";
 import findError from "utils/findError";
 
 const NewInUse = ({ closeModal, passedTool }) => {
-  const { getInUseTools, tools, getTools } = React.useContext(toolsContx);
   const { workers, getWorkers } = React.useContext(appContext);
-  const [tool, setTool] = React.useState({
-    dateAssigned: dayjs().format("YYYY-MM-DDTHH:mm"),
-    toolId: passedTool?.id || null,
+  const { getInUseTools, getTools } = React.useContext(toolsContx);
+  const [state, setState] = React.useState({
+    toolId: passedTool.id,
   });
 
   const [errors, setErrors] = React.useState({});
 
   const changed = (e) => {
-    onChangeSimple(e, tool, setTool);
+    onChangeSimple(e, state, setState);
   };
 
   const assignTool = () => {
-    postEndpoint(`/tools/inuse`, tool).then((res) => {
+    console.log(state);
+    postEndpoint(`/tools/inuse`, state).then((res) => {
       if (res && res.status === 200) {
         closeModal();
         getInUseTools();
@@ -43,34 +40,13 @@ const NewInUse = ({ closeModal, passedTool }) => {
 
   return (
     <>
-      <ModalCont open={true} onClose={closeModal} title="New Tool">
-        <Grid
-          container
-          alignItems="center"
-          justifyContent="space-between"
-          spacing={3}
-        >
-          <Grid item xs={12} md={6}>
-            {passedTool ? (
-              <InputComp disabled={true} value={passedTool.name} label="Tool" />
-            ) : (
-              <ToolSearcher
-                label="Tool"
-                list={tools}
-                error={findError("ToolId", errors)}
-                onAction={(item) =>
-                  changed({
-                    target: {
-                      value: item.id,
-                      name: "toolId",
-                      type: "number",
-                    },
-                  })
-                }
-              />
-            )}
-          </Grid>
-          <Grid item xs={12} md={6}>
+      <ModalCont
+        open={true}
+        onClose={closeModal}
+        title={`Assign Tool (${passedTool.name})`}
+      >
+        <div className="row gy-3">
+          <div className="col-md-6">
             <WorkerSearcher
               label="Worker To Assign"
               list={workers}
@@ -85,9 +61,18 @@ const NewInUse = ({ closeModal, passedTool }) => {
                 })
               }
             />
-          </Grid>
-        </Grid>
-
+          </div>
+          <div className="col-md-6">
+            <InputComp
+              type="number"
+              label="Amount To Assign"
+              name="amount"
+              onChange={changed}
+              error={findError("Amount", errors)}
+              postfix={`/${passedTool.quantity - passedTool.inUse}`}
+            />
+          </div>
+        </div>
         <div className="modal-btns">
           <BtnComp label="Save" onClick={assignTool} />
         </div>

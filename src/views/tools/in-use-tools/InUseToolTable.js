@@ -29,6 +29,7 @@ const InUseToolsTable = ({ workers }) => {
     return [
       <div>{AssociatedTool.name}</div>,
       <div>{AssociatedWorker.name}</div>,
+      <div>{r.amount}</div>,
       <div>{dayjs(r.dateAssigned).format("DD MMM 'YY, HH:mm")}</div>,
       <Ellipsis
         menus={[
@@ -44,7 +45,13 @@ const InUseToolsTable = ({ workers }) => {
   return (
     <>
       <TableCont
-        tableTitles={["Tool", "Worker Using", "Date Assigned", ""]}
+        tableTitles={[
+          "Tool",
+          "Worker Assigned To",
+          "Amount",
+          "Date Assigned",
+          "",
+        ]}
         dataList={data}
       />
     </>

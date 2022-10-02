@@ -2,10 +2,11 @@ import Ellipsis from "components/ellipsis/Ellipsis";
 import TableCont from "components/table-comp/TableCont";
 import React from "react";
 import DeleteModal from "components/delete-modal/DeleteModal";
-import { deleteEndpoint } from "services/apiFunctions";
+import { deleteEndpoint, putEndpoint } from "services/apiFunctions";
 import ToolForm from "./ToolForm";
 import { toolsContx } from "../ToolsContx";
 import NewInUse from "../in-use-tools/NewInUse";
+import dateFormatter from "utils/dateFormatter";
 
 const ToolsTable = () => {
   const { tools, getTools } = React.useContext(toolsContx);
@@ -21,12 +22,17 @@ const ToolsTable = () => {
     });
   };
 
+  const returnAll = (tool) => {
+    putEndpoint(`/tools/return-all`, tool).then(getTools);
+  };
+
   const data = tools.map((r) => {
     return [
       <div>{r.name}</div>,
       <div>{r.quantity}</div>,
       <div>{r.inUse}</div>,
       <div>{r.quantity - r.inUse}</div>,
+      <div>{dateFormatter(r.lastModified, "DD MMM 'YY, HH:mm")}</div>,
       <Ellipsis
         menus={[
           {
@@ -45,6 +51,12 @@ const ToolsTable = () => {
             },
             label: "Assign",
           },
+          {
+            onClick: () => {
+              returnAll(r);
+            },
+            label: "Return All",
+          },
         ]}
       ></Ellipsis>,
     ];
@@ -53,7 +65,14 @@ const ToolsTable = () => {
   return (
     <>
       <TableCont
-        tableTitles={["Tool Name", "Total Amount", "In Use", "In Store", ""]}
+        tableTitles={[
+          "Tool Name",
+          "Total Amount",
+          "In Use",
+          "In Store",
+          "Last Modified",
+          "",
+        ]}
         dataList={data}
       />
       {openDeleteTool && (

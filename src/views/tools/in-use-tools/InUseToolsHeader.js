@@ -1,11 +1,8 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import BtnComp from "components/btn-comp/BtnComp";
-import NewInUse from "./NewInUse";
 import ToolsTab from "../tools-tab/ToolsTab";
 
 const InUseToolsHeader = () => {
-  const [open, setOpen] = React.useState(false);
 
   return (
     <>
@@ -19,15 +16,8 @@ const InUseToolsHeader = () => {
           <ToolsTab />
         </Grid>
 
-        <Grid item>
-          <BtnComp label="Assign Tool" onClick={() => setOpen(true)} />
-        </Grid>
+        <Grid item></Grid>
       </Grid>
-      {open && (
-        <NewInUse
-          closeModal={() => setOpen(false)}
-        />
-      )}
     </>
   );
 };
