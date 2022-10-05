@@ -4,8 +4,11 @@ import { toast } from "react-toastify";
 let testCustomerId;
 let baseUrl;
 baseUrl = "https://ery9ct8r48.execute-api.ap-south-1.amazonaws.com";
+
+/* local test parameters */
 //testCustomerId = 2;
-baseUrl = "https://localhost:5001";
+//baseUrl = "https://localhost:5001";
+
 if (window.location.hostname !== "localhost") {
   testCustomerId = undefined;
   baseUrl = "https://ery9ct8r48.execute-api.ap-south-1.amazonaws.com";

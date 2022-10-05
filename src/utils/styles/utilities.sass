@@ -79,13 +79,17 @@ body,html
 .MuiSwitch-colorSecondary
   color: #ccbfbe !important
   &.Mui-checked
-    color: #079C04 !important
+    color: red !important
     & + .MuiSwitch-track
-      background-color:#079C04 !important
+      background-color: red !important
 .MuiSwitch-track
   background-color: #a69b9a !important
 .MuiInputLabel-outlined 
   z-index: 0 !important
+.uii>.MuiSwitch-colorSecondary.Mui-checked
+  color: #079C04 !important
+  & + .MuiSwitch-track
+    background-color: #079C04 !important
 
 //spinner  
 .MuiCircularProgress-root.MuiCircularProgress-indeterminate

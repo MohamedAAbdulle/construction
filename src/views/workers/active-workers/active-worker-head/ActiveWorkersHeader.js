@@ -10,7 +10,7 @@ const ActiveWorkersHeader = ({ totalPay, activeWorkers }) => {
   const [openNewActive, setOpenNewActive] = React.useState(false);
 
   return (
-    <div className="workers-header">
+    <span className="workers-header">
       <Grid
         container
         justifyContent="space-between"
@@ -22,12 +22,18 @@ const ActiveWorkersHeader = ({ totalPay, activeWorkers }) => {
         </Grid>
 
         <Grid item className="active-workers-total-pay">
-          <span style={{ marginRight: "10px" }}>Total Pay:</span>
-          <span className="bold">
-            {digitsToCurrency(
-              activeWorkers && activeWorkers.length ? totalPay : 0
-            )}
-          </span>
+          
+            <span>
+              <span className="red mx-2">Due:</span>
+              <span className="red bold">
+                {digitsToCurrency(totalPay.totalDues)}
+              </span>{" "}
+              | <span className="green mx-2">Paid:</span>
+              <span className="green bold">
+                {digitsToCurrency(totalPay.totalPaid)}
+              </span>
+            </span>
+          
         </Grid>
 
         <Grid item>
@@ -46,7 +52,7 @@ const ActiveWorkersHeader = ({ totalPay, activeWorkers }) => {
       <StickySlider clickState={openNewActive} setClickState={setOpenNewActive}>
         <NewActiveWorkerSlider setOpenNewActive={setOpenNewActive} />
       </StickySlider>
-    </div>
+    </span>
   );
 };
 
