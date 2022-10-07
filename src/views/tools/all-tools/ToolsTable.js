@@ -6,7 +6,7 @@ import { deleteEndpoint, putEndpoint } from "services/apiFunctions";
 import ToolForm from "./ToolForm";
 import { toolsContx } from "../ToolsContx";
 import NewInUse from "../in-use-tools/NewInUse";
-import dateFormatter from "utils/dateFormatter";
+import { dateFormatter2 } from "utils/dateFormatter";
 
 const ToolsTable = () => {
   const { tools, getTools } = React.useContext(toolsContx);
@@ -32,7 +32,7 @@ const ToolsTable = () => {
       <div>{r.quantity}</div>,
       <div>{r.inUse}</div>,
       <div>{r.quantity - r.inUse}</div>,
-      <div>{dateFormatter(r.lastModified, "DD MMM 'YY, HH:mm")}</div>,
+      <div>{dateFormatter2(r.lastModified, "DD MMM 'YY, HH:mm")}</div>,
       <Ellipsis
         menus={[
           {

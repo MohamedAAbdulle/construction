@@ -13,7 +13,7 @@ import { CgFileDocument } from "react-icons/cg";
 import { ImUndo2 } from "react-icons/im";
 import { RiShareForwardFill } from "react-icons/ri";
 import { MdOutlineDeleteForever } from "react-icons/md";
-import dateFormatter from "utils/dateFormatter";
+import { dateFormatter2 } from "utils/dateFormatter";
 import { orderStatus } from "utils/enums";
 import assignColor from "utils/assignColors";
 
@@ -82,7 +82,7 @@ const AccountingTable = () => {
       <div>{r.supplierName}</div>,
       <div>{r.quantity}</div>,
       <div>{r.price}</div>,
-      <div>{dateFormatter(r.dateDone, "DD MMM 'YY, HH:mm")}</div>,
+      <div>{dateFormatter2(r.dateDone, "DD MMM 'YY, HH:mm")}</div>,
       <div className={assignColor(orderStatus, colorList, _status)}>
         {r.status}
       </div>,

@@ -1,7 +1,7 @@
 import React from "react";
 import { deleteEndpoint } from "services/apiFunctions";
 import { digitsToCurrency } from "utils/currencyFormatter";
-import dateFormatter from "utils/dateFormatter";
+import { dateFormatter2 } from "utils/dateFormatter";
 import miscTableData from "./miscTableData";
 import Ellipsis from "components/ellipsis/Ellipsis";
 import DataTable from "react-data-table-component";
@@ -26,10 +26,10 @@ const MiscTable = ({ miscList, getMiscs }) => {
       price: digitsToCurrency(data.price),
       description: (
         <Tooltip title={data.description}>
-          <div className="clickable">{data.description||"__"}</div>
+          <div className="clickable">{data.description || "__"}</div>
         </Tooltip>
       ),
-      dateCreated: dateFormatter(data.dateCreated, "MMM DD, YYYY"),
+      dateCreated: dateFormatter2(data.dateCreated, "MMM DD, YYYY HH:mm"),
       actions: (
         <div className="table-actions">
           <Ellipsis

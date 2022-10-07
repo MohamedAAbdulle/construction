@@ -26,6 +26,11 @@ const sidebarRoutes = [
     route: "/miscellaneous",
     icon: <MdAttachMoney />,
   },
+  {
+    title: "Users",
+    route: "/users",
+    icon: <MdAttachMoney />,
+  },
   { title: "Setting", route: "/setting", icon: <MdOutlineSettings /> },
   { title: "Accounting", route: "/Accounting", icon: <RiBarChart2Line /> },
 ];

@@ -3,7 +3,7 @@ import TableCont from "components/table-comp/TableCont";
 import Ellipsis from "components/ellipsis/Ellipsis";
 import StickySlider from "components/sliderModal/StickySlider";
 import { digitsToCurrency } from "utils/currencyFormatter";
-import dateFormatter from "utils/dateFormatter";
+import { dateFormatter2 } from "utils/dateFormatter";
 import { contractContext } from "../ContractContext";
 import EditContract from "./contract-form/EditContract";
 import DeleteModal from "components/delete-modal/DeleteModal";
@@ -48,7 +48,7 @@ const ContractTable = ({ contracts, contractors }) => {
             inv.name,
             contractorName || <i style={{ color: "red" }}>No Contractor</i>,
             digitsToCurrency(inv.totalPrice),
-            dateFormatter(inv.lastModified, "DD-MMM-YY HH:mm"),
+            dateFormatter2(inv.lastModified, "DD-MMM-YY HH:mm"),
             inv.status,
             <Ellipsis
               menus={[

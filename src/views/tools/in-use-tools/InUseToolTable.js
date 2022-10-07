@@ -2,8 +2,8 @@ import Ellipsis from "components/ellipsis/Ellipsis";
 import TableCont from "components/table-comp/TableCont";
 import React from "react";
 import { deleteEndpoint } from "services/apiFunctions";
-import dayjs from "dayjs";
 import { toolsContx } from "../ToolsContx";
+import { dateFormatter2 } from "utils/dateFormatter";
 
 const InUseToolsTable = ({ workers }) => {
   const { tools, getInUseTools, inUseTools, getTools } =
@@ -30,7 +30,7 @@ const InUseToolsTable = ({ workers }) => {
       <div>{AssociatedTool.name}</div>,
       <div>{AssociatedWorker.name}</div>,
       <div>{r.amount}</div>,
-      <div>{dayjs(r.dateAssigned).format("DD MMM 'YY, HH:mm")}</div>,
+      <div>{dateFormatter2(r.dateAssigned,"DD MMM 'YY, HH:mm")}</div>,
       <Ellipsis
         menus={[
           {

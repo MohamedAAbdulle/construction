@@ -19,6 +19,7 @@ import ContractsNContractors from "views/contract/ContractsNContractors";
 import Miscellaneous from "views/misc/Miscellaneous";
 import Topbar from "views/topbar/Topbar";
 import Setting from "views/setting/Setting";
+import Users from "views/users/Users";
 
 export default function App() {
   const [appContent, setAppContent] = React.useState(<CircularProgress />);
@@ -80,6 +81,7 @@ export default function App() {
               <Route path="/tools" element={<Tools />} />
               <Route path="/tools-inuse" element={<InUseTools />} />
               <Route path="/setting" element={<Setting />} />
+              <Route path="/users" element={<Users />} />
             </Routes>
           </div>
         </div>
