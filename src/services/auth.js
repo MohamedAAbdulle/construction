@@ -39,7 +39,6 @@ export const getAccessToken = async (status) => {
   let formattedParrM = new URLSearchParams(parrMm).toString();
 
   return getTokens(formattedParrM).then((res) => {
-    console.log(res);
     const {
       access_token,
       expires_in,
@@ -47,7 +46,6 @@ export const getAccessToken = async (status) => {
       refresh_token,
     } = res.data;
     const userInfo = jwt_decode(idToken);
-
     const expiresAt = new Date(Date.now() + expires_in * 1000);
 
     const refreshAt = new Date(
@@ -68,6 +66,7 @@ export const getAccessToken = async (status) => {
       //userInfo: { ...userInfo, ["custom:customerId"]: 2 },
     };
     sessionStorage.setItem("cachedJwt", JSON.stringify(jwt));
+    sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
   });
 };
 
@@ -106,6 +105,8 @@ export function logoutRedirect(url) {
   };
 
   sessionStorage.removeItem("cachedJwt");
+  sessionStorage.removeItem("userInfo");
+  sessionStorage.removeItem("aaa");
   let c = new URLSearchParams(s).toString();
   window.location = `https://construction.auth.ap-south-1.amazoncognito.com/logout?${c}`;
 }

@@ -37,7 +37,7 @@ const DailyUse = ({ open, onClose, inv }) => {
   return (
     <ModalCont open={open} onClose={onClose} title={`Daily Use (${inv.name})`}>
       <div className="row gy-3">
-        <div className="col-lg-6">
+        <div className="col-lg-12">
           <div className="d-flex align-items-center">
             <h3 className="fw-normal m-0">{inv.quantity}</h3>
             <h2 className="my-0 mx-2">-</h2>
@@ -51,16 +51,6 @@ const DailyUse = ({ open, onClose, inv }) => {
               postfix={inv.unit}
             />
           </div>
-        </div>
-        <div className="col-lg-6">
-          <InputComp
-            type="datetime-local"
-            label="Date Created"
-            name="modifiedDate"
-            onChange={onChange}
-            value={state.modifiedDate}
-            error={findError("ModifiedDate", errors)}
-          />
         </div>
       </div>
 

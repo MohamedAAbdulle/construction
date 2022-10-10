@@ -9,6 +9,7 @@ import { TiArrowShuffle } from "react-icons/ti";
 import { AiOutlineBuild } from "react-icons/ai";
 import { RiBarChart2Line } from "react-icons/ri";
 import { MdAttachMoney } from "react-icons/md";
+import { HiUsers } from "react-icons/hi";
 
 const sidebarRoutes = [
   { title: "Inventory", route: "/inventory", icon: <AiOutlineBuild /> },
@@ -29,7 +30,7 @@ const sidebarRoutes = [
   {
     title: "Users",
     route: "/users",
-    icon: <MdAttachMoney />,
+    icon: <HiUsers />,
   },
   { title: "Setting", route: "/setting", icon: <MdOutlineSettings /> },
   { title: "Accounting", route: "/Accounting", icon: <RiBarChart2Line /> },

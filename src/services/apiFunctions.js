@@ -3,14 +3,17 @@ import { toast } from "react-toastify";
 
 let testCustomerId;
 let baseUrl;
+//let userId;
 baseUrl = "https://ery9ct8r48.execute-api.ap-south-1.amazonaws.com";
 
 /* local test parameters */
 //testCustomerId = 2;
-//baseUrl = "https://localhost:5001";
+//userId = 1;
+baseUrl = "https://localhost:5001";
 
 if (window.location.hostname !== "localhost") {
   testCustomerId = undefined;
+  //userId = undefined;
   baseUrl = "https://ery9ct8r48.execute-api.ap-south-1.amazonaws.com";
 }
 const headerSetup = () => {
@@ -24,11 +27,13 @@ const headerSetup = () => {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
       customerId,
+      userId: customerId,
     },
   };
 };
 const errorHandler = (res) => {
   //test 404
+  //console.log(res);
   let errorMessage = "Unknown Error Occured";
   if (res.response) {
     console.log(res.response);
@@ -72,6 +77,7 @@ export const putEndpoint = async (url, body) =>
   await axios
     .put(baseUrl + url, body, headerSetup())
     .then((res) => {
+      //console.log(res);
       toast.success(res.data);
       return res;
     })

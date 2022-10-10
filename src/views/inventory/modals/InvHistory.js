@@ -1,9 +1,9 @@
 import React from "react";
 import ModalCont from "components/modalCont/ModalCont";
 import { getEndpoint } from "services/apiFunctions";
-import dayjs from "dayjs";
 import "./InvHistory.sass";
 import fetchStatus from "components/fetch-status/fetchStatus";
+import dateFormatter from "utils/dateFormatter";
 
 const InvHistory = ({ open, onClose, inv }) => {
   const [state, setState] = React.useState();
@@ -42,7 +42,7 @@ const InvHistory = ({ open, onClose, inv }) => {
                   {typeShorten(item.type)}
                 </div>
                 <div className="col-4 text-nowrap">
-                  {dayjs(item.dateDone).format("DD-MMM-YY, HH:mm")}
+                  {dateFormatter(item.dateDone, "DD-MMM-YY, HH:mm")}
                 </div>
                 <div className="col-3">
                   <span className="quantity">{item.quantity}</span>

@@ -15,7 +15,6 @@ const Miscellaneous = () => {
       //setMiscList(_miscList);
     });
     getEndpoint("/misc/cash").then((res) => {
-      console.log(res);
       if (res.failed) {
         setTotalMisc(<i className="negative-action"> failed</i>);
       } else {
