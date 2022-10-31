@@ -24,7 +24,7 @@ const NewActiveWorkerSlider = ({ setOpenNewActive }) => {
         <div className="active-mode">
           <InputComp type="search" />
           <span className="or">OR</span>
-          <BtnComp label="Create New Worker" />
+          <BtnComp label="New New Worker" />
         </div>
         <div className="worker-info">
           <div className="input-pair">

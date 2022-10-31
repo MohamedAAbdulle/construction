@@ -22,10 +22,9 @@ const ActivityDateRange = () => {
       />
       <InputComp
         value={
-          activeWeek.format("DD/MM/YY") +
-          " - " +
-          activeWeek.date(activeWeek.date() + 6).format("DD/MM/YY")
+          activeWeek.format("DD/MM/YY") 
         }
+        label="Week Of"
       />
       <ChevronRightRounded
         className="icon-rounded clickable"

@@ -34,7 +34,7 @@ const MiscHeader = ({ totalMisc, getMiscs }) => {
             />
           </h4>
         </div>
-        <BtnComp label="Create Misc" onClick={() => setOpen(true)} />
+        <BtnComp label="New Misc" onClick={() => setOpen(true)} />
       </div>
       {open && (
         <MiscForm

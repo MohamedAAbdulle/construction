@@ -16,12 +16,12 @@ const InventoryHead = () => {
       style={{ margin: "20px 0 15px" }}
     >
       <div className="page-title">Inventory</div>
-      <Grid item>
+      {/* <Grid item>
         <InputComp type="search" placeholder="Search Inventory" />
-      </Grid>
+      </Grid> */}
 
       <Grid item>
-        <BtnComp label="Create Inventory" onClick={() => setOpen(true)} />
+        <BtnComp label="New Inventory" onClick={() => setOpen(true)} />
       </Grid>
       {open && <NewInventory open={open} setOpen={setOpen} />}
     </Grid>

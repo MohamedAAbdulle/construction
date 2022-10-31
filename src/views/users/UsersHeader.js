@@ -10,7 +10,7 @@ const UsersHeader = () => {
       <div className="d-flex justify-content-between align-items-center py-2">
         <div className="page-title">Users</div>
 
-        <BtnComp label="Create User" onClick={() => {}} />
+        <BtnComp label="New User" onClick={() => {}} />
       </div>
       {/* {open && (
         <MiscForm

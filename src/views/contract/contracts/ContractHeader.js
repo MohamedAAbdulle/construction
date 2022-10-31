@@ -11,18 +11,18 @@ const ContractHead = () => {
 
   return (
     <>
-      <div className="d-flex justify-content-between align-items-center py-2">
+      <Grid container className="d-flex justify-content-between align-items-center py-2">
         <Grid item>
           <ContractTab />
         </Grid>
-        <Grid item>
+        {/* <Grid item>
           <InputComp postfix={<Search />} placeholder="Search Contracts" />
-        </Grid>
+        </Grid> */}
 
         <Grid item>
-          <BtnComp label="Create Contract" onClick={() => setOpen(true)} />
+          <BtnComp label="New Contract" onClick={() => setOpen(true)} />
         </Grid>
-      </div>
+      </Grid>
       {open && <NewContract setOpen={setOpen} open={open} />}
     </>
   );

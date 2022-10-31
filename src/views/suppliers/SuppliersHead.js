@@ -15,12 +15,12 @@ const SuppliersHead = () => {
         <Grid item>
           <div className="page-title">Suppliers</div>
         </Grid>
-        <Grid item>
+        {/* <Grid item>
           <InputComp postfix={<Search />} placeholder="Search Supplier" />
-        </Grid>
+        </Grid> */}
 
         <Grid item>
-          <BtnComp label="Create Supplier" onClick={() => setOpen(true)} />
+          <BtnComp label="New Supplier" onClick={() => setOpen(true)} />
         </Grid>
       </div>
       <StickySlider clickState={open} setClickState={setOpen}>

@@ -19,13 +19,11 @@ const AllWorkersHeader = () => {
         <Grid item>
           <WorkersTab />
         </Grid>
-        <Grid item>
-          <InputComp type="search" placeholder="Search Worker" />
-        </Grid>
+        
 
         <Grid item>
           <BtnComp
-            label="Create Worker"
+            label="New Worker"
             onClick={() => {
               setOpenNewActive(true);
             }}

@@ -30,14 +30,14 @@ const AccountingHead = () => {
             </MenuItem>
           ))}
         </TextField> */}
-        <div className="filter-select">
+        {/* <div className="filter-select">
           <InputComp
             type="select"
             options={orderStatus}
             placeholder="Filter Order"
           />
-        </div>
-        <BtnComp label="Create Order" onClick={() => setOpen(true)} />
+        </div> */}
+        <BtnComp label="New Order" onClick={() => setOpen(true)} />
       </div>
       <StickySlider clickState={open} setClickState={setOpen}>
         <OrderForm closeSlider={() => setOpen(false)} order={{}} />

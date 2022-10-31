@@ -16,12 +16,12 @@ const ContractorsHead = () => {
         <Grid item>
           <ContractTab />
         </Grid>
-        <Grid item>
+        {/* <Grid item>
           <InputComp postfix={<Search />} placeholder="Search Contracts" />
-        </Grid>
+        </Grid> */}
 
         <Grid item>
-          <BtnComp onClick={() => setOpen(true)} label="Create Contractor" />
+          <BtnComp onClick={() => setOpen(true)} label="New Contractor" />
         </Grid>
       </Grid>
       <StickySlider clickState={open} setClickState={setOpen}>

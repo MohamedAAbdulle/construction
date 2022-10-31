@@ -20,7 +20,7 @@ const AllToolsHeader = () => {
         </Grid>
 
         <Grid item>
-          <BtnComp label="Create Tool" onClick={() => setOpen(true)} />
+          <BtnComp label="New Tool" onClick={() => setOpen(true)} />
         </Grid>
       </Grid>
       {open && <ToolForm closeModal={() => setOpen(false)} state={{}} />}
