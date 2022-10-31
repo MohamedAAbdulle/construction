@@ -37,16 +37,16 @@ const AppContent = () => {
   };
   if (userType === "Admin" && !JSON.parse(sessionStorage.getItem("aaa"))) {
     return (
-      <div className="fff">
+      <div className="welcome-cont">
         <h1>Welcome {given_name}</h1>
         <p>Choose a site.</p>
-        <div className="mmm">
-          <div onClick={() => setSite(4)} className="clickable">
-            <div className="bbb"></div>
+        <div className="sites-cont">
+          <div className="one-site-cont clickable" onClick={() => setSite(4)}>
+            <div className="site-profile"></div>
             <div>Demo</div>
           </div>
-          <div onClick={() => setSite(2)} className="clickable">
-            <div className="bbb clickable"></div>
+          <div className="one-site-cont clickable" onClick={() => setSite(2)}>
+            <div className="site-profile"></div>
             <div>Site 1</div>
           </div>
         </div>
