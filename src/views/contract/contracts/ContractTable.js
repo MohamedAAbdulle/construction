@@ -6,7 +6,7 @@ import { digitsToCurrency } from "utils/currencyFormatter";
 import { dateFormatter2 } from "utils/dateFormatter";
 import { contractContext } from "../ContractContext";
 import EditContract from "./contract-form/EditContract";
-import DeleteModal from "components/delete-modal/DeleteModal";
+import ConfirmationModal from "components/delete-modal/ConfirmationModal";
 import { deleteEndpoint } from "services/apiFunctions";
 
 const ContractTable = ({ contracts, contractors }) => {
@@ -73,7 +73,7 @@ const ContractTable = ({ contracts, contractors }) => {
         <EditContract closeSlider={() => setOpen(false)} open={open} />
       </StickySlider>
       {openDeleteContract && (
-        <DeleteModal
+        <ConfirmationModal
           onClose={() => setOpenDeleteContract(false)}
           deleteAction={() => onDelete(openDeleteContract.id)}
           message={

@@ -1,7 +1,7 @@
 import React from "react";
 import TableCont from "components/table-comp/TableCont";
 import Ellipsis from "components/ellipsis/Ellipsis";
-import DeleteModal from "components/delete-modal/DeleteModal";
+import ConfirmationModal from "components/delete-modal/ConfirmationModal";
 import { deleteEndpoint, putEndpoint } from "services/apiFunctions";
 import { Switch } from "@material-ui/core";
 import findWorkerTypeName from "utils/findEnumValue";
@@ -26,7 +26,7 @@ const ActiveWorkersTable = ({
     });
   };
 
-  const aa = (id, chart) => {
+  const sendUpdatedChartToApi = (id, chart) => {
     putEndpoint(`/workers/activeWorkers/chart/${id}?chart=${chart}`, {}).then(
       (res) => {
         if (res && res.status === 200) {
@@ -40,7 +40,7 @@ const ActiveWorkersTable = ({
   const payWorker = (worker) => {
     let a = worker.chart.slice(0, -1);
     if (a.includes("1")) {
-      aa(worker.id, a.replaceAll("1", "2") + "2"); //improve
+      sendUpdatedChartToApi(worker.id, a.replaceAll("1", "2") + "2"); //improve
     }
   };
 
@@ -53,10 +53,10 @@ const ActiveWorkersTable = ({
     }
     let r = worker.chart.split("");
     r.splice(index, 1, b);
-    aa(worker.id, r.join(""));
+    sendUpdatedChartToApi(worker.id, r.join(""));
   };
 
-  const aaa = (y) => {
+  const actionLabel = (y) => {
     let a = "Update Worker";
     let x = y.worker.chart[y.index];
     console.log(x);
@@ -65,8 +65,10 @@ const ActiveWorkersTable = ({
     else if (x === "2") a = "UnPay Worker";
     return a;
   };
+
   let allDueTotal = 0;
   let allPaidTotal = 0;
+
   const data = activeWorkers.map((activeWorker, index) => {
     const weeklyChartList = [];
     let dueTotal = 0;
@@ -155,7 +157,7 @@ const ActiveWorkersTable = ({
         dataList={data}
       />
       {openInactivate && (
-        <DeleteModal
+        <ConfirmationModal
           onClose={() => setOpenInactivate(false)}
           deleteAction={() => inactivateWorker(openInactivate.id)}
           message={`${openInactivate.name} will be Inactivated!`}
@@ -164,16 +166,16 @@ const ActiveWorkersTable = ({
         />
       )}
       {openUpdateChart && (
-        <DeleteModal
+        <ConfirmationModal
           onClose={() => setOpenUpdateChart(false)}
           deleteAction={() => updateChart(openUpdateChart)}
           message={`${openUpdateChart.worker.name}'s chart will be update!`}
-          title={aaa(openUpdateChart)}
-          btnTitle={aaa(openUpdateChart)}
+          title={actionLabel(openUpdateChart)}
+          btnTitle={actionLabel(openUpdateChart)}
         />
       )}
       {openPayWorker && (
-        <DeleteModal
+        <ConfirmationModal
           onClose={() => setOpenPayWorker(false)}
           deleteAction={() => payWorker(openPayWorker)}
           message={`${openPayWorker.name}'s chart will be update!`}

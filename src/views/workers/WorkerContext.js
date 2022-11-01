@@ -16,9 +16,11 @@ const WorkerContext = (props) => {
     setTotalDues(allDueTotal);
     setTotalPaid(allPaidTotal);
   };
+
   const [activeWeek, setActiveWeek] = React.useState(
     dayjs().subtract(1, "days").day(1)
   );
+
   const [activeTab, setActiveTab] = React.useState(1);
 
   const getAllWorkers = () => {
@@ -30,6 +32,7 @@ const WorkerContext = (props) => {
 
   const getActiveWorkers = () => {
     setActiveWorkers();
+    updateTotalPay({ allDueTotal: 0, allPaidTotal: 0 });
     getEndpoint(
       `/workers/activeWorkers?weekof=${activeWeek.format("MM-DD-YYYY")}`
     ).then((res) => {

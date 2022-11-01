@@ -5,7 +5,7 @@ import StickySlider from "components/sliderModal/StickySlider";
 import EditContrator from "./contractor-form/EditContractor";
 import { deleteEndpoint } from "services/apiFunctions";
 import { contractContext } from "../ContractContext";
-import DeleteModal from "components/delete-modal/DeleteModal";
+import ConfirmationModal from "components/delete-modal/ConfirmationModal";
 
 const ContractorsTable = ({ contractors }) => {
   const { getContractors } = React.useContext(contractContext);
@@ -55,7 +55,7 @@ const ContractorsTable = ({ contractors }) => {
         <EditContrator closeSlider={() => setOpen(false)} open={open} />
       </StickySlider>
       {openDeleteContractor && (
-        <DeleteModal
+        <ConfirmationModal
           onClose={() => setOpenDeleteContractor(false)}
           deleteAction={() => onDelete(openDeleteContractor.id)}
           message={

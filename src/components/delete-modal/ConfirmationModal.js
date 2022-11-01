@@ -2,7 +2,7 @@ import React from "react";
 import ModalCont from "components/modalCont/ModalCont";
 import BtnComp from "components/btn-comp/BtnComp";
 
-const DeleteModal = ({
+const ConfirmationModal = ({
   onClose,
   deleteAction,
   title,
@@ -19,4 +19,4 @@ const DeleteModal = ({
   );
 };
 
-export default DeleteModal;
+export default ConfirmationModal;

@@ -2,7 +2,7 @@ import Ellipsis from "components/ellipsis/Ellipsis";
 import TableCont from "components/table-comp/TableCont";
 import React from "react";
 import { accountingContx } from "views/orders/AccountingContx";
-import DeleteModal from "components/delete-modal/DeleteModal";
+import ConfirmationModal from "components/delete-modal/ConfirmationModal";
 import { deleteEndpoint, putEndpoint } from "services/apiFunctions";
 import { appContext } from "AppContext";
 import StickySlider from "components/sliderModal/StickySlider";
@@ -145,7 +145,7 @@ const AccountingTable = () => {
       />
 
       {modal.type === "delete-order" && (
-        <DeleteModal
+        <ConfirmationModal
           onClose={closeModal}
           deleteAction={() => deleteOrder(modal.state)}
           message={`This order will be permanently deleted!`}

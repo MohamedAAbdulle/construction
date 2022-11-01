@@ -1,4 +1,4 @@
-import DeleteModal from "components/delete-modal/DeleteModal";
+import ConfirmationModal from "components/delete-modal/ConfirmationModal";
 import Ellipsis from "components/ellipsis/Ellipsis";
 import StickySlider from "components/sliderModal/StickySlider";
 import TableCont from "components/table-comp/TableCont";
@@ -46,7 +46,7 @@ const SuppliersTable = ({ getSuppliers, suppliers }) => {
       />
 
       {openDeleteSupplier && (
-        <DeleteModal
+        <ConfirmationModal
           onClose={() => setOpenDeleteSupplier(false)}
           deleteAction={() => deleteSupplier(openDeleteSupplier)}
           message={`This Supplier will be permanently deleted!`}

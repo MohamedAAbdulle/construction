@@ -7,7 +7,7 @@ import Ellipsis from "components/ellipsis/Ellipsis";
 import DataTable from "react-data-table-component";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import MiscForm from "./MiscForm";
-import DeleteModal from "components/delete-modal/DeleteModal";
+import ConfirmationModal from "components/delete-modal/ConfirmationModal";
 
 const MiscTable = ({ miscList, getMiscs }) => {
   const [openEdit, setOpenEdit] = React.useState(false);
@@ -73,7 +73,7 @@ const MiscTable = ({ miscList, getMiscs }) => {
         />
       )}
       {openDelete && (
-        <DeleteModal
+        <ConfirmationModal
           onClose={() => setOpenDelete(false)}
           deleteAction={() => deleteMisc(openDelete)}
           message={`This Misc will be permanently deleted!`}

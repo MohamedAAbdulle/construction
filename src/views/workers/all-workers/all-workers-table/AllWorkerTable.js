@@ -3,7 +3,7 @@ import TableCont from "components/table-comp/TableCont";
 import Ellipsis from "components/ellipsis/Ellipsis";
 import { workerContext } from "../../WorkerContext";
 import Createworker from "../all-workers-header/CreateWorker";
-import DeleteModal from "components/delete-modal/DeleteModal";
+import ConfirmationModal from "components/delete-modal/ConfirmationModal";
 import { deleteEndpoint, postEndpoint } from "services/apiFunctions";
 import dayjs from "dayjs";
 import { appContext } from "AppContext";
@@ -80,7 +80,7 @@ const AllWorkersTable = () => {
         />
       )}
       {openDeleteWorker && (
-        <DeleteModal
+        <ConfirmationModal
           onClose={() => setOpenDeleteWorker(false)}
           deleteAction={() => deleteWorker(openDeleteWorker.id)}
           message={`${openDeleteWorker.name} will be permanently deleted!`}

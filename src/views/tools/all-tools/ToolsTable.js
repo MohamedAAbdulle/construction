@@ -1,7 +1,7 @@
 import Ellipsis from "components/ellipsis/Ellipsis";
 import TableCont from "components/table-comp/TableCont";
 import React from "react";
-import DeleteModal from "components/delete-modal/DeleteModal";
+import ConfirmationModal from "components/delete-modal/ConfirmationModal";
 import { deleteEndpoint, putEndpoint } from "services/apiFunctions";
 import ToolForm from "./ToolForm";
 import { toolsContx } from "../ToolsContx";
@@ -76,7 +76,7 @@ const ToolsTable = () => {
         dataList={data}
       />
       {openDeleteTool && (
-        <DeleteModal
+        <ConfirmationModal
           onClose={() => setOpenDeleteTool(false)}
           deleteAction={() => deleteTool(openDeleteTool)}
           message={`This Tool will be permanently deleted!`}
