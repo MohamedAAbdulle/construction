@@ -30,8 +30,10 @@ const WorkerContext = (props) => {
     });
   };
 
-  const getActiveWorkers = () => {
-    setActiveWorkers();
+  const getActiveWorkers = (dontRefresh) => {
+    if (!dontRefresh) {
+      setActiveWorkers();
+    }
     updateTotalPay({ allDueTotal: 0, allPaidTotal: 0 });
     getEndpoint(
       `/workers/activeWorkers?weekof=${activeWeek.format("MM-DD-YYYY")}`

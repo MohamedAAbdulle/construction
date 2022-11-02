@@ -31,7 +31,7 @@ const ActiveWorkersTable = ({
       (res) => {
         if (res && res.status === 200) {
           setOpenUpdateChart(false);
-          getActiveWorkers(); //expensive. this is involves alot of work.
+          getActiveWorkers("don't refresh"); //expensive. this is involves alot of work.
         }
       }
     );
