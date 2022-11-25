@@ -41,38 +41,29 @@
                 padding: 10px 0
                 .rdt_TableCell
                   justify-content: center
+                  text-align: center
+                  padding: 0 6px
+
+                  //for multiple items inside the cell
+                  section
+                    >*:last-child
+                      margin-top: 6px
+                      margin-top: 6px
+                      font-size: 0.9em
+                      opacity: 0.8
+                      //border: solid 1px
+                  .table-actions 
+                    font-size: 22px
+                    color: #202f53
+                    display: flex
+                    align-items: flex-end
+                    overflow: visible
+                    > :nth-child(2)
+                      margin-left: 10px 
                   div:first-child
                     //overflow: visible //potential bug
                 
-  .cell-elements
-    color: #202f53
-    white-space: initial !important
-    @media screen and (max-width: 1399px)
-        font-size: 11px !important
-    @media screen and (min-width: 1400px)
-        font-size: 12px !important
-    >div
-      white-space: initial !important
-    > * 
-      display: inline-block
-      vertical-align: middle
-    > *:nth-child(2) 
-      margin-left: 10px
-    .head 
-      display: block
-      font-weight: bold
-      margin-bottom: 5px
-      color: inherited
-    .foot 
-      font-size: 10px
-  .table-actions 
-    font-size: 22px
-    color: #202f53
-    display: flex
-    align-items: flex-end
-    overflow: visible
-    > :first-child 
-      margin-right: 20px 
+  
   
     
 

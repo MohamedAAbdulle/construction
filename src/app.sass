@@ -1,4 +1,4 @@
-@import ./utils/styles/shared
+
 .app
   background: #f4f4f4
   height: 100vh
@@ -8,15 +8,7 @@
     flex-grow: 1
     height: 100vh
     overflow: scroll
-  @media screen and (max-width: 915px)
-    .view-cont
-      padding: 0
-    .main-view
-      padding: 0 12px 12px
-    .sidebar
-      display: none
-    .top-bar
-      display: block
+  
   .welcome-cont
     position: absolute
     top: 50%
@@ -36,4 +28,5 @@
         border: solid blue 1px
         background: gray
         margin: 5px 5px 15px
-        
+
+@import ./utils/styles/shared

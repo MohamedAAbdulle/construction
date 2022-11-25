@@ -3,7 +3,6 @@ import { inventoryStatus } from "utils/enums";
 import "./Inventory.css";
 import DailyUse from "./modals/DailyUse";
 import InvHistory from "./modals/InvHistory";
-import TableCont from "components/table-comp/TableCont";
 import Ellipsis from "components/ellipsis/Ellipsis";
 import DeleteInv from "./modals/DeleteInv";
 import EditInv from "./modals/EditInv";
@@ -14,8 +13,10 @@ import { FiEdit } from "react-icons/fi";
 import { MdOutlineDeleteForever } from "react-icons/md";
 import { BsCheck2Circle } from "react-icons/bs";
 import InvCorrection from "./modals/InvCorrection";
+import invTableColumns, { invTableColumnsPhone } from "./InvTableColumns";
+import DataTable from "react-data-table-component";
 
-export default function Inventory({ invList }) {
+const InventoryTable = ({ invList }) => {
   const getInventoryStatus = (inv) => {
     let a = "";
     if (inv.quantity <= 0) {
@@ -39,55 +40,60 @@ export default function Inventory({ invList }) {
     setModal("");
   };
 
+  const aa = invList.map((inv) => ({
+    name: inv.name,
+    unit: inv.unit,
+    quantity: inv.quantity,
+    status: getInventoryStatus(inv),
+    modifiedDate: dateFormatter(inv.modifiedDate, "DD MMM 'YY, HH:mm"),
+    //for phone display
+    modifiedDateOnly: dateFormatter(inv.modifiedDate, "DD MMM 'YY"),
+    modifiedTime: dateFormatter(inv.modifiedDate, "HH:mm"),
+    actions: (
+      <div className="table-actions">
+        <Ellipsis
+          menus={[
+            {
+              onClick: () => tableAction("remove", inv),
+              label: "Daily Usage",
+              icon: <FiChevronsRight />,
+            },
+
+            {
+              onClick: () => tableAction("add", inv),
+              label: "Correction",
+              icon: <BsCheck2Circle />,
+            },
+            {
+              onClick: () => tableAction("edit", inv),
+              label: "Edit",
+              icon: <FiEdit />,
+            },
+            {
+              onClick: () => tableAction("history", inv),
+              label: "History",
+              icon: <MdHistoryToggleOff />,
+            },
+            {
+              onClick: () => tableAction("delete", inv),
+              label: "Delete",
+              icon: <MdOutlineDeleteForever />,
+            },
+          ]}
+        />
+      </div>
+    ),
+  }));
+
   return (
     <>
-      <TableCont
-        tableTitles={[
-          "Name",
-          "Unit",
-          "Quantity",
-          "Status",
-          "Last Modified",
-          "",
-        ]}
-        dataList={invList.map((inv) => [
-          inv.name,
-          inv.unit,
-          inv.quantity,
-          getInventoryStatus(inv),
-          dateFormatter(inv.modifiedDate, "DD MMM 'YY, HH:mm"),
-          <Ellipsis
-            menus={[
-              {
-                onClick: () => tableAction("remove", inv),
-                label: "Daily Usage",
-                icon: <FiChevronsRight />,
-              },
+      <div className="summary-list desktop-only">
+        <DataTable columns={invTableColumns} data={aa} />
+      </div>
 
-              {
-                onClick: () => tableAction("add", inv),
-                label: "Correction",
-                icon: <BsCheck2Circle />,
-              },
-              {
-                onClick: () => tableAction("edit", inv),
-                label: "Edit",
-                icon: <FiEdit />,
-              },
-              {
-                onClick: () => tableAction("history", inv),
-                label: "History",
-                icon: <MdHistoryToggleOff />,
-              },
-              {
-                onClick: () => tableAction("delete", inv),
-                label: "Delete",
-                icon: <MdOutlineDeleteForever />,
-              },
-            ]}
-          />,
-        ])}
-      />
+      <div className="summary-list phone-only">
+        <DataTable columns={invTableColumnsPhone} data={aa} />
+      </div>
 
       {modal === "remove" && (
         <DailyUse open={true} onClose={closeModal} inv={selectedInv} />
@@ -106,4 +112,6 @@ export default function Inventory({ invList }) {
       )}
     </>
   );
-}
+};
+
+export default InventoryTable;

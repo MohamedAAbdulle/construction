@@ -1,4 +1,4 @@
-import { Menu, MenuItem, IconButton } from "@material-ui/core";
+import { Menu, MenuItem } from "@material-ui/core";
 import { MoreVert } from "@material-ui/icons";
 
 import React from "react";
@@ -7,13 +7,14 @@ const Ellipsis = ({ menus, cover }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   return (
     <>
-      <IconButton
+      <div
+        className="clickable"
         onClick={(e) => {
           setAnchorEl(e.target);
         }}
       >
         {cover ? cover : <MoreVert />}
-      </IconButton>
+      </div>
       <Menu
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}
