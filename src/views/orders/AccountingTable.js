@@ -5,7 +5,6 @@ import { accountingContx } from "views/orders/AccountingContx";
 import ConfirmationModal from "components/delete-modal/ConfirmationModal";
 import { deleteEndpoint, putEndpoint } from "services/apiFunctions";
 import { appContext } from "AppContext";
-import StickySlider from "components/sliderModal/StickySlider";
 import OrderForm from "./OrderForm";
 import OrderDocs from "./models/OrderDocs";
 import { FiEdit } from "react-icons/fi";
@@ -24,8 +23,6 @@ const AccountingTable = () => {
   const { accounts, getAccounts } = React.useContext(accountingContx);
 
   //const [OpenUpdateStatus, setOpenUpdateStatus] = React.useState(false);
-
-  const [openEdit, setOpenEdit] = React.useState(false);
 
   const [modal, setModal] = React.useState({ type: "", state: "" });
 
@@ -89,7 +86,9 @@ const AccountingTable = () => {
       <Ellipsis
         menus={[
           {
-            onClick: () => setOpenEdit(r),
+            onClick: () => {
+              setModal({ type: "edit", state: r });
+            },
             label: "Edit",
             icon: <FiEdit />,
           },
@@ -156,10 +155,9 @@ const AccountingTable = () => {
       {modal.type === "docs" && (
         <OrderDocs closeModal={closeModal} order={modal.state} />
       )}
-
-      <StickySlider clickState={openEdit} setClickState={setOpenEdit}>
-        <OrderForm closeSlider={() => setOpenEdit(false)} order={openEdit} />
-      </StickySlider>
+      {modal.type === "edit" && (
+        <OrderForm closeModal={closeModal} order={modal.state} />
+      )}
     </>
   );
 };

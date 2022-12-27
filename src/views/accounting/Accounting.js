@@ -3,7 +3,7 @@ import React from "react";
 import dateFormatter from "utils/dateFormatter";
 
 const Accounting = () => {
-  let a = "2022-11-24T20:57:04.351851";
+  let a = "2022-05-19T04:39:00";
   let format = "YYYY-MM-DDTHH:mm";
   return (
     <div>

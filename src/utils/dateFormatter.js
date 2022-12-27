@@ -6,11 +6,12 @@ const dateFormatter = (date, format, ignoreUTC) => {
 
   if (a.getDate()) {
     if (ignoreUTC === true) {
-      date = date.toLowerCase().replace("z", "");
+      date = date.toUpperCase().replace("Z", "");
     } //delete this when utc are distinquishable
     else {
-      date = date.toLowerCase().replace("z", "");
-      date = date + "z";
+      date = date.toUpperCase().replace("Z", "");
+      date = date + "Z";
+      console.log(date);
     }
     return dayjs(date).format(format);
   } else return "";
@@ -22,11 +23,11 @@ export const dateFormatter2 = (date, format, ignoreUTC) => {
 
   if (a.getDate()) {
     if (ignoreUTC === true) {
-      date = date.toLowerCase().replace("z", "");
+      date = date.toUpperCase().replace("Z", "");
     } //delete this when utc are distinquishable
     else {
-      date = date.toLowerCase().replace("z", "");
-      date = date + "z";
+      date = date.toUpperCase().replace("Z", "");
+      date = date + "Z";
     }
     return dayjs(date).format(format);
   } else return "";
