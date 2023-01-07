@@ -1,15 +1,21 @@
 import fetchStatus from "components/fetch-status/fetchStatus";
 import React from "react";
 import { toolsContx } from "../ToolsContx";
+import AllToolsTable from "./all-tools-table/AllToolsTable";
 import AllToolsHeader from "./ToolsHeader";
-import ToolsTable from "./ToolsTable";
 
 const AllTools = () => {
   const { tools } = React.useContext(toolsContx);
   return (
-    <div>
+    <div className="all-tools">
       <AllToolsHeader />
-      {fetchStatus(tools, ()=><ToolsTable />, "No Tools")}
+      {fetchStatus(
+        tools,
+        () => (
+          <AllToolsTable />
+        ),
+        "No Tools"
+      )}
     </div>
   );
 };

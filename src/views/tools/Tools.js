@@ -2,6 +2,7 @@ import React from "react";
 import AllTools from "./all-tools/AllTools";
 import InUseTools from "./in-use-tools/InUseTools";
 import { toolsContx, ToolsContx } from "./ToolsContx";
+import "./tools.sass";
 
 const Tools = () => {
   return (

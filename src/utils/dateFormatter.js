@@ -11,7 +11,6 @@ const dateFormatter = (date, format, ignoreUTC) => {
     else {
       date = date.toUpperCase().replace("Z", "");
       date = date + "Z";
-      console.log(date);
     }
     return dayjs(date).format(format);
   } else return "";

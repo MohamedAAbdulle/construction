@@ -1,12 +1,11 @@
 import Ellipsis from "components/ellipsis/Ellipsis";
-import TableCont from "components/table-comp/TableCont";
 import React from "react";
 import { accountingContx } from "views/orders/AccountingContx";
 import ConfirmationModal from "components/delete-modal/ConfirmationModal";
 import { deleteEndpoint, putEndpoint } from "services/apiFunctions";
 import { appContext } from "AppContext";
-import OrderForm from "./OrderForm";
-import OrderDocs from "./models/OrderDocs";
+import OrderForm from "../OrderForm";
+import OrderDocs from "../models/OrderDocs";
 import { FiEdit } from "react-icons/fi";
 import { CgFileDocument } from "react-icons/cg";
 import { ImUndo2 } from "react-icons/im";
@@ -15,10 +14,11 @@ import { MdOutlineDeleteForever } from "react-icons/md";
 import { dateFormatter2 } from "utils/dateFormatter";
 import { orderStatus } from "utils/enums";
 import assignColor from "utils/assignColors";
+import DataTable from "react-data-table-component";
+import orderColumns from "./orderColumns";
+import orderColumnsPhone from "./orderColumnsPhone";
 
-//import {} from "react-icons/hi";
-
-const AccountingTable = () => {
+const OrderTable = () => {
   const { invList, suppliers } = React.useContext(appContext);
   const { accounts, getAccounts } = React.useContext(accountingContx);
 
@@ -74,74 +74,74 @@ const AccountingTable = () => {
         : undefined;
     let prevStep = statusIndex > 0 ? orderStatus[statusIndex - 1] : undefined;
 
-    return [
-      <div>{r.inventoryName}</div>,
-      <div>{r.supplierName}</div>,
-      <div>{r.quantity}</div>,
-      <div>{r.price}</div>,
-      <div>{dateFormatter2(r.dateDone, "DD MMM 'YY, HH:mm")}</div>,
-      <div className={assignColor(orderStatus, colorList, _status)}>
-        {r.status}
-      </div>,
-      <Ellipsis
-        menus={[
-          {
-            onClick: () => {
-              setModal({ type: "edit", state: r });
-            },
-            label: "Edit",
-            icon: <FiEdit />,
-          },
-          {
-            onClick: () => {
-              setModal({ type: "docs", state: r });
-            },
-            label: "Documents",
-            icon: <CgFileDocument />,
-          },
-          nextStep && {
-            onClick: () => {
-              updateStatus(r.id);
-              //setOpenUpdateStatus(r.id);
-            },
-            label: nextStep,
-            icon: <RiShareForwardFill />,
-          },
-          prevStep && {
-            onClick: () => {
-              undoStatus(r.id);
-            },
-            label: prevStep,
-            icon: <ImUndo2 />,
-            classes: "red",
-          },
-          {
-            onClick: () => {
-              setModal({ type: "delete-order", state: r.id });
-            },
-            label: "Delete",
-            icon: <MdOutlineDeleteForever />,
-            classes: "red",
-          },
-        ]}
-      ></Ellipsis>,
-    ];
+    return {
+      inventory: r.inventoryName,
+      supplier: r.supplierName,
+      quantity: r.quantity,
+      price: r.price,
+      dateDone: dateFormatter2(r.dateDone, "DD MMM 'YY, HH:mm"),
+      status: (
+        <div className={assignColor(orderStatus, colorList, _status)}>
+          {r.status}
+        </div>
+      ),
+      actions: (
+        <div className="table-actions">
+          <Ellipsis
+            menus={[
+              {
+                onClick: () => {
+                  setModal({ type: "edit", state: r });
+                },
+                label: "Edit",
+                icon: <FiEdit />,
+              },
+              {
+                onClick: () => {
+                  setModal({ type: "docs", state: r });
+                },
+                label: "Documents",
+                icon: <CgFileDocument />,
+              },
+              nextStep && {
+                onClick: () => {
+                  updateStatus(r.id);
+                  //setOpenUpdateStatus(r.id);
+                },
+                label: nextStep,
+                icon: <RiShareForwardFill />,
+              },
+              prevStep && {
+                onClick: () => {
+                  undoStatus(r.id);
+                },
+                label: prevStep,
+                icon: <ImUndo2 />,
+                classes: "red",
+              },
+              {
+                onClick: () => {
+                  setModal({ type: "delete-order", state: r.id });
+                },
+                label: "Delete",
+                icon: <MdOutlineDeleteForever />,
+                classes: "red",
+              },
+            ]}
+          ></Ellipsis>
+        </div>
+      ),
+    };
   });
 
   return (
     <>
-      <TableCont
-        tableTitles={[
-          "Material",
-          "Supplier",
-          "Quantity",
-          "Price",
-          "Date Created",
-          "Status",
-          "",
-        ]}
-        dataList={data}
-      />
+      <div className="summary-list desktop-only">
+        <DataTable columns={orderColumns} data={data} />
+      </div>
+      <div className="summary-list phone-only">
+        <DataTable columns={orderColumnsPhone} data={data} />
+      </div>
 
       {modal.type === "delete-order" && (
         <ConfirmationModal
@@ -162,4 +162,4 @@ const AccountingTable = () => {
   );
 };
 
-export default AccountingTable;
+export default OrderTable;

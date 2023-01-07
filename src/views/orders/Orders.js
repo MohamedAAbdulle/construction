@@ -1,9 +1,9 @@
 import React from "react";
 import AccountingHead from "./AccountingHead";
-import AccountingTable from "./AccountingTable";
 import "./accounting.css";
 import { accountingContx, AccountingContx } from "./AccountingContx";
 import fetchStatus from "components/fetch-status/fetchStatus";
+import OrderTable from "./orders-table/OrderTable";
 
 const Accounting = () => {
   return (
@@ -24,7 +24,7 @@ const AccountCont = () => {
       {fetchStatus(
         accounts,
         () => (
-          <AccountingTable />
+          <OrderTable />
         ),
         "No Orders"
       )}

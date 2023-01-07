@@ -1,5 +1,4 @@
 import React from "react";
-import TableCont from "components/table-comp/TableCont";
 import Ellipsis from "components/ellipsis/Ellipsis";
 import { workerContext } from "../../WorkerContext";
 import Createworker from "../all-workers-header/CreateWorker";
@@ -8,6 +7,9 @@ import { deleteEndpoint, postEndpoint } from "services/apiFunctions";
 import dayjs from "dayjs";
 import { appContext } from "AppContext";
 import findWorkerTypeName from "utils/findEnumValue";
+import DataTable from "react-data-table-component";
+import workersColumns from "./workersColumns";
+import workersColumnsPhone from "./workersColumnsPhone";
 
 const AllWorkersTable = () => {
   const { WorkerTypes } = React.useContext(appContext);
@@ -35,43 +37,47 @@ const AllWorkersTable = () => {
     });
   };
 
-  const data = allWorkers.map((r) => {
-    return [
-      <div>{r.name}</div>,
-      <div>{r.idNumber}</div>,
-      <div>{findWorkerTypeName(r.workerType, WorkerTypes)}</div>,
-      <div>{r.rate}</div>,
-
-      <Ellipsis
-        menus={[
-          {
-            onClick: () => activateWorker(r.id),
-            label: "Activate",
-          },
-          {
-            onClick: () => {
-              setOpenEditWorker(r);
+  const data = allWorkers.map((r) => ({
+    name: r.name,
+    idNumber: r.idNumber,
+    workerType: findWorkerTypeName(r.workerType, WorkerTypes),
+    rate: r.rate,
+    actions: (
+      <div className="table-actions">
+        <Ellipsis
+          menus={[
+            {
+              onClick: () => activateWorker(r.id),
+              label: "Activate",
             },
-            label: "Edit",
-          },
-          { onClick: () => {}, label: "History" },
-          {
-            onClick: () => {
-              setOpenDeleteWorker(r);
+            {
+              onClick: () => {
+                setOpenEditWorker(r);
+              },
+              label: "Edit",
             },
-            label: "Delete",
-          },
-        ]}
-      />,
-    ];
-  });
+            { onClick: () => {}, label: "History" },
+            {
+              onClick: () => {
+                setOpenDeleteWorker(r);
+              },
+              label: "Delete",
+            },
+          ]}
+        />
+      </div>
+    ),
+  }));
 
   return (
     <>
-      <TableCont
-        tableTitles={["Name", "ID Number", "Worker Type", "Rate", ""]}
-        dataList={data}
-      />
+      <div className="summary-list desktop-only">
+        <DataTable columns={workersColumns} data={data} />
+      </div>
+      <div className="summary-list phone-only">
+        <DataTable columns={workersColumnsPhone} data={data} />
+      </div>
+
       {openEditActive && (
         <Createworker
           open={true}

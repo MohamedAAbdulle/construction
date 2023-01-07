@@ -1,10 +1,12 @@
 import ConfirmationModal from "components/delete-modal/ConfirmationModal";
 import Ellipsis from "components/ellipsis/Ellipsis";
 import StickySlider from "components/sliderModal/StickySlider";
-import TableCont from "components/table-comp/TableCont";
 import React, { useState } from "react";
+import DataTable from "react-data-table-component";
 import { deleteEndpoint } from "services/apiFunctions";
 import SupplierForm from "views/suppliers/SupplierForm";
+import supplierColumns from "./supplierColumns";
+import supplierColumnsPhone from "./supplierColumnsPhone";
 
 const SuppliersTable = ({ getSuppliers, suppliers }) => {
   const [openDeleteSupplier, setOpenDeleteSupplier] = useState(false);
@@ -17,33 +19,37 @@ const SuppliersTable = ({ getSuppliers, suppliers }) => {
     });
   };
 
-  const data = suppliers.map((r) => {
-    return [
-      <div>{r.name}</div>,
-      <div>{r.address}</div>,
-      <div>{r.phone}</div>,
-      <div>{r.email}</div>,
-      <Ellipsis
-        menus={[
-          {
-            onClick: () => setOpenEdit(r),
-            label: "Edit",
-          },
-          {
-            onClick: () => setOpenDeleteSupplier(r.id),
-            label: "Delete",
-          },
-        ]}
-      ></Ellipsis>,
-    ];
-  });
+  const data = suppliers.map((r) => ({
+    name: r.name,
+    address: r.address,
+    phone: r.phone,
+    email: r.email,
+    actions: (
+      <div className="table-actions">
+        <Ellipsis
+          menus={[
+            {
+              onClick: () => setOpenEdit(r),
+              label: "Edit",
+            },
+            {
+              onClick: () => setOpenDeleteSupplier(r.id),
+              label: "Delete",
+            },
+          ]}
+        ></Ellipsis>
+      </div>
+    ),
+  }));
 
   return (
     <>
-      <TableCont
-        tableTitles={["Supplier Name", "Address", "Phone", "Email", ""]}
-        dataList={data}
-      />
+      <div className="summary-list desktop-only">
+        <DataTable columns={supplierColumns} data={data} />
+      </div>
+      <div className="summary-list phone-only">
+        <DataTable columns={supplierColumnsPhone} data={data} />
+      </div>
 
       {openDeleteSupplier && (
         <ConfirmationModal

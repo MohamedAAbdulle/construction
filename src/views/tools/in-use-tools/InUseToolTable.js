@@ -4,6 +4,9 @@ import React from "react";
 import { deleteEndpoint } from "services/apiFunctions";
 import { toolsContx } from "../ToolsContx";
 import { dateFormatter2 } from "utils/dateFormatter";
+import DataTable from "react-data-table-component";
+import inUseToolsColumns from "./inUseToolsColumns";
+import inUseToolsColumnsPhone from "./inUseToolsColumnsPhone";
 
 const InUseToolsTable = ({ workers }) => {
   const { tools, getInUseTools, inUseTools, getTools } =
@@ -18,42 +21,39 @@ const InUseToolsTable = ({ workers }) => {
     });
   };
 
-  console.log("test");
-
   const data = inUseTools.map((r) => {
-    console.log(r);
     let AssociatedTool = (tools || []).find((t) => t.id === r.toolId) || {};
     let AssociatedWorker =
       (workers || []).find((w) => w.id === r.workerId) || {};
 
-    return [
-      <div>{AssociatedTool.name}</div>,
-      <div>{AssociatedWorker.name}</div>,
-      <div>{r.amount}</div>,
-      <div>{dateFormatter2(r.dateAssigned,"DD MMM 'YY, HH:mm")}</div>,
-      <Ellipsis
-        menus={[
-          {
-            onClick: () => returnTool(r),
-            label: "Return Tool",
-          },
-        ]}
-      ></Ellipsis>,
-    ];
+    return {
+      toolName: AssociatedTool.name,
+      workerName: AssociatedWorker.name,
+      amount: r.amount,
+      dateAssigned: dateFormatter2(r.dateAssigned, "DD MMM 'YY, HH:mm"),
+      actions: (
+        <div className="table-actions">
+          <Ellipsis
+            menus={[
+              {
+                onClick: () => returnTool(r),
+                label: "Return Tool",
+              },
+            ]}
+          ></Ellipsis>
+        </div>
+      ),
+    };
   });
 
   return (
     <>
-      <TableCont
-        tableTitles={[
-          "Tool",
-          "Worker Assigned To",
-          "Amount",
-          "Date Assigned",
-          "",
-        ]}
-        dataList={data}
-      />
+      <div className="summary-list desktop-only">
+        <DataTable columns={inUseToolsColumns} data={data} />
+      </div>
+      <div className="summary-list phone-only">
+        <DataTable columns={inUseToolsColumnsPhone} data={data} />
+      </div>
     </>
   );
 };
