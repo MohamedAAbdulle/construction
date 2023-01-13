@@ -5,6 +5,7 @@ import "./InvHistory.sass";
 import fetchStatus from "components/fetch-status/fetchStatus";
 import dateFormatter from "utils/dateFormatter";
 import DataTable from "react-data-table-component";
+import Ellipsis from "components/ellipsis/Ellipsis";
 
 const InvHistory = ({ open, onClose, inv }) => {
   const [state, setState] = React.useState();
@@ -46,8 +47,8 @@ const InvHistory = ({ open, onClose, inv }) => {
       grow: 2,
     },
     {
-      selector: (row) => row.docs,
-      grow: 1,
+      selector: (row) => row.actions,
+      width: "40px",
     },
   ];
   const historyData = state?.map((item) => ({
@@ -66,7 +67,18 @@ const InvHistory = ({ open, onClose, inv }) => {
         <div>{inv.unit}</div>
       </section>
     ),
-    docs: <div className="link-like text-nowrap">Docs</div>,
+    actions: (
+      <div className="table-actions">
+        <Ellipsis
+          menus={[
+            {
+              onClick: () => {},
+              label: "Documents",
+            },
+          ]}
+        />
+      </div>
+    ),
   }));
   return (
     <ModalCont open={open} onClose={onClose} title={`History (${inv.name})`}>

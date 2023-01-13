@@ -1,5 +1,4 @@
 import Ellipsis from "components/ellipsis/Ellipsis";
-import TableCont from "components/table-comp/TableCont";
 import React from "react";
 import { deleteEndpoint } from "services/apiFunctions";
 import { toolsContx } from "../ToolsContx";
