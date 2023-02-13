@@ -5,12 +5,16 @@ import React, { useState } from "react";
 import DataTable from "react-data-table-component";
 import { deleteEndpoint } from "services/apiFunctions";
 import SupplierForm from "views/suppliers/SupplierForm";
+import QuotesList from "../quotes/QuotesList";
+import SupplierForms from "../SupplierForms";
 import supplierColumns from "./supplierColumns";
 import supplierColumnsPhone from "./supplierColumnsPhone";
 
 const SuppliersTable = ({ getSuppliers, suppliers }) => {
   const [openDeleteSupplier, setOpenDeleteSupplier] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+  const [openSupplier, setOpenSupplier] = useState(false);
+  const [openQuotes, setOpenQuotes] = useState(false);
 
   const deleteSupplier = (id) => {
     deleteEndpoint(`/suppliers/${id}`).then(() => {
@@ -31,6 +35,14 @@ const SuppliersTable = ({ getSuppliers, suppliers }) => {
             {
               onClick: () => setOpenEdit(r),
               label: "Edit",
+            },
+            {
+              onClick: () => setOpenSupplier(r),
+              label: "Edit Supplier",
+            },
+            {
+              onClick: () => setOpenQuotes(r.id),
+              label: "Quotes",
             },
             {
               onClick: () => setOpenDeleteSupplier(r.id),
@@ -65,6 +77,16 @@ const SuppliersTable = ({ getSuppliers, suppliers }) => {
           supplier={openEdit}
         />
       </StickySlider>
+
+      {openSupplier && (
+        <SupplierForms
+          closeSlider={() => setOpenSupplier(false)}
+          supplier={openSupplier}
+        />
+      )}
+      {openQuotes && (
+        <QuotesList onClose={() => setOpenQuotes(false)} id={openQuotes} />
+      )}
     </>
   );
 };

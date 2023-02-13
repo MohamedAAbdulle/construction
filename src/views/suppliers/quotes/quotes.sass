@@ -2,6 +2,20 @@
   >*
     &.Created
       color: #8cc18c
+    &.Modified
+      color: blue
+    &.Deleted 
+      input
+        pointer-events: none
+      > *:not(:last-child)
+        text-decoration: line-through
+
+.supplier-quotes
+  >*
+    &.Created
+        color: #8cc18c
+    &.Modified
+      color: blue
     &.Deleted 
       input
         pointer-events: none
