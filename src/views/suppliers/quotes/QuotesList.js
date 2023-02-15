@@ -4,12 +4,12 @@ import { useContext, useEffect, useState } from "react";
 import findError from "utils/findError";
 import BtnComp from "components/btn-comp/BtnComp";
 import { Grid, IconButton } from "@material-ui/core";
-import { getEndpoint, postEndpoint, putEndpoint } from "services/apiFunctions";
-import { Add, Delete } from "@material-ui/icons";
+import { getEndpoint, putEndpoint } from "services/apiFunctions";
+import { Delete } from "@material-ui/icons";
 
-import onChangeSimple from "utils/onChangeSimple";
 import { appContext } from "AppContext";
 import fetchStatus from "components/fetch-status/fetchStatus";
+import NewQuotes from "./NewQuotes";
 
 const QuotesList = ({ onClose, id }) => {
   const [quotes, setQuotes] = useState();
@@ -18,8 +18,11 @@ const QuotesList = ({ onClose, id }) => {
 
   const getQuotes = () => {
     getEndpoint(`/suppliers/${id}/quotes`).then((res) => {
-      let data = res.failed ? res : res.reverse();
-      setQuotes(data);
+      if (res.failed) {
+        setQuotes(res); //handle this better than this
+      } else {
+        setQuotes(res.reverse());
+      }
     });
   };
 
@@ -43,7 +46,7 @@ const QuotesList = ({ onClose, id }) => {
     }
   };
   const addQuote = (quote) => {
-    setQuotes([...quotes, { ...quote, status: "Created" }]);
+    setQuotes([...quotes, { ...quote, status: "Created", supplierId: id }]);
   };
 
   const editQuote = (e, index) => {
@@ -157,6 +160,7 @@ const QuotesList = ({ onClose, id }) => {
             }),
           "No Quotes"
         )}
+        {Array.isArray(quotes) && <NewQuotes addQuote={addQuote} />}
       </div>
     </ModalCont>
   );

@@ -8,7 +8,7 @@ const fetchStatus = (response, successComponent, emptyMessage) => {
     if (response.failed) return <FailedToFetch />;
     else if (response.length === 0)
       return (
-        <p
+        <div
           style={{
             color: "#afa6a6",
             textAlign: "center",
@@ -17,10 +17,10 @@ const fetchStatus = (response, successComponent, emptyMessage) => {
           }}
         >
           {emptyMessage}
-        </p>
+        </div>
       );
     else return successComponent();
-  } else return <CircularProgress className=""/>;
+  } else return <CircularProgress className="" />;
 };
 
 export default fetchStatus;

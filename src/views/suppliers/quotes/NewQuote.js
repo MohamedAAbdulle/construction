@@ -7,7 +7,7 @@ import onChangeSimple from "utils/onChangeSimple";
 import Inventorysearcher from "components/searchers/InventorySearcher";
 
 const NewQuote = ({ onClose, addQuote }) => {
-  const [state, setState] = React.useState({ amount: 1 });
+  const [state, setState] = React.useState({});
   const [unit, setUnit] = React.useState("");
   const [errors, setErrors] = React.useState({});
 

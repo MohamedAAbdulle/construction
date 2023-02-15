@@ -3,7 +3,7 @@ const onChangeSimple = (e, state, setState) => {
   let val = value;
   if (type === "number") {
     //console.log(value);
-    if (value === "") val = null;
+    if (value === "") val = undefined;
     else {
       val = parseInt(value);
     }
