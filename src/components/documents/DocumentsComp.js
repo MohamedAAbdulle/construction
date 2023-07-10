@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, IconButton /* , Menu, MenuItem */ } from "@material-ui/core";
 import { HiDownload } from "react-icons/hi";
-import {  Delete } from "@material-ui/icons";
+import { Delete } from "@material-ui/icons";
 import NewDocument from "./NewDocument";
 import "./documents-comp.sass";
 import dayjs from "dayjs";
@@ -9,9 +9,12 @@ import { getEndpoint } from "services/apiFunctions";
 import BtnComp from "components/btn-comp/BtnComp";
 //import classNames from "classnames";
 import fetchStatus from "components/fetch-status/fetchStatus";
+import DocPreviewer from "./DocPreviewer";
+import { FiEdit } from "react-icons/fi";
 
 const DocumentsComp = ({ docs, setDocs, url }) => {
   const [newDoc, setNewDoc] = React.useState(false);
+  const [openPreview, setOpenPreview] = React.useState(false);
 
   const downloadDoc = (fileName) => {
     getEndpoint(`/documents?fileName=${fileName}`, "blob").then((r) => {
@@ -22,6 +25,7 @@ const DocumentsComp = ({ docs, setDocs, url }) => {
       let fileType = r.type.substring(r.type.lastIndexOf("/") + 1);
       const link = document.createElement("a");
       link.href = url;
+      console.log(fileType);
       link.setAttribute("download", `file.${fileType || "pdf"}`);
       document.body.appendChild(link);
       link.click();
@@ -81,13 +85,13 @@ const DocumentsComp = ({ docs, setDocs, url }) => {
                 <Grid item xs={4}>
                   {file.fileName}
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={1}>
                   {file.fileType}
                 </Grid>
                 <Grid item xs={3}>
                   {dayjs(file.dateCreated).format("DD MMM 'YY, HH:mm")}
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={4}>
                   {file.status === "Deleted" ? (
                     <BtnComp
                       label="Restore"
@@ -102,8 +106,19 @@ const DocumentsComp = ({ docs, setDocs, url }) => {
                     />
                   ) : (
                     <>
-                      <IconButton onClick={() => downloadDoc(file.fileName)}>
+                      <IconButton
+                        onClick={() => {
+                          downloadDoc(file.fileName);
+                        }}
+                      >
                         <HiDownload />
+                      </IconButton>
+                      <IconButton
+                        onClick={() => {
+                          setOpenPreview(file.fileName);
+                        }}
+                      >
+                        <FiEdit />
                       </IconButton>
                       <IconButton onClick={() => deleteDoc(file.id)}>
                         <Delete className="negative-action" />
@@ -124,6 +139,12 @@ const DocumentsComp = ({ docs, setDocs, url }) => {
 
       {newDoc && (
         <NewDocument onClose={() => setNewDoc(false)} addFile={addFile} />
+      )}
+      {openPreview && (
+        <DocPreviewer
+          fileName={openPreview}
+          closeModal={() => setOpenPreview(false)}
+        />
       )}
     </div>
   );

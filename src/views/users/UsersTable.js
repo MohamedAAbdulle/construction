@@ -2,23 +2,10 @@ import React from "react";
 import dateFormatter from "utils/dateFormatter";
 import Ellipsis from "components/ellipsis/Ellipsis";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
-/* import { deleteEndpoint } from "services/apiFunctions";
-import { digitsToCurrency } from "utils/currencyFormatter";
-import MiscForm from "./MiscForm";
-import DeleteModal from "components/delete-modal/DeleteModal"; */
 import userTableData from "./usersTableData";
 import DataTable from "react-data-table-component";
 
-const UsersTable = ({ usersList, getMiscs }) => {
-  /* const [openEdit, setOpenEdit] = React.useState(false);
-  const [openDelete, setOpenDelete] = React.useState(false);
-  const deleteMisc = (id) => {
-    deleteEndpoint(`/misc/${id}`).then(() => {
-      getMiscs();
-      setOpenDelete(false);
-    });
-  }; */
-
+const UsersTable = ({ usersList }) => {
   let _data = usersList?.map((data) => {
     return {
       email: (
