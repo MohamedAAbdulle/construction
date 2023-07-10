@@ -36,6 +36,7 @@ const OrderDocs = ({ order, closeModal }) => {
         docs={docs}
         setDocs={setDocs}
         url={`/orders/${order.id}/docs`}
+        id={order.id}
       />
       <div className="modal-btns">
         <BtnComp label="Save" onClick={onSave} />

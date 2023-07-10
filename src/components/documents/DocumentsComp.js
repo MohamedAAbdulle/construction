@@ -5,14 +5,18 @@ import { Delete } from "@material-ui/icons";
 import NewDocument from "./NewDocument";
 import "./documents-comp.sass";
 import dayjs from "dayjs";
-import { getEndpoint } from "services/apiFunctions";
+import {
+  deleteEndpoint,
+  getEndpoint,
+  postEndpoint,
+} from "services/apiFunctions";
 import BtnComp from "components/btn-comp/BtnComp";
 //import classNames from "classnames";
 import fetchStatus from "components/fetch-status/fetchStatus";
 import DocPreviewer from "./DocPreviewer";
 import { FiEdit } from "react-icons/fi";
 
-const DocumentsComp = ({ docs, setDocs, url }) => {
+const DocumentsComp = ({ docs, setDocs, url, id }) => {
   const [newDoc, setNewDoc] = React.useState(false);
   const [openPreview, setOpenPreview] = React.useState(false);
 
@@ -58,6 +62,36 @@ const DocumentsComp = ({ docs, setDocs, url }) => {
       cc.splice(index, 1);
       return cc;
     });
+  };
+
+  const createDoc = (doc) => {
+    if (doc.fileData && doc.fileType) {
+      const formState = new FormData();
+
+      formState.set("file", doc.fileData, doc.fileName);
+      formState.set("docsInfo", JSON.stringify(doc));
+      console.log(formState);
+      postEndpoint(`/Documents/${id}`, formState).then((res) => {
+        if (res && res.status === 200) {
+          setNewDoc(false);
+          //getAccounts();
+        } else if (res && res.errors) {
+          console.log(res.errors);
+          //setErrors(res.errors);
+        }
+      });
+    }
+  };
+
+  const removeDoc = (file) => {
+    console.log(file);
+    deleteEndpoint(`/Documents/${file.id}?fileName=${file.fileName}`).then(
+      (res) => {
+        if (res && res.status === 200) {
+          getDocs();
+        }
+      }
+    );
   };
 
   const getDocs = () => {
@@ -120,7 +154,12 @@ const DocumentsComp = ({ docs, setDocs, url }) => {
                       >
                         <FiEdit />
                       </IconButton>
-                      <IconButton onClick={() => deleteDoc(file.id)}>
+                      <IconButton
+                        onClick={() => {
+                          removeDoc(file);
+                          //deleteDoc(file.id);
+                        }}
+                      >
                         <Delete className="negative-action" />
                       </IconButton>
                     </>
@@ -138,7 +177,11 @@ const DocumentsComp = ({ docs, setDocs, url }) => {
       </p>
 
       {newDoc && (
-        <NewDocument onClose={() => setNewDoc(false)} addFile={addFile} />
+        <NewDocument
+          onClose={() => setNewDoc(false)}
+          createDoc={createDoc}
+          addFile={addFile}
+        />
       )}
       {openPreview && (
         <DocPreviewer
