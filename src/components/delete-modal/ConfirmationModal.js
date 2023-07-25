@@ -11,7 +11,7 @@ const ConfirmationModal = ({
 }) => {
   return (
     <ModalCont open={true} onClose={onClose} title={title}>
-      <p> {message}</p>
+      <p style={{ textAlign: "center" }}> {message}</p>
       <div className="modal-btns">
         <BtnComp label={btnTitle} onClick={deleteAction} />
       </div>

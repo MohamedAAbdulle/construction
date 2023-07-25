@@ -3,31 +3,30 @@ import { toast } from "react-toastify";
 
 let testCustomerId;
 let baseUrl;
-//let userId;
+let testUserId;
 baseUrl = "https://ery9ct8r48.execute-api.ap-south-1.amazonaws.com";
 
 /* local test parameters */
 //testCustomerId = 2;
-//userId = 1;
+//testUserId = 1;
 baseUrl = "https://localhost:5001";
 
 if (window.location.hostname !== "localhost") {
   testCustomerId = undefined;
-  //userId = undefined;
+  testUserId = undefined;
   baseUrl = "https://ery9ct8r48.execute-api.ap-south-1.amazonaws.com";
 }
 const headerSetup = () => {
-  let cachedJwt = JSON.parse(sessionStorage.getItem("cachedJwt"));
-  let userInfo = (cachedJwt || {}).userInfo;
-  const customerId =
-    testCustomerId || (userInfo || {})["custom:customerId"] || 0;
+  let userInfo = JSON.parse(sessionStorage.getItem("userInfo")) || {};
+  const customerId = testCustomerId || userInfo["custom:customerId"] || 0;
+  const userId = testUserId || userInfo.sub;
   return {
     headers: {
       accept: "application/json",
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
       customerId,
-      userId: customerId,
+      userId,
     },
   };
 };
@@ -69,7 +68,7 @@ export const postEndpoint = async (url, body) =>
     .post(baseUrl + url, body, headerSetup())
     .then((res) => {
       toast.success(res.data);
-      return res;
+      return { ...res, success: true };
     })
     .catch(errorHandler);
 
@@ -79,7 +78,7 @@ export const putEndpoint = async (url, body) =>
     .then((res) => {
       //console.log(res);
       toast.success(res.data);
-      return res;
+      return { ...res, success: true };
     })
     .catch(errorHandler);
 
@@ -88,6 +87,6 @@ export const deleteEndpoint = async (url) =>
     .delete(baseUrl + url, headerSetup())
     .then((res) => {
       toast.success(res.data);
-      return res;
+      return { ...res, success: true };
     })
     .catch(errorHandler);
